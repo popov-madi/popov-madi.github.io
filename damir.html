@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DVD</title>
+<style>
+
+#dvd{
+    width:150px;
+    height:150px;
+  	background-image: url("dima.png");
+    background-size:97%;
+
+	  
+  }
+.DVD{
+  animation:dvd 10s linear infinite;
+  }
+.DVD1{
+  animation:dvd1 2s linear infinite;
+  }
+.DVD2{
+  animation:dvd2 1s linear infinite;
+  }  
+.DVD3{
+  animation:dvd3 1s linear infinite;
+  }  
+  div.keif{
+    background: linear-gradient(45deg, rgb(235, 16, 8),orange,rgb(241, 241, 6),green,blue, #30017a,violet);
+    border:2px solid black;
+    height:860px;
+  }
+@keyframes dvd{
+	 0%
+    {
+      transform:translate(0px,400px);
+    }
+    20%
+    {
+       transform:translate(750px,0px);
+    }
+    40%
+    {
+       transform:translate(1200px,700px);  
+    }
+    60%
+    {
+       transform:translate(1265px,400px);
+    }  
+	 80%
+   {
+		 transform:translate(850px,700px);
+   }
+   100%
+   {
+		 transform:translate(0px,400px);
+   }
+    }
+  
+@keyframes dvd1{
+	 0%
+    {
+      transform:translate(0px,550px);
+    }
+    50%
+    {
+       transform:translate(1265px,200px);
+    }
+    90%
+    {
+      transform:translate(0px,100px);
+    }
+    100%
+    {
+      transform:translate(0px,550px);
+    }
+}
+@keyframes dvd2{
+	 0%
+    {
+      transform:translate(750px,-300px);
+    }
+    50%
+    {
+       transform:translate(750px,400px);
+    }
+    100%
+    {
+      transform:translate(750px,-300px);
+    }
+}
+@keyframes dvd3{
+	 0%
+    {
+      transform:translate(450px,250px);
+    }
+    50%
+    {
+       transform:translate(450px,-450px);
+    }
+    100%
+    {
+      transform:translate(450px,250px);
+    }
+}
+</style>
+</head>
+<body>
+<div class="keif">
+  <div id="dvd" class="DVD"></div>
+  <div id="dvd" class="DVD1"></div>
+  <div id="dvd" class="DVD2"></div>
+  <div id="dvd" class="DVD3"></div>
+</div>
+<audio autoplay>
+    <!--<source src="damirrap.mp3" type="audio/mpeg">-->
+</audio>
+</body>
+</html>
