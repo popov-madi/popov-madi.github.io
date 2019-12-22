@@ -1,0 +1,673 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://maps.api.2gis.ru/2.0/loader.js"></script>
+<style>
+html,body{
+  padding:0px;
+  margin:0px;
+  background:url('fon.jpg')no-repeat fixed;
+  background-size: cover;
+}
+P { 
+    text-indent: 1.5em;
+   }
+/*________________________________________адаптивное меню________________________________________*/
+.topnav {
+  overflow: hidden;
+  background-color: #717171;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 25px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a#truba {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 25px;
+}
+
+.topnav a#truba:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+/*_____________________________________________Слайдшоу__________________________________________*/
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+/*-_______________________________________________Грид_____________________________________________*/
+      .grid-container#cntbox {
+        grid-area: cntbox;
+        background-color: #717171;
+        display: grid;
+        grid-template-areas:
+          'item '
+          'item1 '
+          'item2 ';
+        grid-template-columns: 1fr;
+        grid-row-gap: 20px;
+        font-size:25px;
+
+      }
+      div.foto1{
+        border:0px solid black;
+        width:100%;
+        height:auto;
+      }
+      div.comment{
+        border:0px solid black;
+        width:100%;
+        height:40%;
+        padding:0px 0px 0px 0px;
+        
+      }
+      .grid-item#cntbox {
+        grid-area:item;
+        background-color:#333;
+        color:white;
+        border:0px solid black;
+        height:100%;
+        display:block;
+        
+      }
+      .grid-item#cntbox1 {
+        grid-area:item1;
+        background-color:#333;
+        color:white;
+        border:0px solid black;
+        height:1fr;
+        display:block;
+      }
+      .grid-item#cntbox2 {
+        grid-area:item2;
+        background-color:#333;
+        color:white;
+        border:0px solid black;
+        height:1fr;
+        display:block;
+      }
+
+@media screen and (min-width: 900px) {
+
+.grid-container#cntbox {
+          grid-area: cntbox;
+          background-color: #717171;
+          display: grid;
+          padding:30px 100px 30px 100px;
+          grid-template-areas:
+            'item item1 item2';
+          grid-template-columns:1fr 1fr 1fr;
+          grid-template-rows: 1fr;
+          grid-column-gap: 20px;
+          height:auto;
+        }
+        div.foto1{
+        border:0px solid black;
+        width:100%;
+        height:auto;
+      }
+      div.comment{
+        border:0px solid black;
+        padding:0px 0px 0px 5px;
+        width:100%;
+        height:70%;
+        
+      }
+      
+}
+/*_______________________________________________форма______________________________________________*/
+
+
+#regForm {
+  background-color: #ffffff;
+  margin: auto;
+  font-family: Raleway;
+  padding: 40px;
+  width: 70%;
+}
+
+input {
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#prevBtn {
+  background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;  
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #4CAF50;
+}
+
+/*-_______________________________________________footer_____________________________________________*/
+.grid-container#footer {
+        color:white;
+        background-color:black;
+        padding:30px 100px 30px 50px;
+
+      }
+/*-_______________________________________________кнопка вверх_____________________________________________*/
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 28px;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 100px;
+}
+
+
+#myBtn:hover {
+  background-color: #555;
+}
+
+/*--------------------------------------------параллакс--------------------------*/
+@media only screen and (max-device-width: 1024px) {
+    html, .parallax {
+        background-attachment: scroll;
+    }
+}
+</style>
+</head>
+<body>
+
+<!--Адаптивное меню-->
+
+<a name="menu"></a>
+  <div class="topnav" id="myTopnav" >
+    <a href="#menu" class="active">Главная</a>
+    <a href="#reg">Записаться</a>
+    <a href="#about">О нас</a>
+    <a href="tel:+74991550104" id="truba">📞</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  <script> 
+      function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+    }
+  </script>
+
+ <!--Контейнер со слайд-шоу-->
+
+ <br><br><br><div class="slideshow-container">
+
+    <div class="mySlides fade">
+      <div class="numbertext">1 / 3</div>
+      <img src="1slide.png" style="width:100%">
+    </div>
+    
+    <div class="mySlides fade">
+      <div class="numbertext">2 / 3</div>
+      <img src="2slide.jpg" style="width:100%">
+    </div>
+    
+    <div class="mySlides fade">
+      <div class="numbertext">3 / 3</div>
+      <img src="3slide.png" style="width:100%">
+    </div>
+    
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
+    
+    </div>
+    <br><br>
+    
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+    </script>
+     
+<!--Дроны-->
+
+<div class="parallax" style="padding:10px; font-size:25px; background:url('drons.jpg')no-repeat fixed; background-size: cover;">
+  <H1 align=center style="color:black; background:red;font-size:40px;">Дроны заменят курьеров?</H1>
+      <p>
+        Мы хотим предложить использовать  дронов не для того, чтобы снимать красивые панорамы, а чтобы дрон мог самостоятельно, без помощи человека доставлял груз.
+        Эта вохможность очень сильно облегчит работу курьерам или <b>совсем заменит их.</b>
+      </p>
+      <p>
+        Это дрон для дальних полётов с фиксированным крылом, совмещающий высокоточные возможности лидарного сканирования с RGB-камерой высокого разрешения, 
+        что несколько повышает точность полета.<b> Дрон может летать над большими площадями 
+        в неблагоприятных погодных условиях в автономном режиме,</b> вне прямой видимости, делая минимальное количество полётов для охвата района.
+      </p>
+      <p>
+        До сих пор лидары воздушного базирования применялись со специализиров. однофункцион. платформами или для затратной аэрогеодезии на пилотируемых 
+        воздушных судах с длительными сроками выполнения. <b>Лидар специально разработан для использования на дронах.</b> Полностью интегрированная умная RGB-камера 
+        рассчитана на управление с помощью датчиков в реальном времени и на полётный обзор получаемых фото с автоматическим техническим контролем.
+        Дрон рассчитан на покрытие<b> за один полёт 2 400 акров (около 10 кв. км),</b> возможности связи в радиусе 30 км и 100 минут полётного времени. 
+        Как результат, беспилотник подходит не только для доставки грузов, но и для инженерно-экологических изысканий, съёмки местности, мониторинга лесного хозяйства, 
+        поддержания инфраструктуры, инспекций трубопроводов и линий электропередачи, строительства автомобильных и железных дорог.
+      </p>
+</div>
+
+<!--Контейнер с гридом-->
+
+<div style="background-color:#717171;"><H1 align=center style="color:white; font-size:40px; margin-top:0px;">Сенсоры в беспилотных дронах</H1>
+<div class="grid-container" id="cntbox">
+    <div class="grid-item" id="cntbox" >
+      <div class="foto1" ><img src="camera.png" height=auto width=100% ></div>
+      <div class="comment"><H1 align=center style="font-size:40px;">Камеры</H1>
+        <p>
+          Камера — это ключевой источник информации для беспилотного дрона.
+        </p>
+        <p>
+          Из всех сенсоров беспилотника только камера умеет определять пешехода, машины, здания и так далее. Также у камеры большие углы обзора.
+        </p>
+        <p>
+          Из минусов — определять скорости объектов, а также расстояния до них по данным с камеры проблематично, точность недостаточная.
+          И обработка видеопотока в реальном времени требует хорошей вычислительной мощности.
+        </p>
+      </div>
+  </div>
+  <div class="grid-item" id="cntbox1" > 
+      <div class="foto1"><img src="radar.png" height=auto width=100% ></div>
+      <div class="comment"><H1 align=center style="font-size:40px;">Радары</H1>
+        <p>
+          Радары позволяют почти мгновенно (по сравнению с камерами), а главное — с хорошей точностью получать информацию о расстояниях 
+          до объектов и их скоростях. Подходят для работы с удалёнными объектами, не сильно зависят от погодных условий, работают в темноте.
+        </p>
+      </div>
+  </div>
+  <div class="grid-item" id="cntbox2" > 
+      <div class="foto1"><img src="lidars.png" height=auto width=100% ></div>
+      <div class="comment"><H1 align=center style="font-size:40px;">Лидары</H1>
+        <p>
+          Излучатели лидара формируют вертикальную полосу из лазерных лучей, как правило, их от 16 до 128. Для создания картинки с охватом 360° 
+          площадка с лазерами совершает несколько оборотов в секунду вокруг своей вертикальной оси.
+        </p>
+        <p>
+          Лидары выдают хорошо детализированную картинку происходящего вокруг, определяют расстояния до объектов и их скорость. 
+          Обладают хорошей дальностью и высокой скоростью работы. Отлично функционируют при плохой погоде и в ночное время суток.
+        </p>
+      </div>
+  </div>
+</div>
+
+<!--Форма-->
+
+<a name="reg"></a>
+<div class="parallax"style="background:url('fon.jpg')no-repeat fixed; background-size: cover;">
+<H1 align=center style="color:white; margin:0px; font-size:40px;">Хочешь работать с нами? Присоединяйся!</H1>
+<H1 align=center style="color:white; margin:0px; font-size:40px;">Заполни канткету и жди ответа!</H1>
+<form id="regForm" >
+  <h1>Анкета:</h1>
+  <div class="tab">Как Вас звать?
+    <p><input placeholder="Имя..." oninput="this.className = ''" name="fname"></p>
+    <p><input placeholder="Фамилия..." oninput="this.className = ''" name="lname"></p>
+  </div>
+  <div class="tab">Контакты:
+    <p><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+    <p><input placeholder="Телефон..." oninput="this.className = ''" name="phone"></p>
+  </div>
+  <div class="tab">Дата рождения:
+    <p><input placeholder="День" oninput="this.className = ''" name="dd"></p>
+    <p><input placeholder="Месяц(цыфрами)" oninput="this.className = ''" name="nn"></p>
+    <p><input placeholder="Год" oninput="this.className = ''" name="yyyy"></p>
+  </div>
+  <div style="overflow:auto;">
+    <div style="float:right;">
+      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Назад</button>
+      <button type="button" id="nextBtn" onclick="nextPrev(1)">Следующий шаг</button>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:40px;">
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+  </div>
+</form>
+<br>
+</div>
+<script>
+var currentTab = 0;
+showTab(currentTab); 
+
+function showTab(n) {
+  var x = document.getElementsByClassName("tab");
+  x[n].style.display = "block";
+  if (n == 0) {
+    document.getElementById("prevBtn").style.display = "none";
+  } else {
+    document.getElementById("prevBtn").style.display = "inline";
+  }
+  if (n == (x.length - 1)) {
+    document.getElementById("nextBtn").innerHTML = "Подтвердить";
+  } else {
+    document.getElementById("nextBtn").innerHTML = "Следующий шаг";
+  }
+  fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+  var x = document.getElementsByClassName("tab");
+  if (n == 1 && !validateForm()) return false;
+  x[currentTab].style.display = "none";
+  currentTab = currentTab + n;
+  if (currentTab >= x.length) {
+    document.getElementById("regForm").submit();
+    return false;
+  }
+  showTab(currentTab);
+}
+
+function validateForm() {
+  var x, y, i, valid = true;
+  x = document.getElementsByClassName("tab");
+  y = x[currentTab].getElementsByTagName("input");
+  for (i = 0; i < y.length; i++) {
+    if (y[i].value == "") {
+      y[i].className += " invalid";
+      valid = false;
+    }
+  }
+  if (valid) {
+    document.getElementsByClassName("step")[currentTab].className += " finish";
+  }
+  return valid; 
+}
+
+function fixStepIndicator(n) {
+  var i, x = document.getElementsByClassName("step");
+  for (i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace(" active", "");
+  }
+  x[n].className += " active";
+}
+</script>
+
+<!--О НАС-->
+
+<a name="about"></a>
+<div style="padding:14px 16px; background:white;color:black;font-size:20px; " >
+  <H1 align=center style="color:black; margin:0px;">О нас</H1>
+  <center>
+    <H2>
+      Мы, молодые предприниматели и разработчики, основали нашу кампанию в 2015 году. Сейчас мы разрабатываем линары для дронов, 
+      которые в будущем облегчат нам жизнь. На данный момент мы заняты разработка новой версией лидара и сотрудничаем с Яндекс.
+    </H2>
+      <H2>Над проектом работают:</H2>
+      <img src="foto1.png" height=200 width=200 style="border-radius: 200px;">
+      <H2><b>Даниил Букус</b>-студент МАДИ</H2>
+          <img src="foto1.png" height=200 width=200 style="border-radius: 200px;">
+          <H2><b>Андрей Попов</b>-студент МАДИ</H2>
+          <H1 align=center style="color:black; margin:0px;">Где нас искать?</H1>
+          <H2>
+            Наш офис находится по адресу:Ленинградский пр-т., 64, Москва, 125319
+          </H2>
+          <H2>
+            Наш телефон: <a href="tel:+74991550104">+74991550104</a>
+          </H2>
+        </center>
+  <div id="map" style="width: 100%; height: 400px;"></div>
+  <script>
+      DG.then(function() {
+          var map = DG.map('map', {
+              center: [55.8025335027456, 37.529198154852395],
+              zoom: 16
+          });
+          DG.marker([55.8025335027456, 37.529198154852395])
+              .addTo(map)
+              .bindLabel('Ленинградский пр-т., 64, Москва, 125319', {
+                  static: true
+              });
+
+          DG.marker([55.8025335027456, 37.529198154852395]).addTo(map).bindPopup('Мы находимся здесь!');
+      });
+  </script>
+
+</div>
+
+
+<!--Контейнер footer-->
+
+<div class="grid-container" id="footer">
+<center>
+<p>Курсовая работа по дисциплине "Разработка интернет приложений"</p>
+<p>Мы в соц. сетях</p>
+<a href="https://www.instagram.com/?hl=ru"> <img src="insta.png" href="#" height=70 width=70 ></a><a href="https://vk.com/"><img src="vk.png" height=50 width=50 style="margin-top: 19px;"></a>
+</center>
+</div>
+
+<!--Кнопка-->
+
+<button onclick="topFunction()" id="myBtn">↑</button>
+<script>
+// спустя 20px стрелка появляется
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// когда пользователь кликай по стрелке
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+</body>
+</html>
