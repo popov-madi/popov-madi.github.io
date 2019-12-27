@@ -693,18 +693,25 @@ function fixStepIndicator(n) {
 ">
 </div>
 <script>
-// спустя 20px стрелка появляется
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("myBtn").style.display = "block";
+        document.getElementById("myBtnTrue").style.display = "block";
     } else {
-        document.getElementById("myBtn").style.display = "none";
+        document.getElementById("myBtnTrue").style.display = "none";
+    }
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtnTrue1").style.display = "block";
+    } else {
+        document.getElementById("myBtnTrue1").style.display = "none";
+    } if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtnTrue2").style.display = "block";
+    } else {
+        document.getElementById("myBtnTrue2").style.display = "none";
     }
 }
 
-// когда пользователь кликай по стрелке
 function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
