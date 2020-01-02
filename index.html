@@ -9,8 +9,8 @@
 html,body{
   padding:0px;
   margin:0px;
-  background:url('fon.jpg')no-repeat fixed;
-  background-size: cover;
+  background:url('back1.jpeg') ;
+  background-size: 100%;
   font-family: 'Montserrat', sans-serif;
   text-align: justify;
 }
@@ -176,7 +176,7 @@ img {vertical-align: middle;}
 /*-_______________________________________________Грид_____________________________________________*/
       .grid-container#cntbox {
         grid-area: cntbox;
-        background:url('fon.jpg')no-repeat fixed; background-size: cover;
+        background:url('fon.jpg') ; background-size: 100%;
         display: grid;
         grid-template-areas:
           'item '
@@ -235,8 +235,8 @@ img {vertical-align: middle;}
 @media screen and (min-width: 900px) {
 
 .grid-container#cntbox {
+          background:url('fon.jpg')no-repeat fixed; background-size: cover;
           grid-area: cntbox;
-          background-color: #717171;
           display: grid;
           padding:30px 100px 30px 100px;
           grid-template-areas:
@@ -341,9 +341,12 @@ button:hover {
 
 
 /*--------------------------------------------параллакс--------------------------*/
+.paralax{
+    background:url('fon.jpg') ; background-size: 100%;
+} 
 @media only screen and (max-device-width: 1024px) {
-    html, .parallax {
-        background-attachment: scroll;
+    html,body .parallax {
+        background:url('fon.jpg') no-repeat fixed; background-size: cover;
     }
 }
 </style>
@@ -452,7 +455,7 @@ button:hover {
 
 <!--Контейнер с гридом-->
 
-<div style="background:url('fon.jpg')no-repeat fixed; background-size: cover;"><H1 align=center style="color:white; font-size:40px; margin-top:0px;">Сенсоры в беспилотных дронах</H1>
+<div ><H1 align=center style="color:white; font-size:40px; margin-top:0px;">Сенсоры в беспилотных дронах</H1>
 <div class="grid-container" id="cntbox">
     <div class="grid-item" id="cntbox" >
       <div class="foto1" ><img src="camera.png" height=auto width=100% style="border-radius:25px 25px 25px 25px;"></div>
@@ -520,7 +523,7 @@ button:hover {
 <!--Форма-->
 
 <a name="reg"></a>
-<div class="parallax"style="background:url('fon.jpg')no-repeat fixed; background-size: cover; font-size:25px;">
+<div class="parallax" style="font-size:25px;">
 <H1 align=center style="color:white; margin:0px; font-size:40px;">Хочешь работать с нами? Присоединяйся!</H1>
 <H1 align=center style="color:white; margin:0px; font-size:40px;">Заполни анкету и жди ответа!</H1>
 <form id="regForm" >
