@@ -348,6 +348,22 @@ button:hover {
         background:url('fon.jpg') no-repeat fixed; background-size: cover;
     }
 }
+  *--------------------------------------------эбаут--------------------------*/
+.about{
+  font-size:25px;
+  width:auto;
+}
+#map{
+    width: 100%;
+}
+@media screen and (min-width: 900px) {
+    .about {
+        width:900px;
+    }
+    #map{
+        width: 900px;
+    }
+}
 </style>
 </head>
 <body>
@@ -617,24 +633,24 @@ function fixStepIndicator(n) {
 <div style="padding:14px 16px; background:#1d2733; color:white;font-size:20px; " >
   <H1 align=center style="color:white; margin:0px;">О нас</H1>
   <center>
-    <H2>
+    <p class="about">
       Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, 
       которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс.
-    </H2>
-      <H2>Над проектом работают:</H2>
+    </p>
+      <p style="font-size:25px;">Над проектом работают:</p>
       <img src="dan.png" height=200 width=200 style="border-radius: 200px; border:2px solid white;">
-      <H2><b>Даниил Букус</b>-студент МАДИ</H2>
+      <p style="font-size:25px;"><b>Даниил Букус</b>-студент МАДИ</p>
           <img src="me.png" height=200 width=200 style="border-radius: 200px; border:2px solid white;">
-          <H2><b>Андрей Попов</b>-студент МАДИ</H2>
+          <p style="font-size:25px;"><b>Андрей Попов</b>-студент МАДИ</p>
           <H1 align=center style="color:white; margin:0px;">Где нас искать?</H1>
-          <H2>
+          <p style="font-size:25px;">
             Наш офис находится по адресу:<br>Ленинградский пр-т., 64, Москва, 125319
-          </H2>
-          <H2>
+          </p>
+          <p style="font-size:25px;">
             Наш телефон: <a href="tel:+74991550104">+74991550104</a>
-          </H2>
-        </center>
-  <div id="map" style="width: 100%; height: 400px;"></div>
+          </p>
+  <div id="map" style="height: 400px;"></div>
+    </center>
   <script>
       DG.then(function() {
           var map = DG.map('map', {
