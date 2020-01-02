@@ -206,7 +206,7 @@ img {vertical-align: middle;}
         background-color:#1d2733;
         padding:0px 5px 0px 5px;
         color:white;
-        border:2px solid white;
+        border:0px solid white;
         height:100%;
         display:block;
         border-radius: 25px;
@@ -217,7 +217,7 @@ img {vertical-align: middle;}
         background-color:#1d2733;
         padding:0px 5px 0px 5px;
         color:white;
-        border:2px solid white;
+        border:0px solid white;
         height:1fr;
         display:block;
         border-radius: 25px;
@@ -227,7 +227,7 @@ img {vertical-align: middle;}
         background-color:#1d2733;
         padding:0px 5px 0px 5px;
         color:white;
-        border:2px solid white;
+        border:0px solid white;
         height:1fr;
         display:block;
         border-radius: 25px;
@@ -260,6 +260,9 @@ img {vertical-align: middle;}
         height:70%;
         
       }
+  .grid-item#cntbox, .grid-item#cntbox1, .grid-item#cntbox2 {
+         border:2px solid white;
+  }
       
 }
 /*_______________________________________________форма______________________________________________*/
@@ -473,7 +476,7 @@ button:hover {
 <div ><H1 align=center style="color:white; font-size:40px; margin-top:0px;">Сенсоры в беспилотных дронах</H1>
 <div class="grid-container" id="cntbox">
     <div class="grid-item" id="cntbox" >
-      <div class="foto1" ><img src="camera.png" height=auto width=100% style="border-radius:25px 25px 25px 25px;"></div>
+      <div class="foto1" ><img src="camera.png" height=auto width=100% ></div>
       <div class="comment"><H1 align=center style="font-size:40px;">Камеры</H1>
         <p>
           Камера — это ключевой источник информации для беспилотного дрона.
@@ -488,7 +491,7 @@ button:hover {
       </div>
   </div>
   <div class="grid-item" id="cntbox1" > 
-      <div class="foto1"><img src="radar.png" height=auto width=100% style="border-radius:25px 25px 25px 25px;"></div>
+      <div class="foto1"><img src="radar.png" height=auto width=100% ></div>
       <div class="comment"><H1 align=center style="font-size:40px;">Радары</H1>
         <p>
           Радары позволяют почти мгновенно (по сравнению с камерами), а главное — с хорошей точностью получать информацию о расстояниях 
@@ -497,7 +500,7 @@ button:hover {
       </div>
   </div>
   <div class="grid-item" id="cntbox2" > 
-      <div class="foto1"><img src="lidars.png" height=auto width=100% style="border-radius:25px 25px 25px 25px;"></div>
+      <div class="foto1"><img src="lidars.png" height=auto width=100% ></div>
       <div class="comment"><H1 align=center style="font-size:40px;">Лидары</H1>
         <p>
           Излучатели лидара формируют вертикальную полосу из лазерных лучей, как правило, их от 16 до 128. Для создания картинки с охватом 360° 
@@ -631,7 +634,7 @@ function fixStepIndicator(n) {
 
 <a name="about"></a>
 <div style="padding:14px 16px; background:#1d2733; color:white;font-size:25px; " >
-  <H1 align=center style="color:white; margin:0px;">О нас</H1>
+  <H1 align=center style="color:white; margin:0px; font-size:40px;">О нас</H1>
   <center>
     <p class="about">
       Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, 
@@ -642,7 +645,7 @@ function fixStepIndicator(n) {
       <p style="font-size:25px;"><b>Даниил Букус</b>-студент МАДИ</p>
           <img src="me.png" height=200 width=200 style="border-radius: 200px; border:2px solid white;">
           <p style="font-size:25px;"><b>Андрей Попов</b>-студент МАДИ</p>
-          <H1 align=center style="color:white; margin:0px;">Где нас искать?</H1>
+          <H1 align=center style="color:white; margin:0px; font-size:40px;">Где нас искать?</H1>
           <p style="font-size:25px;">
             Наш офис находится по адресу:<br>Ленинградский пр-т., 64, Москва, 125319
           </p>
