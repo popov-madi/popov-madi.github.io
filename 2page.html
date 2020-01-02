@@ -2,7 +2,6 @@
 <head>
 <meta name="viewport" content="width=device-width" />
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://maps.api.2gis.ru/2.0/loader.js"></script>
 <style>
@@ -412,16 +411,7 @@ button:hover {
         x.className = "topnav";
     }
     }
-  //--------------------------------------------
-  $(document).ready(function(){
-    $('a[href^="#"], *[data-href^="#"]').on('click', function(e){
-        e.preventDefault();
-        var t = 1000;
-        var d = $(this).attr('data-href') ? $(this).attr('data-href') : $(this).attr('href');
-        $('html,body').stop().animate({ scrollTop: $(d).offset().top }, t);
-    });
-});
- 
+  //-------------------------------------------- 
   </script>
 
  <!--Контейнер со слайд-шоу-->
