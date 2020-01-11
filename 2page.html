@@ -10,8 +10,6 @@
 html,body{
   padding:0px;
   margin:0px;
-  background:url('back1.jpeg') ;
-  background-size: 100%;
   font-family: 'Montserrat', sans-serif;
   text-align: justify;
   line-height: 40px;
@@ -176,7 +174,6 @@ img {vertical-align: middle;}
 /*-_______________________________________________Грид_____________________________________________*/
       .grid-container#cntbox {
         grid-area: cntbox;
-        background:url('back1.jpeg'); background-size: 100%;
         display: grid;
         grid-template-areas:
           'item '
@@ -236,7 +233,6 @@ img {vertical-align: middle;}
 
 .grid-container#cntbox {
           grid-area: cntbox;
-          background:url('back1.jpeg') no-repeat fixed; background-size: cover;
           display: grid;
           padding:30px 100px 30px 100px;
           grid-template-areas:
@@ -360,7 +356,7 @@ button:hover {
   background-color: #555;
 }*/
 
-/*--------------------------------------------параллакс--------------------------*/
+/*--------------------------------------------параллакс--------------------------
 .paralax{
     background:url('back1.jpeg') ; background-size: 100%;
 }
@@ -368,7 +364,7 @@ button:hover {
     html,body, .parallax {
         background:url('back1.jpeg') no-repeat fixed; background-size: cover;
     }
-}
+}*/
 /*--------------------------------------------эбаут--------------------------*/
 .about{
   font-size:25px;
@@ -389,14 +385,14 @@ button:hover {
 </style>
 </head>
 <body>
-
+  <div id="apppp">
 <!--Адаптивное меню-->
 
-<a name="menu"></a>
+<a name="menu" id="element"></a>
   <div class="topnav" id="myTopnav" >
-    <a href="#menu" class="active">Наш проект</a>
-    <a href="#reg">Записаться</a>
-    <a href="#about">О нас</a>
+    <a href="" class="active">Наш проект</a>
+    <a href="" v-scroll-to="'#reg'">Записаться</a>
+    <a href="" v-scroll-to="'#about'">О нас</a>
     <a href="index.html">Темная тема</a>
     <a href="tel:+74991550104" id="truba">📞</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -471,6 +467,40 @@ button:hover {
       dots[slideIndex-1].className += " active";
     }
     </script>
+      <!--кнопка сама-->
+ <div v-scroll-to="'#element'">
+  <div id="myBtnTrue" onclick="topFunction()" style="
+  background:grey; 
+  width:35px;
+  height:35px;
+  position: fixed;
+  bottom: 15px;
+  right: 37px;
+  opacity: 50%;
+  border:2px solid black;">
+</div>
+<div id="myBtnTrue1" onclick="topFunction()" style="
+  width:20px;
+  height:8px;
+  background-color: white;
+  transform: rotate(-45deg);
+  position: fixed;
+  bottom: 30px;
+  right: 51px;
+">
+</div>
+<div id="myBtnTrue2" onclick="topFunction()" style="
+  width:20px;
+  height:8px;
+  background-color: white;
+  transform: rotate(45deg);
+  position: fixed;
+  bottom: 30px;
+  right: 42px;
+">
+</div>
+  </div>
+<!--Дроны-->
      
 <!--Дроны-->
 
@@ -536,6 +566,7 @@ button:hover {
       </div>
   </div>
 </div>
+    </div>
 <br>
 
 <!--Дроны-->
@@ -564,7 +595,7 @@ button:hover {
 <!--Форма-->
 
 <a name="reg"></a>
-<div class="parallax" style="font-size:25px;">
+<div class="parallax" style="font-size:25px;" id="reg">
 <H1 align=center style="color:black; margin:0px; font-size:40px;">Хочешь работать с нами? Присоединяйся!</H1>
 <H1 align=center style="color:black; margin:0px; font-size:40px;">Заполни анкету и жди ответа!</H1>
 <form id="regForm" >
@@ -656,7 +687,7 @@ function fixStepIndicator(n) {
 <!--О НАС-->
 
 <a name="about"></a>
-<div class="parallax" style="padding:14px 16px;color:black;font-size:25px; " >
+<div class="parallax" style="padding:14px 16px;color:black;font-size:25px; " id="about">
   <H1 align=center style="color:black; margin:0px;">О нас</H1>
   <center>
     <p class="about">
@@ -706,7 +737,9 @@ function fixStepIndicator(n) {
 </center>
 </div>
 
-<!--Кнопка-->
+<!--Кнопка и scroll-to-->
+<script src="https://unpkg.com/vue@2.5.2/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-scrollto@2.7.9/vue-scrollto.js"></script>
 <script>
 // спустя 20px стрелка появляется
 window.onscroll = function() {scrollFunction()};
@@ -729,42 +762,13 @@ function scrollFunction() {
 }
 
 // когда пользователь кликай по стрелке
-function topFunction() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-}
+new Vue({
+  el: '#apppp',
+  methods: {}
+})
 
  
 </script>
-<div id="myBtnTrue" onclick="topFunction()" style="
-  background:grey; 
-  width:35px;
-  height:35px;
-  position: fixed;
-  bottom: 15px;
-  right: 37px;
-  opacity: 50%;
-  border:2px solid black;">
-</div>
-<div id="myBtnTrue1" onclick="topFunction()" style="
-  width:20px;
-  height:8px;
-  background-color: white;
-  transform: rotate(-45deg);
-  position: fixed;
-  bottom: 30px;
-  right: 51px;
-">
-</div>
-<div id="myBtnTrue2" onclick="topFunction()" style="
-  width:20px;
-  height:8px;
-  background-color: white;
-  transform: rotate(45deg);
-  position: fixed;
-  bottom: 30px;
-  right: 42px;
-">
-</div>
+    </div>
 </body>
 </html>
