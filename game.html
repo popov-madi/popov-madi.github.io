@@ -1,5 +1,6 @@
 <html id="htmll">
 <head>
+  <meta name="viewport" content="width=device-width" />
 	<title>GAME</title>
 <style>
 
@@ -308,6 +309,26 @@ p{
       transform:translate(1900%,50%);
     }
 }
+/*===========================================*/
+#page_1{
+    visibility: hidden;
+  }
+  #page_start{
+    visibility:visible;
+  }
+@media only screen and (max-width: 850px) {
+  button
+  {
+    visibility: hidden;
+  }
+  #page_start{
+    visibility:hidden;
+  }
+  #page_1{
+    color:red;
+    visibility:visible;
+  }
+}
 </style>
 <script>
     function func_lose()
@@ -453,7 +474,8 @@ p{
     <div id="main">
       <!--<div id="first-top" onmouseover="func_lose()" ></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div>-->
       <center>
-      <H2 style="color:black">ВЫ ДОЛЖНЫ ОСТАВАТЬСЯ НА БЕЛЫХ ПОЛЯХ И УВОРАЧИВАТЬСЯ МЫШКОЙ ОТ ПРЕПЯТСТВИЙ</H2><br>
+      <H2 id="page_start" style="color:black">ВЫ ДОЛЖНЫ ОСТАВАТЬСЯ НА БЕЛЫХ ПОЛЯХ И УВОРАЧИВАТЬСЯ МЫШКОЙ ОТ ПРЕПЯТСТВИЙ</H2>
+      <H2 id="page_1">На этом устройстве недоступно!</H2>
       <button onclick="func_again()">Начать!</button>
       </center>
     </div>
