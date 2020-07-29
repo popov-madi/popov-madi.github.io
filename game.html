@@ -445,7 +445,8 @@ p{
      }
      if (s==35)
      {
-      document.getElementById('marker').innerHTML = 'ТЫ ВЫИГРАЛ, ХУИЛА!';
+      document.getElementById('marker').innerHTML = 'ТЫ ВЫИГРАЛ, ХУИЛА!';  
+      document.getElementById('trek').outerHTML = '<audio id = "trek" autoplay loop><source src="" type="audio/mpeg"></audio>';
       document.getElementById('main').outerHTML= '<video width="100%" height="80%" autoplay="autoplay" loop="loop" preload="auto"><source src="win.mp4"></source></video>';
       document.body.style.background = 'black';
       document.getElementById('htmll').style.background = 'black';
