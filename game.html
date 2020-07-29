@@ -13,7 +13,7 @@
 /*===========================================*/
 #main
 {
-    width:99.9%;
+    width:100%;
     height:50%;
     position: absolute;
     top: 25%;
@@ -45,6 +45,23 @@ p{
   height:50%;
   position: absolute;
   top:100%;
+}
+#left
+{
+  width:5%;
+  height:100%;
+  position: absolute;
+  top:0%;
+  background-color: none;
+}
+#right
+{
+  width:1%;
+  height:100%;
+  position: absolute;
+  top:0%;
+  left:99.1%;
+  background-color: none;
 }
 a{
   color:black;
@@ -350,7 +367,7 @@ a{
         findTIME();
         document.getElementById('marker').innerHTML ='';
         var elem = document.getElementById('main');
-        elem.outerHTML = '<div id="main"><div id="top" onmouseover="func_lose()"></div><div id="first-top" onmouseover="func_lose()"></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div><div id="bottom" onmouseover="func_lose()"></div></div>';
+        elem.outerHTML = '<div id="main"><div id="right" onmouseover="func_lose()"></div><div id="left" onmouseover="func_lose()"></div><div id="top" onmouseover="func_lose()"></div><div id="first-top" onmouseover="func_lose()"></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div><div id="bottom" onmouseover="func_lose()"></div></div>';
         
     }
     ///////////////////////////////////////////////
@@ -376,6 +393,8 @@ a{
      {
         document.getElementById('marker').innerHTML = 'Раунд 1';
         document.body.style.background = 'black';
+        document.getElementById('left').style.background = 'black';
+        document.getElementById('right').style.background = 'black';
         document.getElementById('htmll').style.background = 'black';
 
      }
@@ -397,6 +416,8 @@ a{
         document.getElementById('seven-top').style.animation = 'seven 8s linear infinite';
         document.getElementById('seven-bottom').style.animation = 'seven 8s linear infinite';
         document.body.style.background = 'yellow';
+	     document.getElementById('left').style.background = ' yellow';
+	     document.getElementById('right').style.background = ' yellow';
         document.getElementById('htmll').style.background = ' yellow';
         document.getElementById('first-top').style.background = ' yellow';
         document.getElementById('first-bottom').style.background = ' yellow';
@@ -432,6 +453,8 @@ a{
         document.getElementById('seven-top').style.animation = 'seven 10s linear infinite';
         document.getElementById('seven-bottom').style.animation = 'seven 10s linear infinite';
         document.body.style.background = 'red';
+        document.getElementById('left').style.background = 'red';
+        document.getElementById('right').style.background = 'red';
         document.getElementById('htmll').style.background = 'red';
         document.getElementById('first-top').style.background = 'red';
         document.getElementById('first-bottom').style.background = 'red';
