@@ -1,0 +1,581 @@
+<html id="htmll">
+<head>
+  <meta name="viewport" content="width=device-width" />
+	<title>GAME</title>
+<style>
+
+ body,html
+ {
+    margin:0em;
+    padding:0em;
+    background:white;
+}
+/*===========================================*/
+#main
+{
+    width:99.9%;
+    height:50%;
+    position: absolute;
+    top: 25%;
+    left: 0%;
+    background-color: white;
+    cursor: move;
+}
+#inp{
+  width:20%;
+    height:8%;
+    font-size:30px;
+    text-align: center;
+    background: none;
+    color:white;
+    border:0px solid black;
+}
+H1{
+    font-size:50px;
+    color:white;
+}
+button{
+    width:20%;
+    height:10%
+}
+p{
+    color:white;
+}
+#top
+{
+  width: 100%;
+  height:50%;
+  position: absolute;
+  top:-50%;
+}
+#bottom
+{
+  width:100%;
+  height:50%;
+  position: absolute;
+  top:100%;
+}
+#left
+{
+  width:5%;
+  height:100%;
+  position: absolute;
+  top:0%;
+  background-color: black;
+}
+a{
+  color:black;
+  text-decoration:none;
+  cursor:default;
+}
+/*===========================================*/
+#first-top
+{
+    width:5%;
+    height:50%;
+    background-color: black;
+    overflow: hidden;
+    bottom: 83%;
+    position: absolute;
+    animation:first 10s linear infinite;
+}
+#first-bottom
+{
+    width:5%;
+    height:50%;
+    background-color: black;
+    overflow: hidden;
+    top: 26%;
+    position: absolute;
+    animation:first 10s linear infinite;
+}
+
+@keyframes first{
+	 0%
+    {
+      transform:translate(1900%,50%);
+    }
+    50%
+    {
+       transform:translate(0%,50%);
+    }
+    100%
+    {
+      transform:translate(1900%,50%);
+    }
+}
+/*===========================================*/
+#second-top
+{
+    width:5%;
+    height:65%;
+    background-color: black;
+    overflow: hidden;
+    bottom: 70%;
+    position: absolute;
+    animation:second 10s linear infinite;
+}
+#second-bottom
+{
+    width:5%;
+    height:50%;
+    background-color: black;
+    overflow: hidden;
+    top: 46%;
+    position: absolute;
+    animation:second 10s linear infinite;
+}
+
+@keyframes second{
+	 0%
+    {
+      transform:translate(1900%,50%);
+    }
+    30%
+    {
+       transform:translate(0%,50%);
+    }
+    100%
+    {
+      transform:translate(1900%,50%);
+    }
+}
+/*===========================================*/
+#third-top
+{
+    width:5%;
+    height:85%;
+    background-color: black;
+    overflow: hidden;
+    bottom: 60%;
+    position: absolute;
+    animation:third 10s linear infinite;
+}
+#third-bottom
+{
+    width:5%;
+    height:50%;
+    background-color: black;
+    overflow: hidden;
+    top: 65%;
+    position: absolute;
+    animation:third 10s linear infinite;
+}
+
+@keyframes third{
+	 0%
+    {
+      transform:translate(1900%,50%);
+    }
+    65%
+    {
+       transform:translate(0%,50%);
+    }
+    100%
+    {
+      transform:translate(1900%,50%);
+    }
+}
+/*===========================================*/
+#four-top
+{
+    width:5%;
+    height:85%;
+    background-color: black;
+    overflow: hidden;
+    bottom: 60%;
+    position: absolute;
+    animation:four 10s linear infinite;
+}
+#four-bottom
+{
+    width:5%;
+    height:50%;
+    background-color: black;
+    overflow: hidden;
+    top: 65%;
+    position: absolute;
+    animation:four 10s linear infinite;
+}
+
+@keyframes four{
+	 0%
+    {
+      transform:translate(1900%,50%);
+    }
+    20%
+    {
+       transform:translate(0%,50%);
+    }
+    90%
+    {
+      transform:translate(1890%,50%);
+    }
+    100%
+    {
+      transform:translate(2000%,50%);
+    }
+}
+/*===========================================*/
+#five-top
+{
+    width:5%;
+    height:30%;
+    background-color: black;
+    overflow: hidden;
+    bottom: 100%;
+    position: absolute;
+    animation:five 10s linear infinite;
+}
+#five-bottom
+{
+    width:5%;
+    height:80%;
+    background-color: black;
+    overflow: hidden;
+    top: -15%;
+    position: absolute;
+    animation:five 10s linear infinite;
+}
+
+@keyframes five{
+	 0%
+    {
+      transform:translate(1900%,50%);
+    }
+    83%
+    {
+       transform:translate(0%,50%);
+    }
+
+    100%
+    {
+      transform:translate(2000%,50%);
+    }
+}
+/*===========================================*/
+#six-top
+{
+    width:5%;
+    height:30%;
+    background-color: black;
+    overflow: hidden;
+    bottom: 100%;
+    position: absolute;
+    animation:six 10s linear infinite;
+}
+#six-bottom
+{
+    width:5%;
+    height:80%;
+    background-color: black;
+    overflow: hidden;
+    top: -15%;
+    position: absolute;
+    animation:six 10s linear infinite;
+}
+
+@keyframes six{
+	 0%
+    {
+      transform:translate(0%,50%);
+    }
+    83%
+    {
+       transform:translate(1900%,50%);
+    }
+
+    100%
+    {
+      transform:translate(0%,50%);
+    }
+}
+/*===========================================*/
+#seven-top
+{
+    width:5%;
+    height:50%;
+    background-color: black;
+    overflow: hidden;
+    bottom: 83%;
+    position: absolute;
+    animation:seven 10s linear infinite;
+}
+#seven-bottom
+{
+    width:5%;
+    height:50%;
+    background-color: black;
+    overflow: hidden;
+    top: 26%;
+    position: absolute;
+    animation:seven 10s linear infinite;
+}
+
+@keyframes seven{
+	 0%
+    {
+      transform:translate(1900%,50%);
+    }
+    45%
+    {
+       transform:translate(1500%,50%);
+    }
+    75%
+    {
+       transform:translate(0%,50%);
+    }
+
+    100%
+    {
+      transform:translate(1900%,50%);
+    }
+}
+/*===========================================*/
+#page_1{
+    visibility: hidden;
+  }
+  #page_start{
+    visibility:visible;
+  }
+@media only screen and (max-width: 1300px) {
+  button
+  {
+    visibility: hidden;
+  }
+  #page_start{
+    visibility:hidden;
+  }
+  #page_1{
+    color:red;
+    visibility:visible;
+  }
+}
+</style>
+<script>
+    function func_lose()
+    {
+        var elem = document.getElementById('main');
+        elem.outerHTML = '<div id="main" style="background-color: black;"><center><H1 style="color:white;">Игра окончена!</H1><button onclick="func_again()">Начать заново!</button><audio autoplay><source src="soundlose.mp3" type="audio/mpeg"></audio></center></div>';
+        findTIME();
+    }
+    function func_mus() {
+      document.getElementById('trek').outerHTML = '<audio id = "trek" autoplay loop><source src="souandtrack.mp3" type="audio/mpeg"></audio>';
+    }
+    function func_again()
+    {
+        findTIME();
+        document.getElementById('marker').innerHTML ='';
+        var elem = document.getElementById('main');
+        elem.outerHTML = '<div id="main"><div id="top" onmouseover="func_lose()"></div><div id="first-top" onmouseover="func_lose()"></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div><div id="bottom" onmouseover="func_lose()"></div><div id="left" onmouseover="func_lose()"></div></div>';
+        
+    }
+    ///////////////////////////////////////////////
+    function trim(string) { return string.replace (/\s+/g, " ").replace(/(^\s*)|(\s*)$/g, ''); }
+    var init=0;
+    var startDate;
+    var clocktimer;
+   
+    function clearFields() {
+     init = 0;
+     clearTimeout(clocktimer);
+     document.clockform.label.value='';
+    }
+    function startTIME() { 
+     var thisDate = new Date();
+     var t = thisDate.getTime() - startDate.getTime();
+     var ms = t%1000; t-=ms; 
+     ms=Math.floor(ms/10);
+     t = Math.floor (t/1000);
+     var s = t%1000; t-=s;
+     t = Math.floor (t/60);
+     if (s==0)
+     {
+        document.getElementById('marker').innerHTML = 'Ваше время';
+        document.body.style.background = 'black';
+        document.getElementById('htmll').style.background = 'black';
+
+     }
+     if (s==10)
+     {
+        var elem = document.getElementById('main');
+        elem.outerHTML = '<div id="main"><div id="left" onmouseover="func_lose()"></div><div id="top" onmouseover="func_lose()"></div><div id="first-top" onmouseover="func_lose()"></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div><div id="bottom" onmouseover="func_lose()"></div></div>';
+        document.getElementById('first-top').style.animation = 'first 8s linear infinite';
+        document.getElementById('first-bottom').style.animation = 'first 8s linear infinite';
+        document.getElementById('second-top').style.animation = 'second 8s linear infinite';
+        document.getElementById('second-bottom').style.animation = 'second 8s linear infinite';
+        document.getElementById('third-top').style.animation = 'third 8s linear infinite';
+        document.getElementById('third-bottom').style.animation = 'third 8s linear infinite';
+        document.getElementById('four-top').style.animation = ' four 8s linear infinite';
+        document.getElementById('four-bottom').style.animation = 'four 8s linear infinite';
+        document.getElementById('five-top').style.animation = 'five 8s linear infinite';
+        document.getElementById('five-bottom').style.animation = 'five 8s linear infinite';
+        document.getElementById('six-top').style.animation = 'six 8s linear infinite';
+        document.getElementById('six-bottom').style.animation = 'six 8s linear infinite';
+        document.getElementById('seven-top').style.animation = 'seven 8s linear infinite';
+        document.getElementById('seven-bottom').style.animation = 'seven 8s linear infinite';
+        document.body.style.background = 'yellow';
+        document.getElementById('left').style.background = ' yellow';
+        document.getElementById('htmll').style.background = ' yellow';
+        document.getElementById('first-top').style.background = ' yellow';
+        document.getElementById('first-bottom').style.background = ' yellow';
+        document.getElementById('second-top').style.background = ' yellow';
+        document.getElementById('second-bottom').style.background = ' yellow';
+        document.getElementById('third-top').style.background = ' yellow';
+        document.getElementById('third-bottom').style.background = ' yellow';
+        document.getElementById('four-top').style.background = 'yellow';
+        document.getElementById('four-bottom').style.background= 'yellow';
+        document.getElementById('five-top').style.background= 'yellow';
+        document.getElementById('five-bottom').style.background = 'yellow';
+        document.getElementById('six-top').style.background= 'yellow';
+        document.getElementById('six-bottom').style.background = 'yellow';
+        document.getElementById('seven-top').style.background= 'yellow';
+        document.getElementById('seven-bottom').style.background= 'yellow';
+        
+     }
+     if (s==27)
+     {
+        var elem = document.getElementById('main');
+        elem.outerHTML = '<div id="main"><div id="left" onmouseover="func_lose()"></div><div id="top" onmouseover="func_lose()"></div><div id="first-top" onmouseover="func_lose()"></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div><div id="bottom" onmouseover="func_lose()"></div></div>';
+        document.getElementById('first-top').style.animation = 'first 6s linear infinite';
+        document.getElementById('left').style.background = 'red';
+        document.getElementById('first-bottom').style.animation = 'first 6s linear infinite';
+        document.getElementById('second-top').style.animation = 'second 6s linear infinite';
+        document.getElementById('second-bottom').style.animation = 'second 6s linear infinite';
+        document.getElementById('third-top').style.animation = 'third 6s linear infinite';
+        document.getElementById('third-bottom').style.animation = 'third 6s linear infinite';
+        document.getElementById('four-top').style.animation = ' four 6s linear infinite';
+        document.getElementById('four-bottom').style.animation = 'four 6s linear infinite';
+        document.getElementById('five-top').style.animation = 'five 6s linear infinite';
+        document.getElementById('five-bottom').style.animation = 'five 6s linear infinite';
+        document.getElementById('six-top').style.animation = 'six 6s linear infinite';
+        document.getElementById('six-bottom').style.animation = 'six 6s linear infinite';
+        document.getElementById('seven-top').style.animation = 'seven 6s linear infinite';
+        document.getElementById('seven-bottom').style.animation = 'seven 6s linear infinite';
+        document.body.style.background = 'red';
+        document.getElementById('htmll').style.background = 'red';
+        document.getElementById('first-top').style.background = 'red';
+        document.getElementById('first-bottom').style.background = 'red';
+        document.getElementById('second-top').style.background = 'red';
+        document.getElementById('second-bottom').style.background = 'red';
+        document.getElementById('third-top').style.background = 'red';
+        document.getElementById('third-bottom').style.background = 'red';
+        document.getElementById('four-top').style.background = 'red';
+        document.getElementById('four-bottom').style.background= 'red';
+        document.getElementById('five-top').style.background= 'red';
+        document.getElementById('five-bottom').style.background = 'red';
+        document.getElementById('six-top').style.background= 'red';
+        document.getElementById('six-bottom').style.background = 'red';
+        document.getElementById('seven-top').style.background= 'red';
+        document.getElementById('seven-bottom').style.background= 'red';
+     }
+     if (s==40)
+     {
+        var elem = document.getElementById('main');
+        elem.outerHTML = '<div id="main"><div id="left" onmouseover="func_lose()"></div><div id="top" onmouseover="func_lose()"></div><div id="first-top" onmouseover="func_lose()"></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div><div id="bottom" onmouseover="func_lose()"></div></div>';
+        document.getElementById('left').style.background = 'orange';
+        document.getElementById('first-top').style.animation = 'first 4s linear infinite';
+        document.getElementById('first-bottom').style.animation = 'first 4s linear infinite';
+        document.getElementById('second-top').style.animation = 'second 4s linear infinite';
+        document.getElementById('second-bottom').style.animation = 'second 4s linear infinite';
+        document.getElementById('third-top').style.animation = 'third 4s linear infinite';
+        document.getElementById('third-bottom').style.animation = 'third 4s linear infinite';
+        document.getElementById('four-top').style.animation = ' four 4s linear infinite';
+        document.getElementById('four-bottom').style.animation = 'four 4s linear infinite';
+        document.getElementById('five-top').style.animation = '6s linear infinite';
+        document.getElementById('five-bottom').style.animation = '6s linear infinite';
+        document.getElementById('six-top').style.animation = ' 4s linear infinite';
+        document.getElementById('six-bottom').style.animation = ' 4s linear infinite';
+        document.getElementById('seven-top').style.animation = 'seven 4s linear infinite';
+        document.getElementById('seven-bottom').style.animation = 'seven 4s linear infinite';
+        document.body.style.background = 'orange';
+        document.getElementById('htmll').style.background = 'orange';
+        document.getElementById('first-top').style.background = 'orange';
+        document.getElementById('first-bottom').style.background = 'orange';
+        document.getElementById('second-top').style.background = 'orange';
+        document.getElementById('second-bottom').style.background = 'orange';
+        document.getElementById('third-top').style.background = 'orange';
+        document.getElementById('third-bottom').style.background = 'orange';
+        document.getElementById('four-top').style.background = 'orange';
+        document.getElementById('four-bottom').style.background= 'orange';
+        document.getElementById('five-top').style.background= 'orange';
+        document.getElementById('five-bottom').style.background = 'orange';
+        document.getElementById('six-top').style.background= 'orange';
+        document.getElementById('six-bottom').style.background = 'orange';
+        document.getElementById('seven-top').style.background= 'orange';
+        document.getElementById('seven-bottom').style.background= 'orange';
+     }
+     if (s==61)
+     {
+        var elem = document.getElementById('main');
+        elem.outerHTML = '<div id="main"><div id="left" onmouseover="func_lose()"></div><div id="top" onmouseover="func_lose()"></div><div id="first-top" onmouseover="func_lose()"></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div><div id="bottom" onmouseover="func_lose()"></div></div>';
+        document.getElementById('first-top').style.animation = 'first 2s linear infinite';
+        document.getElementById('first-bottom').style.animation = 'first 2s linear infinite';
+        document.getElementById('second-top').style.animation = 'second 2s linear infinite';
+        document.getElementById('second-bottom').style.animation = 'second 2s linear infinite';
+        document.getElementById('third-top').style.animation = 'third 2s linear infinite';
+        document.getElementById('third-bottom').style.animation = 'third 2s linear infinite';
+        document.getElementById('four-top').style.animation = ' four 2s linear infinite';
+        document.getElementById('four-bottom').style.animation = 'four 2s linear infinite';
+        document.getElementById('five-top').style.animation = '2s linear infinite';
+        document.getElementById('five-bottom').style.animation = '2s linear infinite';
+        document.getElementById('six-top').style.animation = ' 2s linear infinite';
+        document.getElementById('six-bottom').style.animation = ' 2s linear infinite';
+        document.getElementById('seven-top').style.animation = 'seven 2s linear infinite';
+        document.getElementById('seven-bottom').style.animation = 'seven 2s linear infinite';
+        document.body.style.background = 'blue';
+        document.getElementById('left').style.background = 'blue';
+        document.getElementById('htmll').style.background = 'blue';
+        document.getElementById('first-top').style.background = 'blue';
+        document.getElementById('first-bottom').style.background = 'blue';
+        document.getElementById('second-top').style.background = 'blue';
+        document.getElementById('second-bottom').style.background = 'blue';
+        document.getElementById('third-top').style.background = 'blue';
+        document.getElementById('third-bottom').style.background = 'blue';
+        document.getElementById('four-top').style.background = 'blue';
+        document.getElementById('four-bottom').style.background= 'blue';
+        document.getElementById('five-top').style.background= 'blue';
+        document.getElementById('five-bottom').style.background = 'blue';
+        document.getElementById('six-top').style.background= 'blue';
+        document.getElementById('six-bottom').style.background = 'blue';
+        document.getElementById('seven-top').style.background= 'blue';
+        document.getElementById('seven-bottom').style.background= 'blue';
+     }
+     if (init==1) document.clockform.clock.value = s + '.' + ms;
+     clocktimer = setTimeout("startTIME()",10);
+    }
+   
+    function findTIME() {
+     if (init==0) {
+      startDate = new Date();
+      startTIME();
+      init=1;
+     }
+     else {
+      var str = trim(document.clockform.clock.value);
+      //document.getElementById('marker').innerHTML = document.clockform.clock.value + '<br>' + document.getElementById('marker').innerHTML;
+      clearFields();
+     }
+    }
+</script>
+</head>
+<body>
+    <form name="clockform">
+        <center><H2 id="marker" style="color:white;"></H2>
+        <input name="clock" size="12" maxlength="12" id="inp" value="" style="visibility: visible" readonly></center>
+    </form>
+    <div id="main">
+      <!--<div id="first-top" onmouseover="func_lose()" ></div><div id="first-bottom" onmouseover="func_lose()"></div><div id="second-top" onmouseover="func_lose()"></div><div id="second-bottom" onmouseover="func_lose()"></div><div id="third-top" onmouseover="func_lose()"></div><div id="third-bottom" onmouseover="func_lose()"></div><div id="four-top" onmouseover="func_lose()"></div><div id="four-bottom" onmouseover="func_lose()"></div><div id="five-top" onmouseover="func_lose()"></div><div id="five-bottom" onmouseover="func_lose()"></div><div id="six-top" onmouseover="func_lose()"></div><div id="six-bottom" onmouseover="func_lose()"></div><div id="seven-top" onmouseover="func_lose()"></div><div id="seven-bottom" onmouseover="func_lose()"></div>-->
+      <center>
+      <H2 id="page_start" style="color:black">ВЫ ДОЛЖНЫ ОСТАВАТЬСЯ НА БЕЛЫХ ПОЛЯХ И УВОРАЧИВАТЬСЯ МЫШКОЙ ОТ ПРЕПЯТСТВИЙ</H2>
+      <H2 id="page_1">На этом устройстве недоступно!</H2>
+      <button onclick="func_again(); func_mus();" >Начать!</button>
+      <!--
+      <H2 id="page_start" style="color:black">Играть на время</H2>
+      <button ><a href="#" style="display:block;">Играть!</a></button>
+      -->  
+    </center>
+    </div>
+    <audio id = "trek" autoplay loop><source src="souandtrack.mp3" type="audio/mpeg"></audio>
+</body>
+</html>
