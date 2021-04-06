@@ -1,0 +1,124 @@
+
+<html>
+<head>
+<title>Table Editor</title>
+<meta charset="utf-8">
+<style>
+        th,td{
+                border:1px solid black;
+                width:100px;
+                height:30px;
+        }
+        #pole{
+                background:yellow;
+                display:block;
+                width:100%;
+                height:100%;
+
+        }
+        #txt{
+                width:100%;
+                height:25px;
+                padding-left: 3px;
+                border:1px solid black;
+
+        }
+        html{
+                padding:10px;
+        }
+
+</style>
+<script src="jquery-2.1.4.js"></script>
+<script lang="javascript" src="xlsx.full.min.js"></script>
+<script lang="javascript" src="FileSaver.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+</head>
+<body>
+<center>
+<div id="navbar"><H1>Table Editor</H1></div>
+</center>
+<input  id="input-excel" type="file" /><br><br>
+<button onclick="func_edit()">Редактировать таблицу</button><br><br>
+<input id="name" value="Без_названия">.xls
+<button id="button-a">Сохранить таблицу</button>
+<div id="wrapper">
+<br><p id="txt"></p>
+</div>
+<script>
+        $('#input-excel').click(function(){
+                document.querySelector('table').parentNode.removeChild(document.querySelector('table'));
+               // reader.readAsText(file, 'windows-1251');
+        });
+        $('#input-excel').change(function(e){
+                var reader = new FileReader();
+                reader.readAsArrayBuffer(e.target.files[0]);
+                reader.onload = function(e) {
+                        var data = new Uint8Array(reader.result);
+                        var wb = XLSX.read(data,{type:'array'});
+                        var htmlstr = XLSX.write(wb,{ type:'binary',bookType:'html'});
+                        $('#wrapper')[0].innerHTML += htmlstr;
+                }
+                
+        });
+
+        /*
+        https://qna.habr.com/q/137015
+        при открытии файла на страницу выводятся иероглифы вместо русских букв.
+        chrome.fileSystem.chooseEntry({type: 'openFile'}, function(readOnlyEntry) {
+ 
+                readOnlyEntry.file(function(file) {
+                var reader = new FileReader();
+                //reader.onerror = errorHandler;
+                reader.onloadend = function(e) {
+                document.body.appendChild(document.createTextNode(e.target.result));
+                };
+                reader.readAsText(file, 'UTF-8');
+                });
+        });*/
+
+        $("#button-a").click(function(){
+                var name = document.getElementById('name');
+                document.querySelector('table').id = "mytable";
+                var wb = XLSX.utils.table_to_book(document.getElementById('mytable'), {sheet:"Лист1"});
+                var wbout = XLSX.write(wb, {bookType:'xls', bookSST:true, type: 'binary'});
+                function s2ab(s) {
+                        var buf = new ArrayBuffer(s.length);
+                        var view = new Uint8Array(buf);
+                        for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                        return buf;
+                }
+                saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), name.value+'.xls');
+        });
+
+        function func_edit(){
+                var tds = document.querySelectorAll('td');
+        for (var i = 0; i < tds.length; i++){
+                tds[i].addEventListener('click', function func(){
+                        var input=document.createElement('input');
+                        input.value=this.innerHTML;
+                        this.innerHTML = '';
+                        this.appendChild(input);
+                        input.focus();
+                        input.id = "pole"; 
+                        var td = this;
+                        input.addEventListener('blur', function func_edit(){
+                                td.innerHTML = this.value;
+                                td.addEventListener('click', func);
+                        });
+                        this.removeEventListener("click", func);
+
+                        //дублирование в инпут
+                        $('#pole').keyup(function() {
+                        var val = $('#pole').val();//Получаем данные из input
+                        $('#txt').html(val);//Вставляем значение в тег с классом txt
+                        });
+                        input.onblur = function(){
+                                $('#txt').html("");
+                        }
+                });
+        }
+        }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,544 @@
+<html>
+    <head>
+        <title>PROJECT 3bASU1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.7">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <script src="https://maps.api.2gis.ru/2.0/loader.js"></script>
+        <style>
+        #main{
+            opacity: 1;
+            height: 100%;
+            background: linear-gradient(to bottom,#a0abb8, #ddd0c5);
+        }
+        html{
+            padding:0px;
+        }
+        a{
+            color:white;
+        }
+        H1,H2,p{
+            color:white;
+        }
+        p{
+            font-weight: bold;
+        }
+
+        /*  СТРЕЛКИ ВЛЕВО И ВПРАВО  */
+
+        .right{
+            position: fixed; 
+            bottom: 0%; 
+            right: 0%;
+            border:solid black 0px;
+            width:15%;
+            height:100%;
+            background:none; 
+            color:white;
+            text-align: center;
+            transition:0.5s;
+        }
+        .left{
+            position: fixed; 
+            bottom: 0%; 
+            right: 85%;
+            border:solid black 0px;
+            width:15%;
+            height:100%;
+            background:none; 
+            color:white;
+            text-align: center;
+            rotate: 180deg;
+            transition:0.5s;
+        }
+        .pleft{
+            font-size:40px;
+            transform: rotate(180deg);
+            position: absolute;
+            top: 50%;
+            left: 45%;
+        }
+        .pright{
+            font-size:40px;
+            position: absolute;
+            top: 50%;
+            right: 45%;
+        }
+        .left:hover{
+            background:black;
+            color:White;
+            opacity: 0.25;
+            transition:0.5s;
+        }
+        .right:hover{
+            background:black;
+            color:White;
+            opacity: 0.25;
+            transition:0.5s;
+        }
+
+        /*  ГАМБУРГЕР  */
+
+        #nomer{
+            top: 90%;
+            left:49%;
+            width:50px;
+            height:50px;
+            border-radius: 100px;
+            background: white;
+            position: fixed; 
+            text-align: center;
+        }
+
+        #nomerx{
+            top: 90%;
+            left:49%;
+            width:50px;
+            height:50px;
+            background: white;
+            border:solid 0px white;
+            border-radius: 100px;
+            position: fixed; 
+            text-align: center;
+        }
+
+        #nomer:hover,#nomerx:hover{
+            background: white;
+            opacity: 0.7;
+        }
+        @media only screen and (max-width: 700px) {
+            #nomer{
+                visibility: hidden;
+                
+            }
+            #nomerx{
+                visibility: hidden;
+            }
+        }
+
+
+        /*  ГРИД И КРЕСТИК ПРИ ПОЯВЛЕНИИ ИНФОРМАЦИИ  */
+
+        #exit:hover{
+            font-size: 45px;
+        }
+        .grid-container {
+            margin-top: 10%;
+            width:70%;
+            height:60%;
+            border: solid 0px #000;
+            display: grid;
+            grid-template-columns: 30% 5% 30% 5% 30%;
+            grid-template-rows: 15% 85%;
+
+        }
+        .grid-item{
+            border: solid 0px #000;
+        }
+
+        #camera{
+            border: solid 3px white;
+        }
+
+        #lidars{
+            border: solid 3px white;
+        }
+
+        #radar{
+            border: solid 3px white;
+        }
+
+        /*  ЧТОБЫ НЕЛЬЗЯ БЫЛО ВЕРТИКАЛЬНО  */
+
+        .start{
+            bottom:50%;
+            position: fixed;
+            visibility:hidden;
+            background: none;
+        }
+        @media only screen and (max-width: 700px) {
+            .start{
+                color:red;
+                visibility:visible;
+            }
+            #main{
+                visibility: hidden;
+            }
+            #nomer{
+                visibility: hidden;
+                
+            }
+            #nomerx{
+                visibility: hidden;
+            }
+            #menu-items{
+                visibility: hidden;
+            }
+            #tutorial{
+                visibility:hidden;
+                background-color: white;
+            }
+        }
+
+        /*  МЕНЮ  */
+
+        #menu{
+            height:0%;
+            width:100%;
+            background:none;
+            position: fixed;
+            bottom: 0%; left: 0%; 
+            backdrop-filter: blur(20px) grayscale(10%);
+        }
+        #menu-items{
+            width:30%;
+            border:0px solid black;
+            border-collapse: collapse;
+            
+        }
+        #h1_menu:hover{
+            text-decoration: underline;
+        }
+
+        #tutorial{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            bottom: 0%; 
+            right: 0%;
+            backdrop-filter: blur(20px) grayscale(10%);
+        }
+       
+        </style>
+    </head>
+    <body>
+        <!--https://unicode-table.com/ru/sets/arrow-symbols/#left-arrows символы-->
+
+        <!--    СКРИПТ ДЛЯ НАРАЩИВАНИЯ СЛАЙДОВ   -->
+        <script>
+            var i=0;
+            window.onload=function(){
+                //$( '#main' ).fadeTo( 3000, 10 );
+            }
+    
+        
+    
+            function last() {//сюда последние новости   ВПЕРЕД
+    
+
+                if(i==0){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >        <H1 align=center>История</H1> <p style="width:70%;"> Лидар — это метод определения расстояний с помощью света. Слово «лидар» образовано от акронима «LiDAR», два самых популярных варианта расшифровки: Light Detection and Ranging и Laser Induced Direction and Range System. </p> <p style="width:70%;"> Строго говоря, использование именно лазера в лидаре необязательно, источником света могут выступать даже светодиоды. Но в 95% случаев, когда говорят о лидарах, подразумевают именно устройство с лазерным лучом. </p> <p style="width:70%;"> Первые попытки измерить расстояние световыми лучами были сделаны еще в 1930-х годах с помощью прожекторов, которые использовались для изучения структуры атмосферы. В 1938 году световые импульсы использовались для определения высоты облаков. </p> <p style="width:70%;"> В 1960 году изобрели лазер, а всего через несколько лет лазерные дальномеры стали использоваться в американских танках. В 1969 году лазерный дальномер применили для измерения расстояния от Земли до Луны, использовав специальную мишень на «Аполлоне-11». </p>                                                                    <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+
+                if(i==1){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >         <h1>Основные сенсоры</h1><br> <div class="grid-container"> <div class="grid-item "><h2 id="h_two1">Камеры</h2></div> <div class="grid-item "></div> <div class="grid-item "><h2 id="h_two2">Лидары</h2></div> <div class="grid-item "></div> <div class="grid-item "><h2 id="h_two3">Радары</h2></div> <div class="grid-item" ><img id="camera" src="camera.png" style="width: 90%;" onmouseover="func_camera_over()" onmouseout="func_camera_out()" onclick="func_camera_show()"></div> <div class="grid-item "></div> <div class="grid-item "><img id="lidars" src="lidars.png" style="width: 90%;" onmouseover="func_lidars_over()" onmouseout="func_lidars_out()" onclick="func_lidars_show()"></div> <div class="grid-item "></div> <div class="grid-item "><img id="radar" src="radar.png" style="width: 90%;" onmouseover="func_radar_over()" onmouseout="func_radar_out()" onclick="func_radar_show()"></div> </div>                                                                <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+
+                if(i==2){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >         <H1 align=center>Дроны заменят курьеров?</H1> <p style="width:70%;"> Мы хотим предложить использовать  дронов не для того, чтобы снимать красивые панорамы, а чтобы дрон мог самостоятельно, без помощи человека доставлять груз. Эта вохможность очень сильно облегчит работу курьерам или совсем заменит их. </p> <p style="width:70%;"> Наш дрон для дальних полётов с фиксированным крылом, совмещающий высокоточные возможности лидарного сканирования с RGB-камерой высокого разрешения, что несколько повышает точность полета. Дрон может летать над большими площадями в неблагоприятных погодных условиях в автономном режиме, вне прямой видимости, делая минимальное количество полётов для охвата района. </p> <p style="width:70%;"> До сих пор лидары воздушного базирования применялись со специализиров. однофункцион. платформами или для затратной аэрогеодезии на пилотируемых воздушных судах с длительными сроками выполнения. Лидар специально разработан для использования на дронах. Полностью интегрированная умная RGB-камера рассчитана на управление с помощью датчиков в реальном времени и на полётный обзор получаемых фото с автоматическим  контролем.   </p>                                                              <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+
+                if(i==3){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img src="dan.png" height=20% width=12% style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img src="me.png" height=20% width=12% style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                                <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+    
+                
+    
+                if(i==4){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >          <H2 align=center >Где нас искать?</H2> <p style="font-size:25px;"> Наш офис находится по адресу:<br>Ленинградский пр-т., 64, Москва, 125319 </p> <p style="font-size:25px;"> Наш телефон: <a href="tel:+74991550104" style=" text-decoration:none;">+74991550104</a> </p>  <div id="map" style="width: 50%; height: 50%; opacity: 1;"></div>                                                                     <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                    DG.then(function() {
+                    var map = DG.map('map', {
+                        center: [55.8025335027456, 37.529198154852395],
+                        zoom: 16
+                    });
+                    DG.marker([55.8025335027456, 37.529198154852395])
+                        .addTo(map)
+                        .bindLabel('Ленинградский пр-т., 64, Москва, 125319', {
+                            static: true
+                        });
+
+                    DG.marker([55.8025335027456, 37.529198154852395]).addTo(map).bindPopup('Мы находимся здесь!');
+                });
+                
+                }    
+                i++;
+                return i;
+    
+            }
+    
+    
+    
+    
+            function next() {//сюда последние новости   НАЗАД
+                i=i-1;
+                if(i==0){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >     <video style="width: 100%; height: 100%;" autoplay loop> <source src="dron.mp4"> </video> <span class="right" onclick="last()"><p class="pright">❯</p></span>                                                                                                                          <span class="right" onclick="last()"><p class="pright">❯</p></span>           </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+    
+                if(i==1){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >         <H1 align=center>История</H1> <p style="width:70%;"> Лидар — это метод определения расстояний с помощью света. Слово «лидар» образовано от акронима «LiDAR», два самых популярных варианта расшифровки: Light Detection and Ranging и Laser Induced Direction and Range System. </p> <p style="width:70%;"> Строго говоря, использование именно лазера в лидаре необязательно, источником света могут выступать даже светодиоды. Но в 95% случаев, когда говорят о лидарах, подразумевают именно устройство с лазерным лучом. </p> <p style="width:70%;"> Первые попытки измерить расстояние световыми лучами были сделаны еще в 1930-х годах с помощью прожекторов, которые использовались для изучения структуры атмосферы. В 1938 году световые импульсы использовались для определения высоты облаков. </p> <p style="width:70%;"> В 1960 году изобрели лазер, а всего через несколько лет лазерные дальномеры стали использоваться в американских танках. В 1969 году лазерный дальномер применили для измерения расстояния от Земли до Луны, использовав специальную мишень на «Аполлоне-11». </p>                                                                   <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+
+                if(i==2){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >     <h1>Основные сенсоры</h1><br> <div class="grid-container"> <div class="grid-item "><h2 id="h_two1">Камеры</h2></div> <div class="grid-item "></div> <div class="grid-item "><h2 id="h_two2">Лидары</h2></div> <div class="grid-item "></div> <div class="grid-item "><h2 id="h_two3">Радары</h2></div> <div class="grid-item" ><img id="camera" src="camera.png" style="width: 90%;" onmouseover="func_camera_over()" onmouseout="func_camera_out()" onclick="func_camera_show()"></div> <div class="grid-item "></div> <div class="grid-item "><img id="lidars" src="lidars.png" style="width: 90%;" onmouseover="func_lidars_over()" onmouseout="func_lidars_out()" onclick="func_lidars_show()"></div> <div class="grid-item "></div> <div class="grid-item "><img id="radar" src="radar.png" style="width: 90%;" onmouseover="func_radar_over()" onmouseout="func_radar_out()" onclick="func_radar_show()"></div> </div>                                                                    <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+
+
+                if(i==3){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >      <H1 align=center>Дроны заменят курьеров?</H1> <p style="width:70%;"> Мы хотим предложить использовать  дронов не для того, чтобы снимать красивые панорамы, а чтобы дрон мог самостоятельно, без помощи человека доставлять груз. Эта вохможность очень сильно облегчит работу курьерам или совсем заменит их. </p> <p style="width:70%;"> Наш дрон для дальних полётов с фиксированным крылом, совмещающий высокоточные возможности лидарного сканирования с RGB-камерой высокого разрешения, что несколько повышает точность полета. Дрон может летать над большими площадями в неблагоприятных погодных условиях в автономном режиме, вне прямой видимости, делая минимальное количество полётов для охвата района. </p> <p style="width:70%;"> До сих пор лидары воздушного базирования применялись со специализиров. однофункцион. платформами или для затратной аэрогеодезии на пилотируемых воздушных судах с длительными сроками выполнения. Лидар специально разработан для использования на дронах. Полностью интегрированная умная RGB-камера рассчитана на управление с помощью датчиков в реальном времени и на полётный обзор получаемых фото с автоматическим  контролем.   </p>                                                                  <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+    
+                if(i==4){
+                    var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img src="dan.png" height=20% width=12% style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img src="me.png" height=20% width=12% style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                               <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                }
+
+                return i;
+            }
+
+            // ПО ПУНКТАМ МЕНЮ
+            function func_main(){
+                i=0;
+                var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" > <video style="width: 100%; height: 100%;" autoplay loop> <source src="dron.mp4"> </video> <span class="right" onclick="last()"><p class="pright">❯</p></span>       </div>';
+                func_1();
+                return i;
+            }
+            function func_history(){
+                i=1;
+                var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >         <H1 align=center>История</H1> <p style="width:70%;"> Лидар — это метод определения расстояний с помощью света. Слово «лидар» образовано от акронима «LiDAR», два самых популярных варианта расшифровки: Light Detection and Ranging и Laser Induced Direction and Range System. </p> <p style="width:70%;"> Строго говоря, использование именно лазера в лидаре необязательно, источником света могут выступать даже светодиоды. Но в 95% случаев, когда говорят о лидарах, подразумевают именно устройство с лазерным лучом. </p> <p style="width:70%;"> Первые попытки измерить расстояние световыми лучами были сделаны еще в 1930-х годах с помощью прожекторов, которые использовались для изучения структуры атмосферы. В 1938 году световые импульсы использовались для определения высоты облаков. </p> <p style="width:70%;"> В 1960 году изобрели лазер, а всего через несколько лет лазерные дальномеры стали использоваться в американских танках. В 1969 году лазерный дальномер применили для измерения расстояния от Земли до Луны, использовав специальную мишень на «Аполлоне-11». </p>                                                                   <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                func_1();
+                return i;
+            }
+            function func_sens(){
+                i=2;
+                var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >     <h1>Основные сенсоры</h1><br> <div class="grid-container"> <div class="grid-item "><h2 id="h_two1">Камеры</h2></div> <div class="grid-item "></div> <div class="grid-item "><h2 id="h_two2">Лидары</h2></div> <div class="grid-item "></div> <div class="grid-item "><h2 id="h_two3">Радары</h2></div> <div class="grid-item" ><img id="camera" src="camera.png" style="width: 90%;" onmouseover="func_camera_over()" onmouseout="func_camera_out()" onclick="func_camera_show()"></div> <div class="grid-item "></div> <div class="grid-item "><img id="lidars" src="lidars.png" style="width: 90%;" onmouseover="func_lidars_over()" onmouseout="func_lidars_out()" onclick="func_lidars_show()"></div> <div class="grid-item "></div> <div class="grid-item "><img id="radar" src="radar.png" style="width: 90%;" onmouseover="func_radar_over()" onmouseout="func_radar_out()" onclick="func_radar_show()"></div> </div>                                                                    <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                func_1();
+                return i;
+            }
+            function func_idea(){
+                i=3;
+                var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >      <H1 align=center>Дроны заменят курьеров?</H1> <p style="width:70%;"> Мы хотим предложить использовать  дронов не для того, чтобы снимать красивые панорамы, а чтобы дрон мог самостоятельно, без помощи человека доставлять груз. Эта вохможность очень сильно облегчит работу курьерам или совсем заменит их. </p> <p style="width:70%;"> Наш дрон для дальних полётов с фиксированным крылом, совмещающий высокоточные возможности лидарного сканирования с RGB-камерой высокого разрешения, что несколько повышает точность полета. Дрон может летать над большими площадями в неблагоприятных погодных условиях в автономном режиме, вне прямой видимости, делая минимальное количество полётов для охвата района. </p> <p style="width:70%;"> До сих пор лидары воздушного базирования применялись со специализиров. однофункцион. платформами или для затратной аэрогеодезии на пилотируемых воздушных судах с длительными сроками выполнения. Лидар специально разработан для использования на дронах. Полностью интегрированная умная RGB-камера рассчитана на управление с помощью датчиков в реальном времени и на полётный обзор получаемых фото с автоматическим контролем.   </p>                                                                  <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                func_1();
+                return i;
+            }
+            function func_about(){
+                i=4;
+                var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img src="dan.png" height=20% width=12% style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img src="me.png" height=20% width=12% style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                               <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                func_1();
+                return i;
+            }
+            function func_contacts(){
+                i=5;
+                var elem = document.getElementById('main');
+                    elem.outerHTML = '<div id="main" >          <H2 align=center >Где нас искать?</H2> <p style="font-size:25px;"> Наш офис находится по адресу:<br>Ленинградский пр-т., 64, Москва, 125319 </p> <p style="font-size:25px;"> Наш телефон: <a href="tel:+74991550104" style=" text-decoration:none;">+74991550104</a> </p>  <div id="map" style="width: 50%; height: 50%; opacity: 1;"></div>                                                                     <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    //$('div').fadeTo( 3000, 10 );
+                    DG.then(function() {
+                    var map = DG.map('map', {
+                        center: [55.8025335027456, 37.529198154852395],
+                        zoom: 16
+                    });
+                    DG.marker([55.8025335027456, 37.529198154852395])
+                        .addTo(map)
+                        .bindLabel('Ленинградский пр-т., 64, Москва, 125319', {
+                            static: true
+                        });
+
+                    DG.marker([55.8025335027456, 37.529198154852395]).addTo(map).bindPopup('Мы находимся здесь!');
+                });
+                func_1();
+                return i;
+            }
+            
+        </script>
+        
+        <!--    СКРИПТ ДЛЯ ПОЯВЛЕНИИ ИНФЫ ПО КАМЕРАМ,ЛИДАРАМ И РАДАРАМ   -->
+
+        <script>
+            function func_camera_over(){
+              document.getElementById("camera").style.transition="0.4s"
+              document.getElementById("camera").style.width="100%";
+            }
+            function func_camera_out(){
+              document.getElementById("camera").style.transition="0.4s"
+              document.getElementById("camera").style.width="90%";
+            }
+            function func_lidars_over(){
+              document.getElementById("lidars").style.transition="0.4s"
+              document.getElementById("lidars").style.width="100%";
+            }
+            function func_lidars_out(){
+              document.getElementById("lidars").style.transition="0.4s"
+              document.getElementById("lidars").style.width="90%";
+            }
+            function func_radar_over(){
+              document.getElementById("radar").style.transition="0.4s"
+              document.getElementById("radar").style.width="100%";
+            }
+            function func_radar_out(){
+              document.getElementById("radar").style.transition="0.4s"
+              document.getElementById("radar").style.width="90%";
+            }
+            function func_camera_show(){
+
+              document.getElementById("camera_show").style.visibility="visible";
+              document.getElementById("exit").style.visibility="visible";
+            }
+            function func_lidars_show(){
+
+              document.getElementById("lidars_show").style.visibility="visible";
+              document.getElementById("exit").style.visibility="visible";
+            }
+            function func_radar_show(){
+
+              document.getElementById("radar_show").style.visibility="visible";
+              document.getElementById("exit").style.visibility="visible";
+            }
+            function func_hid(){
+
+              document.getElementById("camera_show").style.visibility="hidden";
+              document.getElementById("lidars_show").style.visibility="hidden";
+              document.getElementById("radar_show").style.visibility="hidden";
+              document.getElementById("exit").style.visibility="hidden";
+            }
+        </script>
+
+        <!--    СКРИПТ ГАМБУРГЕРА   -->
+
+        <script>
+            function func()
+            {
+                document.getElementById('nomer').style.visibility="hidden";
+                document.getElementById('nomerx').style.visibility="visible";
+                document.getElementById('menu').style = 'height:100%;transition: 0.5s;';
+            }
+            function func_1()
+            {
+                document.getElementById('nomerx').style.visibility="hidden";
+                document.getElementById('nomer').style.visibility="visible";
+                document.getElementById('menu').style = 'height:0%; transition: 0.5s;';
+            }
+        </script>
+
+        <!--    СКРИПТ ТУТОРИАЛА   -->
+
+        <script>
+            function func_tut(){
+                document.getElementById('tutorial').style.visibility="hidden";
+                document.getElementById('myvid').play();
+            }
+        </script>
+    
+    <div id="camera_show" style="background:none; backdrop-filter: blur(20px) grayscale(10%); height: 100%; width:70%; left:15%; bottom:0.1%; visibility:hidden; position: fixed;">
+        <center>
+        <br><h1>Камера</h1>
+        <p>
+            Камера — это ключевой источник информации для беспилотного дрона.
+        </p>
+        <p>
+            Из всех сенсоров беспилотника только камера умеет определять пешехода, машины, здания и так далее. Также у камеры большие углы обзора.
+        </p>
+        <p>
+            Из минусов — определять скорости объектов, а также расстояния до них по данным с камеры проблематично, точность недостаточная.
+            И обработка видеопотока в реальном времени требует хорошей вычислительной мощности.
+        </p>
+        <img src="camerash.jpg" style="width: 40%; height:30%;">
+        </center>
+    </div>
+
+    <div id="lidars_show" style="background:none; backdrop-filter: blur(20px) grayscale(10%); height: 100%; width:70%; left:15%; bottom:0.1%; visibility:hidden; position: fixed;">
+            <center>
+            <br><h1>Лидары</h1>
+            <p>
+                Излучатели лидара формируют вертикальную полосу из лазерных лучей, как правило, их от 16 до 128. Для создания картинки с охватом 360° 
+                площадка с лазерами совершает несколько оборотов в секунду вокруг своей вертикальной оси.
+              </p>
+              <p>
+                Лидары выдают хорошо детализированную картинку происходящего вокруг, определяют расстояния до объектов и их скорость. 
+                Обладают хорошей дальностью и высокой скоростью работы. Отлично функционируют при плохой погоде и в ночное время суток.
+              </p>
+              <img src="lidarssh.png" style="width: 40%; height:30%;">
+            </center>
+    </div>
+
+    <div id="radar_show" style="background:none; backdrop-filter: blur(20px) grayscale(10%); height: 100%; width:70%; left:15%; bottom:0.1%; visibility:hidden; position: fixed;">
+        <center>
+        <br><h1>Радары</h1>
+        <p>
+            Радары позволяют почти мгновенно (по сравнению с камерами), а главное — с хорошей точностью получать информацию о расстояниях 
+            до объектов и их скоростях. Подходят для работы с удалёнными объектами, не сильно зависят от погодных условий, работают в темноте.
+        </p>
+        <img src="radarsh.jpeg" style="width: 40%; height:30%;">
+        </center>
+    </div>
+
+    <h1 id="exit" style="position: fixed; visibility:hidden; cursor: default; left:17%;" onclick="func_hid()">×</h1>
+    <center>
+        <div id="main">     
+            <!--<h1>Сенсоры в беспилотных дронах</h1>
+            <img src="dron.jpg" style="width: 100%; height:100%;">-->
+            <video id="myvid" style="width: 100%; height: 100%;" autoplay loop>
+                <source src="dron.mp4">
+            </video>
+            <span class="right" onclick="last()"><p class="pright">❯</p></span> 
+            <div id="tutorial">
+                <center>
+                    <br><br><br><br>
+                    <H1 style="width:70%">Чтобы переключатся по сайту, нажимайте на стрелки, которые расположены по бокам страницы!</H1>
+                    <button style="border-radius: 5px; background-color: white; border: white; width: 20%; height: 10%;margin-top: 10%;" onclick="func_tut()"><h1 style="color:black">Понятно</h1></button>
+                </center>
+            </div>
+            <!--<h1>Основные сенсоры</h1><br>
+            <div class="grid-container">
+                <div class="grid-item "><h2>Камеры</h2></div>
+                <div class="grid-item "></div>
+                <div class="grid-item "><h2>Лидары</h2></div>
+                <div class="grid-item "></div>
+                <div class="grid-item "><h2>Радары</h2></div>
+                <div class="grid-item" ><img id="camera" src="camera.png" style="width: 90%;" onmouseover="func_camera_over()" onmouseout="func_camera_out()" onclick="func_camera_show()"></div>
+                <div class="grid-item "></div>
+                <div class="grid-item "><img id="lidars" src="lidars.png" style="width: 90%;" onmouseover="func_lidars_over()" onmouseout="func_lidars_out()" onclick="func_lidars_show()"></div>
+                <div class="grid-item "></div>
+                <div class="grid-item "><img id="radar" src="radar.png" style="width: 90%;" onmouseover="func_radar_over()" onmouseout="func_radar_out()" onclick="func_radar_show()"></div>
+            </div>        -->  
+        </div>
+        <div id="menu">
+            <br><br><br><br>
+            <center>
+            <div id="menu-items" onclick="func_main()"><H1 id="h1_menu" style="cursor:default;">Главная</H1></div>
+            <div id="menu-items" onclick="func_history()"><H1 id="h1_menu" style="cursor:default;">История</H1></div>
+            <div id="menu-items" onclick="func_sens()"><H1 id="h1_menu" style="cursor:default;">Основные сенсоры</H1></div>
+            <div id="menu-items" onclick="func_idea()"><H1 id="h1_menu" style="cursor:default;">Наша идея</H1></div>
+            <div id="menu-items" onclick="func_about()"><H1 id="h1_menu" style="cursor:default;">О нас</H1></div>
+            <div id="menu-items" onclick="func_contacts()"><H1 id="h1_menu" style="cursor:default;">Контакты</H1></div>
+        </center>
+        </div>
+        <H1 id="nomer" style="color:black; cursor:default; visibility: visible;" onclick="func()">≡</H1>
+        <H1 id="nomerx" style=" color:black; cursor:default; visibility: hidden;" onclick="func_1()">×</H1>
+    <H1 class="start">Переверните устройство для комфортного просмотра сайта!</H1>
+    </center>
+    </body>
+</html>
