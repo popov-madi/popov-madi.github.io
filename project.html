@@ -82,8 +82,8 @@
         #nomer{
             top: 90%;
             left:49%;
-            width:50px;
-            height:50px;
+            width:55px;
+            height:55px;
             border-radius: 100px;
             background: white;
             position: fixed; 
@@ -93,8 +93,8 @@
         #nomerx{
             top: 90%;
             left:49%;
-            width:50px;
-            height:50px;
+            width:55px;
+            height:55px;
             background: white;
             border:solid 0px white;
             border-radius: 100px;
@@ -106,17 +106,40 @@
             background: white;
             opacity: 0.7;
         }
-        @media only screen and (max-width: 700px) {
-            #nomer{
-                visibility: hidden;
-                
-            }
-            #nomerx{
-                visibility: hidden;
-            }
+
+        /*  камера радар лидар */
+
+        #camera_show{
+            background:none; 
+            backdrop-filter: blur(20px) grayscale(10%); 
+            height: 100%; 
+            width:70%; 
+            left:15%; 
+            bottom:0.1%; 
+            visibility:hidden; 
+            position: fixed;
         }
+        #radar_show{
+            background:none; 
+            backdrop-filter: blur(20px) grayscale(10%); 
+            height: 100%; 
+            width:70%; 
+            left:15%; 
+            bottom:0.1%; 
+            visibility:hidden; 
+            position: fixed;
+        }
+        #lidars_show{
+            background:none; 
+            backdrop-filter: blur(20px) grayscale(10%); 
+            height: 100%; 
+            width:70%; 
+            left:15%; 
+            bottom:0.1%; 
+            visibility:hidden; 
+            position: fixed;
 
-
+        }
         /*  ГРИД И КРЕСТИК ПРИ ПОЯВЛЕНИИ ИНФОРМАЦИИ  */
 
         #exit:hover{
@@ -147,6 +170,78 @@
         #radar{
             border: solid 3px white;
         }
+        
+
+        /*  МЕНЮ  */
+
+        #menu{
+            height:0%;
+            width:100%;
+            background:none;
+            position: fixed;
+            bottom: 0%; left: 0%; 
+            backdrop-filter: blur(20px) grayscale(10%);
+        }
+        #menu-items{
+            width:30%;
+            border:0px solid black;
+            border-collapse: collapse;
+            
+        }
+        #h1_menu:hover{
+            text-decoration: underline;
+        }
+
+        /*  ТУТОРИАЛ  */
+
+        #tutorial{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            bottom: 0%; 
+            right: 0%;
+            backdrop-filter: blur(20px) grayscale(10%);
+        }
+
+        /*  ДЛЯ МОБИЛЬНИКОВ  */
+        #imgdron{
+            visibility: hidden;
+        }
+        #medan{
+            height:130px; 
+            width:130px;
+        }
+
+        @media only screen and (max-width: 1200px) {
+            #tutorial{
+                background-color: linear-gradient(to bottom,#a0abb8, #ddd0c5);
+                opacity: 0.9;
+            }
+            #menu{
+                background-color: linear-gradient(to bottom,#a0abb8, #ddd0c5);
+                opacity: 0.9;
+            }
+            #lidars_show,#radar_show,#camera_show{
+                background-color: linear-gradient(to bottom,#a0abb8, #ddd0c5);
+                opacity: 0.95;
+            }
+
+            #myvid{
+                visibility: hidden;
+            }
+            #imgdron{
+                visibility: visible;
+            }
+            #medan{
+            height:80px; 
+            width:80px;
+            }
+        }
+        @media only screen and (max-width: 1000px) {
+            p{
+                font-size: 0.85rem;
+            }
+        }
 
         /*  ЧТОБЫ НЕЛЬЗЯ БЫЛО ВЕРТИКАЛЬНО  */
 
@@ -156,6 +251,7 @@
             visibility:hidden;
             background: none;
         }
+
         @media only screen and (max-width: 700px) {
             .start{
                 color:red;
@@ -178,35 +274,9 @@
                 visibility:hidden;
                 background-color: white;
             }
-        }
-
-        /*  МЕНЮ  */
-
-        #menu{
-            height:0%;
-            width:100%;
-            background:none;
-            position: fixed;
-            bottom: 0%; left: 0%; 
-            backdrop-filter: blur(20px) grayscale(10%);
-        }
-        #menu-items{
-            width:30%;
-            border:0px solid black;
-            border-collapse: collapse;
-            
-        }
-        #h1_menu:hover{
-            text-decoration: underline;
-        }
-
-        #tutorial{
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            bottom: 0%; 
-            right: 0%;
-            backdrop-filter: blur(20px) grayscale(10%);
+            #imgdron{
+                visibility: hidden;
+            }
         }
        
         </style>
@@ -246,7 +316,7 @@
 
                 if(i==3){
                     var elem = document.getElementById('main');
-                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img  src="project/dan.png" height=130px width=130px style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img  src="project/me.png" height=130px width=130px style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                                <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img  src="project/dan.png" id="medan" style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img  src="project/me.png" id="medan" style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                                <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
                     //$('div').fadeTo( 3000, 10 );
                 }
     
@@ -283,7 +353,7 @@
                 i=i-1;
                 if(i==0){
                     var elem = document.getElementById('main');
-                    elem.outerHTML = '<div id="main" >     <video style="width: 100%; height: 100%;" autoplay loop> <source  src="project/dron.mp4"> </video> <span class="right" onclick="last()"><p class="pright">❯</p></span>                                                                                                                          <span class="right" onclick="last()"><p class="pright">❯</p></span>           </div>';
+                    elem.outerHTML = '<div id="main" >     <img id="imgdron" src="project/dron.png" style="width: 100%; height:100%;"> <video id="myvid" style="width: 100%; height: 100%; position:fixed; bottom: 0%; left: 0%; " autoplay loop> <source  src="project/dron.mp4"> </video> <span class="right" onclick="last()"><p class="pright">❯</p></span>                                                                                                                          <span class="right" onclick="last()"><p class="pright">❯</p></span>           </div>';
                     //$('div').fadeTo( 3000, 10 );
                 }
     
@@ -308,7 +378,7 @@
     
                 if(i==4){
                     var elem = document.getElementById('main');
-                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img  src="project/dan.png" height=130px width=130px style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img  src="project/me.png" height=130px width=130px style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                               <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img  src="project/dan.png" id="medan" style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img  src="project/me.png" id="medan" style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                               <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
                     //$('div').fadeTo( 3000, 10 );
                 }
 
@@ -319,7 +389,7 @@
             function func_main(){
                 i=0;
                 var elem = document.getElementById('main');
-                    elem.outerHTML = '<div id="main" > <video style="width: 100%; height: 100%;" autoplay loop> <source  src="project/dron.mp4"> </video> <span class="right" onclick="last()"><p class="pright">❯</p></span>       </div>';
+                    elem.outerHTML = '<div id="main" >  <img id="imgdron" src="project/dron.png" style="width: 100%; height:100%;"> <video id="myvid" style="width: 100%; height: 100%; position:fixed; bottom: 0%; left: 0%; " autoplay loop> <source  src="project/dron.mp4"> </video> <span class="right" onclick="last()"><p class="pright">❯</p></span>       </div>';
                 func_1();
                 return i;
             }
@@ -347,7 +417,7 @@
             function func_about(){
                 i=4;
                 var elem = document.getElementById('main');
-                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img  src="project/dan.png" height=130px width=130px style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img  src="project/me.png" height=130px width=130px style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                               <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
+                    elem.outerHTML = '<div id="main" >           <center> <h1>О нас</h1> <p style="width:70%;"> Мы, молодые предприниматели и разработчики, основали нашу компанию в 2015 году. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь. На данный момент мы заняты разработкой новой версией лидара и сотрудничаем с Яндекс. </p> <p><b>Над проектом работают:</b></p> <img id="medan" src="project/dan.png" style="border-radius: 200px; border:2px solid white;"> <p><b>Даниил Букус</b>-студент МАДИ</p> <img id="medan" src="project/me.png" style="border-radius: 200px; border:2px solid white;"> <p><b>Андрей Попов</b>-студент МАДИ</p> </center>                                                               <span class="right" onclick="last()"><p class="pright">❯</p></span>    <span class="left" onclick="next()"><p class="pleft">❯</p></span>       </div>';
                 func_1();
                 return i;
             }
@@ -452,7 +522,7 @@
             }
         </script>
     
-    <div id="camera_show" style="background:none; backdrop-filter: blur(20px) grayscale(10%); height: 100%; width:70%; left:15%; bottom:0.1%; visibility:hidden; position: fixed;">
+    <div id="camera_show">
         <center>
         <br><h1>Камера</h1>
         <p>
@@ -469,7 +539,7 @@
         </center>
     </div>
 
-    <div id="lidars_show" style="background:none; backdrop-filter: blur(20px) grayscale(10%); height: 100%; width:70%; left:15%; bottom:0.1%; visibility:hidden; position: fixed;">
+    <div id="lidars_show" >
             <center>
             <br><h1>Лидары</h1>
             <p>
@@ -484,7 +554,7 @@
             </center>
     </div>
 
-    <div id="radar_show" style="background:none; backdrop-filter: blur(20px) grayscale(10%); height: 100%; width:70%; left:15%; bottom:0.1%; visibility:hidden; position: fixed;">
+    <div id="radar_show">
         <center>
         <br><h1>Радары</h1>
         <p>
@@ -498,9 +568,9 @@
     <h1 id="exit" style="position: fixed; visibility:hidden; cursor: default; left:17%;" onclick="func_hid()">×</h1>
     <center>
         <div id="main">     
-            <!--<h1>Сенсоры в беспилотных дронах</h1>
-            <img  src="project/dron.jpg" style="width: 100%; height:100%;">-->
-            <video id="myvid" style="width: 100%; height: 100%;" autoplay loop>
+            <!--<h1>Сенсоры в беспилотных дронах</h1>-->
+            <img id="imgdron" src="project/dron.png" style="width: 100%; height:100%;">
+            <video id="myvid" style="width: 100%; height: 100%; position:fixed; bottom: 0%; left: 0%; " autoplay loop>
                 <source  src="project/dron.mp4">
             </video>
             <span class="right" onclick="last()"><p class="pright">❯</p></span> 
@@ -508,7 +578,7 @@
                 <center>
                     <br><br><br><br>
                     <H1 style="width:70%">Чтобы переключатся по сайту, нажимайте на стрелки, которые расположены по бокам страницы!</H1>
-                    <button style="border-radius: 5px; background-color: white; border: white; width: 20%; height: 10%;margin-top: 10%;" onclick="func_tut()"><h1 style="color:black">Понятно</h1></button>
+                    <button style="border-radius: 5px; background-color: white; border: white; width: 20%; height: 10%;margin-top: 5%;" onclick="func_tut()"><h1 style="color:black">Понятно</h1></button>
                 </center>
             </div>
             <!--<h1>Основные сенсоры</h1><br>
