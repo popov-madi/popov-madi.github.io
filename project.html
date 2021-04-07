@@ -80,7 +80,7 @@
         /*  ГАМБУРГЕР  */
 
         #nomer{
-            top: 90%;
+            top: 88%;
             left:49%;
             width:55px;
             height:55px;
@@ -91,7 +91,7 @@
         }
 
         #nomerx{
-            top: 90%;
+            top: 88%;
             left:49%;
             width:55px;
             height:55px;
@@ -146,7 +146,7 @@
             font-size: 45px;
         }
         .grid-container {
-            margin-top: 10%;
+            margin-top: 5%;
             width:70%;
             height:60%;
             border: solid 0px #000;
@@ -179,7 +179,7 @@
             width:100%;
             background:none;
             position: fixed;
-            bottom: 0%; left: 0%; 
+            bottom: 0%; left: 0%;
             backdrop-filter: blur(20px) grayscale(10%);
         }
         #menu-items{
@@ -503,7 +503,7 @@
             {
                 document.getElementById('nomer').style.visibility="hidden";
                 document.getElementById('nomerx').style.visibility="visible";
-                document.getElementById('menu').style = 'height:100%;transition: 0.5s;';
+                document.getElementById('menu').style = 'height:100%;transition: 0.5s; padding:4%;';
             }
             function func_1()
             {
@@ -576,7 +576,7 @@
             <span class="right" onclick="last()"><p class="pright">❯</p></span> 
             <div id="tutorial">
                 <center>
-                    <br><br><br><br>
+                    <br><br><br>
                     <H1 style="width:70%">Чтобы переключатся по сайту, нажимайте на стрелки, которые расположены по бокам страницы!</H1>
                     <button style="border-radius: 5px; background-color: white; border: white; width: 20%; height: 10%;margin-top: 5%;" onclick="func_tut()"><h1 style="color:black">Понятно</h1></button>
                 </center>
@@ -596,7 +596,6 @@
             </div>        -->  
         </div>
         <div id="menu">
-            <br><br><br><br>
             <center>
             <div id="menu-items" onclick="func_main()"><H1 id="h1_menu" style="cursor:default;">Главная</H1></div>
             <div id="menu-items" onclick="func_history()"><H1 id="h1_menu" style="cursor:default;">История</H1></div>
