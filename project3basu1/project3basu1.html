@@ -1,0 +1,659 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <script src="https://maps.api.2gis.ru/2.0/loader.js"></script>
+        <script src="wow.min.js"></script>
+        <script>
+             wow = new WOW(
+                      {
+                      boxClass:     'wow',      // default
+                      animateClass: 'animated', // default
+                      offset:       0,          // default
+                      mobile:       false,       // default
+                      live:         true        // default
+                    }
+                    )
+                    wow.init();
+        </script>
+        <style>
+            html{
+                background-color: black;
+            }
+            body{
+                margin: 0%;
+                font-size: 0.9em;
+                font-family: 'Open Sans Condensed', sans-serif;
+            }
+            H1{
+                color: white;
+                margin-top: 0%;
+            }
+            p{
+                font-size: 1.17em;
+                color: white;
+            }
+
+            /*_______________________________________________контейнеры______________________________________________*/
+
+            .grid-container#header{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 3fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#main{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#camera{
+                height: 92vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#lidar{
+                grid-area: lidar;
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#radar{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 2fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#form{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#about{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#contact{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-item{
+                border: solid 0px orange;
+            }
+            /*_______________________________________________header______________________________________________*/
+            .img_head{
+                margin-top: 10vh;
+                width: 100%;
+            }
+            #header1{
+                padding-top: 10vh;
+            }
+            /*_______________________________________________main______________________________________________*/
+            .pmain{
+                width:100%;
+            }
+            #myvid{
+                width: 100%;
+                margin-top: 30%;
+            }
+            /*_______________________________________________camera______________________________________________*/
+            .img_camera{
+                width: 100%;
+            }
+            /*_______________________________________________lidar______________________________________________*/
+            .img_lidar{
+                margin-top: 0vh;
+                width: 100%;
+            }
+            #lidar1{
+                grid-column: 1;
+                grid-row: 2;
+            }
+            #lidar2{
+                grid-column: 1;
+                grid-row: 1;
+            }
+            /*_______________________________________________radar______________________________________________*/
+            .img_radar{
+                margin-top: 0vh;
+                width: 100%;
+            }
+
+            /*_______________________________________________форма______________________________________________*/
+
+            #regForm {
+                background-color: #ffffff;
+                margin:auto;
+                margin-top: 20vh;
+                padding: 20px;
+                width: 70%;
+                border-radius: 35px;
+            }
+
+            input {
+                padding: 10px;
+                width: 100%;
+                border: 1px solid #aaaaaa;
+            }
+
+
+            input.invalid {
+                background-color: #ffdddd;
+            }
+
+
+            .tab {
+                display: none;
+            }
+
+            button {
+                background-color: black;
+                color: #ffffff;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 25px;
+            }
+
+            button:hover {
+                opacity: 0.8;
+            }
+
+            #prevBtn {
+                background-color: #bbbbbb;
+            }
+
+
+            .step {
+                height: 5px;
+                width: 5px;
+                margin: 0 2px;
+                background-color: #bbbbbb;
+                border: none;  
+                border-radius: 50%;
+                display: inline-block;
+                opacity: 0.5;
+            }
+
+            .step.active {
+                opacity: 1;
+            }
+
+
+            .step.finish {
+                background-color: black;
+            }
+
+            /*_______________________________________________ about ______________________________________________*/
+            
+            .me,.dan{
+                width: 100px;
+                height: 100px;
+            }
+
+            /*_______________________________________________ contact ______________________________________________*/
+
+            #map{
+                width: 100%; 
+                height: 400px;
+            }
+
+            /*  ГАМБУРГЕР  */
+
+            #nomer{
+                top: 3%;
+                left:2%;
+                font-size: 1.7em;
+                width:35px;
+                height:35px;
+                border-radius: 100px;
+                background: white;
+                position: fixed; 
+                text-align: center;
+            }
+
+            #nomerx{
+                top: 3%;
+                left:2%;
+                font-size: 1.7em;
+                width:35px;
+                height:35px;
+                border-radius: 100px;
+                background: white;
+                border:solid 0px white;
+                position: fixed; 
+                text-align: center;
+            }
+
+            #nomer:hover,#nomerx:hover{
+                background: white;
+                opacity: 0.7;
+            }
+
+            /*  МЕНЮ  */
+
+            #menu{
+                height:100%;
+                width:0%;
+                background:black;
+                position: fixed;
+                bottom: 0%; left: 0%;
+            }
+            #menu-items{
+                width:100%;
+                border:0px solid black;
+                border-collapse: collapse;
+                
+            }
+            #h1_menu_1{
+                visibility: hidden;
+                padding: 45% 0% 0% 10%;
+            }
+            #h1_menu_2,#h1_menu_3,#h1_menu_4,#h1_menu_5{
+                visibility: hidden;
+                padding: 0% 0% 0% 10%;
+            }
+            #h1_menu_1:hover,#h1_menu_2:hover,#h1_menu_3:hover,#h1_menu_4:hover,#h1_menu_5:hover{
+                text-decoration: underline;
+            }
+
+            /*_______________________________________________ media ______________________________________________*/
+
+            @media screen and (min-width: 900px){
+                body{
+                    font-size: 1.5em;
+                }
+                .me,.dan{
+                width: 150px;
+                height: 150px;
+            }
+            #nomer{
+                top: 5%;
+                left:2%;
+                font-size: 1.3em;
+                width:45px;
+                height:45px;
+            }
+
+            #nomerx{
+                top: 5%;
+                left:2%;
+                font-size: 1.3em;
+                width:45px;
+                height:45px;
+                border-radius: 100px;
+            }
+            }
+            @media screen and (min-width: 500px) {
+            /*_______________________________________________ conteyner ______________________________________________*/
+            .grid-container#header{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#main{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#camera{
+                height: 86vh;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#lidar{
+                grid-area: lidar;
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#radar{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#form{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#about{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+            .grid-container#contact{
+                height: 100vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
+
+            /*_______________________________________________ all ______________________________________________*/
+
+            .img_head{
+                margin-top: 30vh;
+                width: 100%;
+            }
+            #header1{
+                padding-top: 30vh;
+            }
+            .pmain{
+                width:50%;
+            }
+            #myvid{
+                width: 45%;
+                margin-top: 0%;
+            }
+            .img_camera{
+                width: 70%;
+            }
+            .img_lidar{
+                margin-top: 10vh;
+                width: 100%;
+            }
+            #lidar1{
+                grid-column: 1;
+                grid-row: 1;
+            }
+            #lidar2{
+                grid-column: 2;
+                grid-row: 1;
+            }
+            .img_radar{
+                margin-top: 10vh;
+                width: 100%;
+            }
+            #regForm{
+                margin-top: 0vh;
+            }
+            #map{
+                width: 60%; 
+                height: 60%;
+            }
+            #h1_menu_1{
+                padding: 15% 0% 0% 10%;
+            }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="grid-container animate__animated animate__fadeIn" id="header" style="animation-duration: 3s;">
+            <div class="grid-item" id="header1">
+                <H1>СЕНСОРЫ В БЕСПИЛОТНЫХ ДРОНАХ</H1>
+                <p>Наш дрон для дальних полётов с фиксированным крылом, совмещающий высокоточные 
+                    возможности лидарного сканирования с RGB-камерой высокого разрешения, что несколько повышает точность полета. 
+                </p>
+            </div>
+            <div class="grid-item">
+                <img class="img_head" src="dron.png">
+            </div>
+        </div>
+        <div class="grid-container " id="main">
+            <div class="grid-item">
+                <center>
+                    <H1>НАША МИССИЯ</H1>
+                    <p class="pmain">
+                        Мы хотим предложить использовать дронов не для того, чтобы снимать красивые панорамы, а чтобы дрон мог самостоятельно, 
+                        без помощи человека доставлять груз. Эта возможность очень сильно облегчит работу курьерам или совсем заменит их.
+                    </p>
+                    <video id="myvid" controls>
+                        <source  src="dron.mp4">
+                    </video>
+                </center>
+            </div>
+        </div>
+
+        <H1 align=center>Как это работает?</H1>
+
+        <div class="grid-container wow animate__animated animate__slideInLeft" id="camera">
+            <div class="grid-item">
+                <H1>Камера</H1>
+                <p>
+                    Камера — это ключевой источник информации для беспилотного дрона.<br>
+                    Из всех сенсоров беспилотника только камера умеет определять пешехода, машины, здания и так далее. Также у камеры большие углы обзора.<br>
+                    Из минусов — определять скорости объектов, а также расстояния до них по данным с камеры проблематично, точность недостаточная. 
+                    И обработка видеопотока в реальном времени требует хорошей вычислительной мощности.
+                </p>
+            </div>
+            <div class="grid-item">
+                <img class="img_camera" src="camera.png">
+            </div>
+        </div>
+
+        <div class="grid-container wow animate__animated animate__slideInRight" id="lidar">
+            <div class="grid-item" id="lidar1">
+                <img class="img_lidar" src="lidar.png">
+            </div>
+            <div class="grid-item" id="lidar2">
+                <H1>Лидары</H1>
+                <p>
+                    Излучатели лидара формируют вертикальную полосу из лазерных лучей, как правило, их от 16 до 128.<br> 
+                    Для создания картинки с охватом 360° площадка с лазерами совершает несколько оборотов в секунду вокруг своей вертикальной оси.<br>
+                    Лидары выдают хорошо детализированную картинку происходящего вокруг, определяют расстояния до объектов и их скорость.
+                    Обладают хорошей дальностью и высокой скоростью работы. Отлично функционируют при плохой погоде и в ночное время суток.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid-container wow animate__animated animate__slideInLeft" id="radar">
+            <div class="grid-item">
+                <H1>Радар</H1>
+                <p>
+                    Радары позволяют почти мгновенно (по сравнению с камерами), 
+                    а главное — с хорошей точностью получать информацию о расстояниях до объектов и их скоростях. <br>
+                    Подходят для работы с удалёнными объектами, не сильно зависят от погодных условий, работают в темноте.
+                </p>
+            </div>
+            <div class="grid-item">
+                <img class="img_radar" src="radar.png">
+            </div>
+        </div>
+
+        <div class="grid-container" id="form">
+            <div class="grid-item">
+                <div class="parallax" id="reg">
+                    <H1 align=center>Хочешь работать с нами? Присоединяйся!</H1>
+                    <form id="regForm" >
+                    <H3>Анкета:</H3>
+                    <div class="tab">Как Вас звать?
+                        <p style="text-indent: 0em; color:black;"><input placeholder="Имя..." oninput="this.className = ''" name="fname"></p>
+                        <p style="text-indent: 0em; color:black;"><input placeholder="Фамилия..." oninput="this.className = ''" name="lname"></p>
+                    </div>
+                    <div class="tab">Контакты:
+                        <p style="text-indent: 0em; color:black;"><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+                        <p style="text-indent: 0em; color:black;"><input placeholder="Телефон..." oninput="this.className = ''" name="phone"></p>
+                    </div>
+                    <div class="tab">Дата рождения:
+                        <p style="text-indent: 0em; color:black;"><input placeholder="День" oninput="this.className = ''" name="dd"></p>
+                        <p style="text-indent: 0em; color:black;"><input placeholder="Месяц(цыфрами)" oninput="this.className = ''" name="nn"></p>
+                        <p style="text-indent: 0em; color:black;"><input placeholder="Год" oninput="this.className = ''" name="yyyy"></p>
+                    </div>
+                    <div style="overflow:auto;">
+                        <div style="float:right;">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Назад</button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Следующий шаг</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="step"></span>
+                        <span class="step"></span>
+                        <span class="step"></span>
+                    </div>
+                    </form>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var currentTab = 0;
+            showTab(currentTab);            
+            function showTab(n) {
+              var x = document.getElementsByClassName("tab");
+              x[n].style.display = "block";
+              if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+              } else {
+                document.getElementById("prevBtn").style.display = "inline";
+              }
+              if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Подтвердить";
+              } else {
+                document.getElementById("nextBtn").innerHTML = "Следующий шаг";
+              }
+              fixStepIndicator(n)
+            }
+            
+            function nextPrev(n) {
+              var x = document.getElementsByClassName("tab");
+              if (n == 1 && !validateForm()) return false;
+              x[currentTab].style.display = "none";
+              currentTab = currentTab + n;
+              if (currentTab >= x.length) {
+                document.getElementById("regForm").submit();
+                return false;
+              }
+              showTab(currentTab);
+            }
+            
+            function validateForm() {
+              var x, y, i, valid = true;
+              x = document.getElementsByClassName("tab");
+              y = x[currentTab].getElementsByTagName("input");
+              for (i = 0; i < y.length; i++) {
+                if (y[i].value == "") {
+                  y[i].className += " invalid";
+                  valid = false;
+                }
+              }
+              if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+              }
+              return valid; 
+            }
+            
+            function fixStepIndicator(n) {
+              var i, x = document.getElementsByClassName("step");
+              for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+              }
+              x[n].className += " active";
+            }
+        </script>
+
+        <a name="about"></a>
+        <div class="grid-container" id="about">
+            <div class="grid-item">
+                <center>
+                    <H1>О НАС</H1>
+                    <p class="pmain">
+                        Мы, молодые разработчики, учимся в МАДИ. Сейчас мы разрабатываем лидары для дронов, которые в будущем облегчат нашу жизнь.<br>
+                        На данный момент мы заняты разработкой новой версией лидара.
+                    </p>
+                    <img src="me.png" class="me" style="border-radius: 200px; border:2px solid white;">&nbsp;&nbsp;&nbsp;
+                    <img src="dan.png" class="dan" style="border-radius: 200px; border:2px solid white;">
+                    <p class="pmain">Андрей Попов и Даниил Букус-студенты МАДИ</p>
+                </center>
+            </div>
+        </div>
+
+        <div class="grid-container" id="contact">
+            <div class="grid-item">
+                <center>
+                    <H1>Контакты</H1>
+                    <p class="pmain">
+                        Наш офис находится по адресу:<br>
+                        Ленинградский пр-т., 64, Москва, 125319<br>
+                        Наш телефон: +74991550104<br>
+                    </p>
+                    <div id="map" ></div>
+                    <script>
+                        DG.then(function() {
+                            var map = DG.map('map', {
+                                center: [55.8025335027456, 37.529198154852395],
+                                zoom: 16
+                            });
+                            DG.marker([55.8025335027456, 37.529198154852395])
+                                .addTo(map)
+                                .bindLabel('Ленинградский пр-т., 64, Москва, 125319', {
+                                    static: true
+                                });
+
+                            DG.marker([55.8025335027456, 37.529198154852395]).addTo(map).bindPopup('Мы находимся здесь!');
+                        });
+                    </script>
+                </center>
+            </div>
+        </div>
+
+        <!--    СКРИПТ ГАМБУРГЕРА   -->
+
+        <script>
+            function func()
+            {
+                document.getElementById('nomer').style.visibility="hidden";
+                document.getElementById('nomerx').style.visibility="visible";
+                document.getElementById('h1_menu_1').style.visibility="visible";
+                document.getElementById('h1_menu_2').style.visibility="visible";
+                document.getElementById('h1_menu_3').style.visibility="visible";
+                document.getElementById('h1_menu_4').style.visibility="visible";
+                document.getElementById('h1_menu_5').style.visibility="visible";
+                document.getElementById('menu').style = 'width:30%;transition: 0.5s; border:solid 1px white;';
+            }
+            function func_1()
+            {
+                document.getElementById('nomerx').style.visibility="hidden";
+                document.getElementById('nomer').style.visibility="visible";
+                document.getElementById('h1_menu_1').style.visibility="hidden";
+                document.getElementById('h1_menu_2').style.visibility="hidden";
+                document.getElementById('h1_menu_3').style.visibility="hidden";
+                document.getElementById('h1_menu_4').style.visibility="hidden";
+                document.getElementById('h1_menu_5').style.visibility="hidden";
+                document.getElementById('menu').style = 'width:0%; transition: 0.5s;border:solid 0px white;';
+            }
+        </script>
+        
+        <div id="menu">
+            <div id="menu-items"><p id="h1_menu_1" style="cursor:default;">Главная</p></div>
+            <div id="menu-items"><p id="h1_menu_2" style="cursor:default;">Наша миссия</p></div>
+            <div id="menu-items"><p id="h1_menu_3" style="cursor:default;">Как это работает?</p></div>
+            <div id="menu-items"><p id="h1_menu_4" style="cursor:default;">О нас</p></div>
+            <div id="menu-items"><p id="h1_menu_5" style="cursor:default;">Контакты</p></div>
+        </div>
+        <H1 id="nomer" style="color:black; cursor:default; visibility: visible;" onclick="func()"><b>≡</b></H1>
+        <H1 id="nomerx" style=" color:black; cursor:default; visibility: hidden;" onclick="func_1()"><b>×</b></H1>
+    </body>
+</html>
