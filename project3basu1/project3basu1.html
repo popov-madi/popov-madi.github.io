@@ -17,6 +17,8 @@
                     )
                     wow.init();
         </script>
+        <script src="vue.js"></script>
+        <script src="vue-scroll-to.js"></script>
         <style>
             html{
                 background-color: black;
@@ -96,6 +98,35 @@
             }
             .grid-item{
                 border: solid 0px orange;
+            }
+            #strelka{
+                position: absolute;
+                transform: rotate(90deg);
+                top: 85%;
+                left: 49.5%;
+                cursor: default;
+                animation:first 3s linear infinite;
+            }
+
+            @keyframes first{
+                0%
+                {
+                transform:translate(0%,50%);
+                }
+                50%
+                {
+                transform:translate(0%,30%);
+                }
+                100%
+                {
+                transform:translate(0%,50%);
+                }
+            }
+            #strelka_top{
+                position: fixed;
+                top: 85%;
+                left: 93%;
+                cursor: default;
             }
             /*_______________________________________________header______________________________________________*/
             .img_head{
@@ -410,6 +441,9 @@
         </style>
     </head>
     <body>
+        
+        <div id="app">
+
         <div class="grid-container animate__animated animate__fadeIn" id="header" style="animation-duration: 3s;">
             <div class="grid-item" id="header1">
                 <H1>СЕНСОРЫ В БЕСПИЛОТНЫХ ДРОНАХ</H1>
@@ -420,6 +454,7 @@
             <div class="grid-item">
                 <img class="img_head" src="dron.png">
             </div>
+            <H1 id="strelka" v-scroll-to="'#main'">⌄</H1>
         </div>
         <div class="grid-container " id="main">
             <div class="grid-item">
@@ -436,7 +471,7 @@
             </div>
         </div>
 
-        <H1 align=center>Как это работает?</H1>
+        <H1 align=center id="how">Как это работает?</H1>
 
         <div class="grid-container wow animate__animated animate__slideInLeft" id="camera">
             <div class="grid-item">
@@ -488,7 +523,7 @@
                     <H1 align=center>Хочешь работать с нами? Присоединяйся!</H1>
                     <form id="regForm" >
                     <H3>Анкета:</H3>
-                    <div class="tab">Как Вас звать?
+                    <div class="tab">Как Вас зовут?
                         <p style="text-indent: 0em; color:black;"><input placeholder="Имя..." oninput="this.className = ''" name="fname"></p>
                         <p style="text-indent: 0em; color:black;"><input placeholder="Фамилия..." oninput="this.className = ''" name="lname"></p>
                     </div>
@@ -631,7 +666,7 @@
                 document.getElementById('h1_menu_3').style.visibility="visible";
                 document.getElementById('h1_menu_4').style.visibility="visible";
                 document.getElementById('h1_menu_5').style.visibility="visible";
-                document.getElementById('menu').style = 'width:30%;transition: 0.5s; border:solid 1px white;';
+                document.getElementById('menu').style = 'width:40%;transition: 0.5s; border:solid 1px white;';
             }
             function func_1()
             {
@@ -647,13 +682,35 @@
         </script>
         
         <div id="menu">
-            <div id="menu-items"><p id="h1_menu_1" style="cursor:default;">Главная</p></div>
-            <div id="menu-items"><p id="h1_menu_2" style="cursor:default;">Наша миссия</p></div>
-            <div id="menu-items"><p id="h1_menu_3" style="cursor:default;">Как это работает?</p></div>
-            <div id="menu-items"><p id="h1_menu_4" style="cursor:default;">О нас</p></div>
-            <div id="menu-items"><p id="h1_menu_5" style="cursor:default;">Контакты</p></div>
+            <div id="menu-items" v-scroll-to="'#app'" onclick="func_1()"><p id="h1_menu_1" style="cursor:default;">Главная</p></div>
+            <div id="menu-items" v-scroll-to="'#main'" onclick="func_1()"><p id="h1_menu_2" style="cursor:default;">Наша миссия</p></div>
+            <div id="menu-items" v-scroll-to="'#how'" onclick="func_1()"><p id="h1_menu_3" style="cursor:default;">Как это работает?</p></div>
+            <div id="menu-items" v-scroll-to="'#about'" onclick="func_1()"><p id="h1_menu_4" style="cursor:default;">О нас</p></div>
+            <div id="menu-items" v-scroll-to="'#contact'" onclick="func_1()"><p id="h1_menu_5" style="cursor:default;">Контакты</p></div>
         </div>
         <H1 id="nomer" style="color:black; cursor:default; visibility: visible;" onclick="func()"><b>≡</b></H1>
         <H1 id="nomerx" style=" color:black; cursor:default; visibility: hidden;" onclick="func_1()"><b>×</b></H1>
+
+        <p id="strelka_top" v-scroll-to="'#app'" style="visibility: hidden;">▲</p>
+        <script>
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
+                    document.getElementById("strelka_top").style.display = "block";
+                    document.getElementById("strelka_top").style.visibility ="visible";
+                } else {
+                    document.getElementById("strelka_top").style.display = "none";
+                }
+            }
+
+            new Vue({
+            el: '#app',
+            methods: {}
+            })
+        </script>
+
+    </div>
+
     </body>
 </html>
