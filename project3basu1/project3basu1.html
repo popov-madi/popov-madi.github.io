@@ -1,5 +1,6 @@
 <html>
     <head>
+        <title>PROJECT 3bASU1</title>
         <meta name="viewport" content="width=device-width" />
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -96,9 +97,18 @@
                 grid-template-rows: 1fr;
                 padding: 0vh 4vh 0vh 4vh;
             }
+            .grid-container#footer{
+                height: 10vh;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                padding: 0vh 4vh 0vh 4vh;
+            }
             .grid-item{
                 border: solid 0px orange;
             }
+
+            /*_______________________________________________ стрелки ______________________________________________*/
             #strelka{
                 position: absolute;
                 transform: rotate(90deg);
@@ -127,6 +137,9 @@
                 top: 85%;
                 left: 93%;
                 cursor: default;
+            }
+            #strelka_top:hover{
+                color:grey;
             }
             /*_______________________________________________header______________________________________________*/
             .img_head{
@@ -170,18 +183,23 @@
             /*_______________________________________________форма______________________________________________*/
 
             #regForm {
-                background-color: #ffffff;
+                background-color: black;
+                border:solid 2px white;
+                color:white;
                 margin:auto;
                 margin-top: 20vh;
                 padding: 20px;
                 width: 70%;
-                border-radius: 35px;
+                border-radius: 10px;
             }
 
             input {
+                background: black;
+                color:white;
                 padding: 10px;
                 width: 100%;
-                border: 1px solid #aaaaaa;
+                border: 1px solid white;
+                border-radius: 5px;
             }
 
 
@@ -196,11 +214,11 @@
 
             button {
                 background-color: black;
-                color: #ffffff;
-                border: none;
+                color: white;
+                border: solid 1px white;
                 padding: 10px 20px;
                 cursor: pointer;
-                border-radius: 25px;
+                border-radius: 5px;
             }
 
             button:hover {
@@ -208,7 +226,7 @@
             }
 
             #prevBtn {
-                background-color: #bbbbbb;
+                background-color: black;
             }
 
 
@@ -216,7 +234,7 @@
                 height: 5px;
                 width: 5px;
                 margin: 0 2px;
-                background-color: #bbbbbb;
+                background-color: white;
                 border: none;  
                 border-radius: 50%;
                 display: inline-block;
@@ -226,12 +244,11 @@
             .step.active {
                 opacity: 1;
             }
-
-
-            .step.finish {
-                background-color: black;
+            ::placeholder {
+                color: white;
+                font-size: 0.8em;
+                
             }
-
             /*_______________________________________________ about ______________________________________________*/
             
             .me,.dan{
@@ -255,7 +272,8 @@
                 width:35px;
                 height:35px;
                 border-radius: 100px;
-                background: white;
+                background: black;
+                border:solid 2px white;
                 position: fixed; 
                 text-align: center;
             }
@@ -267,15 +285,15 @@
                 width:35px;
                 height:35px;
                 border-radius: 100px;
-                background: white;
-                border:solid 0px white;
+                background: black;
+                border:solid 2px white;
                 position: fixed; 
                 text-align: center;
             }
 
             #nomer:hover,#nomerx:hover{
                 background: white;
-                opacity: 0.7;
+                color:black;
             }
 
             /*  МЕНЮ  */
@@ -305,15 +323,34 @@
                 text-decoration: underline;
             }
 
+            /*_______________________________________________ vk, inst ______________________________________________*/
+
+            #inst{
+                width: 50px;
+                height: 50px;
+                padding: 0% 0% 0% 7%;
+            }
+            #vk{
+                width: 35px;
+                height: 35px;
+            }
+            #a_menu_1{
+                visibility: hidden;
+            }
+            #a_menu_2{
+                visibility: hidden;
+            }
+
             /*_______________________________________________ media ______________________________________________*/
 
             @media screen and (min-width: 900px){
-                body{
-                    font-size: 1.5em;
-                }
-                .me,.dan{
-                width: 150px;
-                height: 150px;
+                
+            body{
+                font-size: 1.5em;
+            }
+            .me,.dan{
+            width: 150px;
+            height: 150px;
             }
             #nomer{
                 top: 5%;
@@ -331,20 +368,23 @@
                 height:45px;
                 border-radius: 100px;
             }
+            #inst{
+                width: 70px;
+                height: 70px;
+            }
+            #vk{
+                width: 50px;
+                height: 50px;
+            }
+
             }
             @media screen and (min-width: 500px) {
+
             /*_______________________________________________ conteyner ______________________________________________*/
             .grid-container#header{
                 height: 100vh;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                grid-template-rows: 1fr;
-                padding: 0vh 4vh 0vh 4vh;
-            }
-            .grid-container#main{
-                height: 100vh;
-                display: grid;
-                grid-template-columns: 1fr;
                 grid-template-rows: 1fr;
                 padding: 0vh 4vh 0vh 4vh;
             }
@@ -367,27 +407,6 @@
                 height: 100vh;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                grid-template-rows: 1fr;
-                padding: 0vh 4vh 0vh 4vh;
-            }
-            .grid-container#form{
-                height: 100vh;
-                display: grid;
-                grid-template-columns: 1fr;
-                grid-template-rows: 1fr;
-                padding: 0vh 4vh 0vh 4vh;
-            }
-            .grid-container#about{
-                height: 100vh;
-                display: grid;
-                grid-template-columns: 1fr;
-                grid-template-rows: 1fr;
-                padding: 0vh 4vh 0vh 4vh;
-            }
-            .grid-container#contact{
-                height: 100vh;
-                display: grid;
-                grid-template-columns: 1fr;
                 grid-template-rows: 1fr;
                 padding: 0vh 4vh 0vh 4vh;
             }
@@ -538,8 +557,8 @@
                     </div>
                     <div style="overflow:auto;">
                         <div style="float:right;">
-                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Назад</button>
-                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Следующий шаг</button>
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">← Назад</button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Дальше →</button>
                         </div>
                     </div>
                     <div>
@@ -566,8 +585,12 @@
               }
               if (n == (x.length - 1)) {
                 document.getElementById("nextBtn").innerHTML = "Подтвердить";
+                document.getElementById("nextBtn").style.background = "white";
+                document.getElementById("nextBtn").style.color = "black";
               } else {
-                document.getElementById("nextBtn").innerHTML = "Следующий шаг";
+                document.getElementById("nextBtn").innerHTML = "Дальше →";
+                document.getElementById("nextBtn").style.background = "black";
+                document.getElementById("nextBtn").style.color = "white";
               }
               fixStepIndicator(n)
             }
@@ -632,7 +655,7 @@
                     <p class="pmain">
                         Наш офис находится по адресу:<br>
                         Ленинградский пр-т., 64, Москва, 125319<br>
-                        Наш телефон: +74991550104<br>
+                        Наш телефон: <a href="tel:+74991550104" style="color:white;">+74991550104</a><br>
                     </p>
                     <div id="map" ></div>
                     <script>
@@ -654,6 +677,17 @@
             </div>
         </div>
 
+        <div class="grid-container" id="footer">
+            <div class="grid-item">
+                <center>
+                    <p style="margin: 0%;">Курсовой проект 3бАСУ1</p>
+                    <p style="margin: 0%;">Мы в соц. сетях</p>
+                    <a href="https://www.instagram.com/?hl=ru"> <img id="inst" src="insta.png" style="padding: 0%;"></a>
+                    <a href="https://vk.com/"><img id="vk" src="vk.png" ></a>
+                </center>
+            </div>
+        </div>
+
         <!--    СКРИПТ ГАМБУРГЕРА   -->
 
         <script>
@@ -666,6 +700,8 @@
                 document.getElementById('h1_menu_3').style.visibility="visible";
                 document.getElementById('h1_menu_4').style.visibility="visible";
                 document.getElementById('h1_menu_5').style.visibility="visible";
+                document.getElementById('a_menu_1').style.visibility="visible";
+                document.getElementById('a_menu_2').style.visibility="visible";
                 document.getElementById('menu').style = 'width:40%;transition: 0.5s; border:solid 1px white;';
             }
             function func_1()
@@ -677,6 +713,8 @@
                 document.getElementById('h1_menu_3').style.visibility="hidden";
                 document.getElementById('h1_menu_4').style.visibility="hidden";
                 document.getElementById('h1_menu_5').style.visibility="hidden";
+                document.getElementById('a_menu_1').style.visibility="hidden";
+                document.getElementById('a_menu_2').style.visibility="hidden";
                 document.getElementById('menu').style = 'width:0%; transition: 0.5s;border:solid 0px white;';
             }
         </script>
@@ -687,9 +725,14 @@
             <div id="menu-items" v-scroll-to="'#how'" onclick="func_1()"><p id="h1_menu_3" style="cursor:default;">Как это работает?</p></div>
             <div id="menu-items" v-scroll-to="'#about'" onclick="func_1()"><p id="h1_menu_4" style="cursor:default;">О нас</p></div>
             <div id="menu-items" v-scroll-to="'#contact'" onclick="func_1()"><p id="h1_menu_5" style="cursor:default;">Контакты</p></div>
+            <div id="menu-items" onclick="func_1()">
+                <a href="https://www.instagram.com/?hl=ru" id="a_menu_1"> <img id="inst" src="insta.png" ></a>
+                <a href="https://vk.com/" id="a_menu_2"><img id="vk" src="vk.png" ></a>
+            </div>
+            
         </div>
-        <H1 id="nomer" style="color:black; cursor:default; visibility: visible;" onclick="func()"><b>≡</b></H1>
-        <H1 id="nomerx" style=" color:black; cursor:default; visibility: hidden;" onclick="func_1()"><b>×</b></H1>
+        <H1 id="nomer" style=" cursor:default; visibility: visible;" onclick="func()"><b>≡</b></H1>
+        <H1 id="nomerx" style="cursor:default; visibility: hidden;" onclick="func_1()"><b>×</b></H1>
 
         <p id="strelka_top" v-scroll-to="'#app'" style="visibility: hidden;">▲</p>
         <script>
