@@ -37,6 +37,9 @@
                 font-size: 1.17em;
                 color: white;
             }
+            a:hover{
+                text-decoration: none;
+            }
 
             /*_______________________________________________контейнеры______________________________________________*/
 
@@ -156,6 +159,7 @@
             #myvid{
                 width: 100%;
                 margin-top: 30%;
+                border:3px solid white;
             }
             /*_______________________________________________camera______________________________________________*/
             .img_camera{
@@ -481,9 +485,10 @@
                     <H1>НАША МИССИЯ</H1>
                     <p class="pmain">
                         Мы хотим предложить использовать дронов не для того, чтобы снимать красивые панорамы, а чтобы дрон мог самостоятельно, 
-                        без помощи человека доставлять груз. Эта возможность очень сильно облегчит работу курьерам или совсем заменит их.
+                        без помощи человека доставлять груз, либо мог создать 3d модель местности и многое другое. 
+                        Эта возможность сильно облегчит работу людям или совсем заменит их.
                     </p>
-                    <video id="myvid" controls>
+                    <video id="myvid" controls >
                         <source  src="dron.mp4">
                     </video>
                 </center>
@@ -657,7 +662,7 @@
                         Ленинградский пр-т., 64, Москва, 125319<br>
                         Наш телефон: <a href="tel:+74991550104" style="color:white;">+74991550104</a><br>
                     </p>
-                    <div id="map" ></div>
+                    <div id="map"></div>
                     <script>
                         DG.then(function() {
                             var map = DG.map('map', {
@@ -679,12 +684,19 @@
 
         <div class="grid-container" id="footer">
             <div class="grid-item">
-                <center>
-                    <p style="margin: 0%;">Курсовой проект 3бАСУ1</p>
-                    <p style="margin: 0%;">Мы в соц. сетях</p>
-                    <a href="https://www.instagram.com/?hl=ru"> <img id="inst" src="insta.png" style="padding: 0%;"></a>
-                    <a href="https://vk.com/"><img id="vk" src="vk.png" ></a>
-                </center>
+                <p style="margin: 0%;">
+                    <a href="https://mirquadrocopterov.ru/obshhie-voprosy/chto-takoe-kvadrocopter.html" style="color:white;">Что такое квадрокоптер? Как он устроен и зачем нужен?</a>
+                </p>
+                <p style="margin: 0%;">
+                    <a href="https://dji-blog.ru/naznachenie/geodesia/kak-ispolzovat-bespilotnye-platformy-osnashhennye-lidar.html" style="color:white;">Как использовать беспилотные платформы, оснащенные LIDAR?</a>
+                </p>
+                <p style="margin: 0%;">
+                    <a href="https://mirquadrocopterov.ru/obshhie-voprosy/datchiki-uderzhaniya-vysoty-drona.html" style="color:white;">Датчики удержания высоты дрона</a>
+                </p>
+                <p style="margin: 0%;">Курсовой проект 3бАСУ1</p>
+                <p style="margin: 0%;">Мы в соц. сетях</p>
+                <a href="https://www.instagram.com/?hl=ru"> <img id="inst" src="insta.png" style="padding: 0%;"></a>
+                <a href="https://vk.com/"><img id="vk" src="vk.png" ></a>
             </div>
         </div>
 
@@ -736,6 +748,7 @@
 
         <p id="strelka_top" v-scroll-to="'#app'" style="visibility: hidden;">▲</p>
         <script>
+            // нужен обязательно див главный, боди не подходит (
             window.onscroll = function() {scrollFunction()};
 
             function scrollFunction() {
