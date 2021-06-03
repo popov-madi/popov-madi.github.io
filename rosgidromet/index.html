@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--<meta name="viewport" content="width=device-width" />-->
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  </head>
+<style>
+  .filterDiv {
+    float: left;
+    background-color:#f1f1f1;
+    width: 250px;
+    line-height: 70px;
+    text-align: center;
+    margin: 2px;
+    display: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .filterDiv:hover {
+    background-color:#ddd;
+    color:black;
+  }
+  .show {
+    display: block;
+  }
+
+  .container {
+    margin-top: 20px;
+    overflow: hidden;
+  }
+
+  /* КНОПКИ */
+  .btn {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  .btn:hover {
+    background-color: #ddd;
+  }
+
+  .btn.active {
+    background-color: #667;
+    color: white;
+  }
+  a{
+      display:block;
+      text-decoration: none;
+      color:black;
+  }
+  a:hover{
+      display:block;
+      text-decoration: none;
+      color:black;
+  }
+
+  /* ВСПЛЫВАЮЩЕЕ ОПИСАНИЕ */
+
+  #fedorov,#treshnikov,#somov,#petrov,#molchanov{
+    position: absolute;
+    display: flex;
+    width: 80%;
+    height: 600px;
+    border:0px solid black;
+    visibility: hidden;
+  }
+  #part1{
+      width: 30%;
+      height: 100%;
+      border:2px solid black;
+      padding: 5px;
+      background-color: white;
+  }
+  #part2{
+    position: absolute;
+    left:31%;
+    width: 70%;
+    height: 100%;
+    border:0px solid black;
+  }
+
+  iframe{
+    width: 100%;
+    height: 100%;
+  }
+  .close{
+    width:20px;
+    cursor: pointer;
+    color:black;
+    margin: 0%;
+  }
+  .close:hover{
+    color:#ddd;
+  }
+
+  /*карты*/
+  #map,#map1,#map2,#map3,#map4,#map_track{
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 101.7%;
+    top:0%;
+    border:2px solid black;
+  }
+  #look{
+    cursor: pointer;
+  }
+  #look:hover{
+    cursor: pointer;
+    text-decoration:underline;
+  }
+</style>
+<body>
+
+<img src="http://www.meteorf.ru/upload/iblock/b58/logo2015_2.png" width="50">
+
+<!--КНОПКИ-->
+
+<div id="myBtnContainer">
+  <button class="btn active" onclick="filterSelection('all')">Все</button>
+  <button class="btn" onclick="filterSelection('aanii')">СУДА ФГБУ «ААНИИ»</button>
+  <button class="btn" onclick="filterSelection('severnoe')"> СУДА ФГБУ «СЕВЕРНОЕ УГМС»</button>
+</div>
+
+<!--СПИСОК СУДОВ-->
+
+<div class="container">
+  <div class="filterDiv aanii" id="fed" onclick="func_fedorov()">АКАДЕМИК  ФЁДОРОВ</div>
+  <div class="filterDiv aanii" id="tre" onclick="func_treshnikov()">АКАДЕМИК ТРЁШНИКОВ</div>  
+  <div class="filterDiv severnoe" id="som" onclick="func_somov()">МИХАИЛ  СОМОВ</div>
+  <div class="filterDiv severnoe" id="pet" onclick="func_petrov()">ИВАН  ПЕТРОВ</div>
+  <div class="filterDiv severnoe" id="mol" onclick="func_molchanov()">ПРОФЕССОР МОЛЧАНОВ</div>
+</div>
+
+<!--ВСПЛЫВАЮЩИЯ ОКНА-->
+
+<div id="fedorov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <H2>АКАДЕМИК ФЁДОРОВ</H2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=349691&size=thumb600" width="200">
+    <p>
+      (АТЛАНТИЧЕСКИЙ ОКЕАН) РЕЙС № 47, РАБОТЫ ПО ПЛАНУ 66 РАЭ. ОЖИДАЕМОЕ (РАСЧЕТНОЕ) ВРЕМЯ ПРИБЫТИЯ В ПОРТ БРЕМЕРХАФЕН 05/06/2021
+    </p>
+    <H2 id="look" onclick="func_look_fed()">Посмотреть на карте</H2>
+    <H2 id="look" onclick="func_look_fed_track()">Посмотреть положения за 3 дня</H2>
+  </div>
+  <div id="part2">
+    <!--<iframe src="http://www.marinetraffic.com/en/ais/embed/zoom:7/centery:36/centerx:23/maptype:1/shownames:true/mmsi:273412710/shipid:/fleet:/fleet_id:/vtypes:/showmenu:false/remember:false" name="iframe" scrolling="auto"> </iframe>-->
+    <div id="map"></div>
+    <div id="map_track"></div>
+  </div>
+</div>
+
+<div id="treshnikov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <h2>АКАДЕМИК ТРЁШНИКОВ</h2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=348863&size=thumb600" width="200">
+    <p>
+      (ЕНИСЕЙСКИЙ ЗАЛИВ) РАБОТЫ ПО ПЛАНУ ААНИИ ОЖИДАЕМОЕ (РАСЧЕТНОЕ) ВРЕМЯ ПРИБЫТИЯ  В Р-Н БУХТЫ СЕВЕР (ЕНИСЕЙСКИЙ ЗАЛИВ) 25/05/2021
+    </p>
+    <H2 id="look" onclick="func_look_tre()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <!--<iframe src="http://www.marinetraffic.com/en/ais/embed/zoom:7/centery:36/centerx:23/maptype:1/shownames:true/imo:9548536/mmsi:273359440/shipid:/fleet:/fleet_id:/vtypes:/showmenu:/remember:false" name="iframe" scrolling="auto"> </iframe>-->
+    <div id="map1"></div>
+  </div>
+</div>
+
+<div id="somov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <h2>МИХАИЛ СОМОВ</h2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=350768&size=thumb600" width="200">
+    <p>
+      РАБОТЫ В Р- НЕ БУХТЫ СЕВЕР (ЕНИСЕЙСКИЙ ЗАЛИВ) ПО ПЛАНУ СЕВЕРНОГО УГМС ОЖИДАЕМОЕ (РАСЧЕТНОЕ) ВРЕМЯ ОТХОДА ИЗ Р-НА БУХТЫ СЕВЕР 27/05/2021
+    </p>
+    <H2 id="look" onclick="func_look_som()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <!--<iframe src="http://www.marinetraffic.com/en/ais/embed/zoom:7/centery:36/centerx:23/maptype:1/shownames:true/mmsi:273450550/shipid:/fleet:/fleet_id:/vtypes:/showmenu:/remember:false" name="iframe" scrolling="auto"> </iframe>-->
+    <div id="map2"></div>
+  </div>
+</div>
+
+<div id="petrov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <h2>ИВАН ПЕТРОВ</h2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=350114&size=thumb600" width="200">
+    <p>
+      ПОРТ АРХАНГЕЛЬСК. ПОДГОТОВКА К НАВИГАЦИИ ПО ПЛАНУ СЕВЕРНОГО УГМС
+    </p>
+    <H2 id="look" onclick="func_look_pet()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <!--<iframe src="http://www.marinetraffic.com/en/ais/embed/zoom:7/centery:36/centerx:23/maptype:1/shownames:true/mmsi:273433010/shipid:/fleet:/fleet_id:/vtypes:/showmenu:/remember:false" name="iframe" scrolling="auto"> </iframe>-->
+    <div id="map3"></div>
+  </div>
+</div>
+
+<div id="molchanov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <h2>ПРОФЕССОР МОЛЧАНОВ</h2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=350961&size=thumb600" width="200">
+    <p>
+      (НОРВЕЖСКОЕ МОРЕ) РАБОТЫ ПО МОНИТОРИНГУ РАДИАЦИОННОГО ЗАГРЯЗНЕНИЯ ВОД НОРВЕЖСКОГО МОРЯ СОВМЕСТНО С ФГБУ "НПО ТАЙФУН"
+    </p>
+    <H2 id="look" onclick="func_look_mol()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <!--<iframe src="http://www.marinetraffic.com/en/ais/embed/zoom:7/centery:36/centerx:23/maptype:1/shownames:true/mmsi:273458500/shipid:/fleet:/fleet_id:/vtypes:/showmenu:/remember:false" name="iframe" scrolling="auto"> </iframe>-->
+    <div id="map4"></div>
+  </div>
+</div>
+
+<!--СКРИПТЫ-->
+
+<script>
+
+// ФИЛЬТРАЦИЯ
+
+filterSelection("all")
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("filterDiv");
+  if (c == "all") c = "";
+  for (i = 0; i < x.length; i++) {
+    w3RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+  }
+}
+
+function w3AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+  }
+}
+
+function w3RemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);     
+    }
+  }
+  element.className = arr1.join(" ");
+}
+
+// Add active class to the current button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function(){
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+
+// ФУНКЦИИ ПОЯВЛЕНИЯ ОКОН
+
+function func_fedorov(){
+  document.getElementById('map').style.visibility="hidden";
+  document.getElementById('map1').style.visibility="hidden";
+  document.getElementById('map2').style.visibility="hidden";
+  document.getElementById('map3').style.visibility="hidden";
+  document.getElementById('map4').style.visibility="hidden";
+
+  document.getElementById('map_track').style.visibility="hidden";
+
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('fedorov').style.visibility="visible";
+}
+function func_treshnikov(){
+  document.getElementById('map').style.visibility="hidden";
+  document.getElementById('map1').style.visibility="hidden";
+  document.getElementById('map2').style.visibility="hidden";
+  document.getElementById('map3').style.visibility="hidden";
+  document.getElementById('map4').style.visibility="hidden";
+
+  document.getElementById('map_track').style.visibility="hidden";
+
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('treshnikov').style.visibility="visible";
+}
+function func_somov(){
+  document.getElementById('map').style.visibility="hidden";
+  document.getElementById('map1').style.visibility="hidden";
+  document.getElementById('map2').style.visibility="hidden";
+  document.getElementById('map3').style.visibility="hidden";
+  document.getElementById('map4').style.visibility="hidden";
+
+  document.getElementById('map_track').style.visibility="hidden";
+
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('somov').style.visibility="visible";
+}
+function func_petrov(){
+  document.getElementById('map').style.visibility="hidden";
+  document.getElementById('map1').style.visibility="hidden";
+  document.getElementById('map2').style.visibility="hidden";
+  document.getElementById('map3').style.visibility="hidden";
+  document.getElementById('map4').style.visibility="hidden";
+
+  document.getElementById('map_track').style.visibility="hidden";
+
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('petrov').style.visibility="visible";
+}
+function func_molchanov(){
+  document.getElementById('map').style.visibility="hidden";
+  document.getElementById('map1').style.visibility="hidden";
+  document.getElementById('map2').style.visibility="hidden";
+  document.getElementById('map3').style.visibility="hidden";
+  document.getElementById('map4').style.visibility="hidden";
+
+  document.getElementById('map_track').style.visibility="hidden";
+
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+
+  document.getElementById('molchanov').style.visibility="visible";
+}
+function func_close(){
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('map').style.visibility="hidden";
+  document.getElementById('map1').style.visibility="hidden";
+  document.getElementById('map2').style.visibility="hidden";
+  document.getElementById('map3').style.visibility="hidden";
+  document.getElementById('map4').style.visibility="hidden";
+
+  document.getElementById('map_track').style.visibility="hidden";
+}
+
+//яндекс карты
+
+//1 корабль
+function init() {
+    var myMap = new ymaps.Map("map", {
+            //center: [42.1166,-12.1403],02.06.21
+            center: [50.0098,-1.72256],
+            zoom: 7
+        });
+    myMap.geoObjects
+		.add(new ymaps.Placemark([50.0098,-1.72256], {
+            balloonContent: 'Академик Федоров<br>50.0098,-1.72256'
+        }, {
+            preset: 'islands#circleDotIcon',
+            iconColor: 'red'
+        }));
+}
+ymaps.ready(init);
+
+function func_look_fed(){
+  document.getElementById('map_track').style.visibility="hidden";
+  document.getElementById('map').style.visibility="visible";
+}
+
+//отслеживание за три дня
+
+function init_track() {
+    // Создаем карту.
+    var myMap = new ymaps.Map("map_track", {
+            center: [50.0098,-1.72256],
+            zoom: 7
+        }, {
+            searchControlProvider: 'yandex#search'
+        });
+
+    // Создаем ломаную, используя класс GeoObject.
+    var myGeoObject = new ymaps.GeoObject({
+            // Описываем геометрию геообъекта.
+            geometry: {
+                // Тип геометрии - "Ломаная линия".
+                type: "LineString",
+                // Указываем координаты вершин ломаной.
+                coordinates: [
+                    [50.0098,-1.72256],
+                    [42.1166,-12.1403],
+                    [42.1166,-11.1403]
+                ]
+            },
+            // Описываем свойства геообъекта.
+            properties:{
+                // Содержимое балуна.
+            }
+        }, {
+            // Задаем опции геообъекта.
+            // Включаем возможность перетаскивания ломаной.
+            draggable: false,
+            // Цвет линии - два значения
+            strokeColor: ['#000',"#FFFF00"],
+            // Ширина линии - два значения
+            strokeWidth: [8,5]
+        });
+
+    // Добавляем линии и метки на карту.
+    myMap.geoObjects
+        .add(myGeoObject)
+        .add(new ymaps.Placemark([50.0098,-1.72256], {
+            balloonContent: '03.06.2021',
+            iconCaption:'03.06.21'
+        }, {
+            preset: 'islands#circleDotIcon',
+            iconColor: 'black'
+        }))
+        .add(new ymaps.Placemark([42.1166,-12.1403], {
+            balloonContent: '02.06.2021',
+            iconCaption:'02.06.21'
+        }, {
+            preset: 'islands#circleDotIcon',
+            iconColor: 'black'
+        }))
+        .add(new ymaps.Placemark([42.1166,-11.1403], {
+            balloonContent: '01.06.2021',
+            iconCaption:'01.06.21'
+        }, {
+            preset: 'islands#circleDotIcon',
+            iconColor: 'black'
+        }));
+}
+
+ymaps.ready(init_track);
+
+function func_look_fed_track(){
+  document.getElementById('map').style.visibility="hidden";
+  document.getElementById('map_track').style.visibility="visible";
+}
+
+//2 корабль
+function init1() {
+    var myMap = new ymaps.Map("map1", {
+            center: [69.0564, 33.08639],
+            zoom: 13
+        });
+    myMap.geoObjects
+		.add(new ymaps.Placemark([69.0564, 33.08639], {
+            balloonContent: 'Академик Трешников<br>69.0564, 33.08639'
+        }, {
+            preset: 'islands#circleDotIcon',
+            iconColor: 'red'
+        }));
+}
+ymaps.ready(init1);
+
+function func_look_tre(){
+  document.getElementById('map1').style.visibility="visible";
+}
+
+//3 корабль
+function init2() {
+    var myMap = new ymaps.Map("map2", {
+            center: [64.5955, 40.5016],
+            zoom: 15
+        });
+    myMap.geoObjects
+		.add(new ymaps.Placemark([64.5955, 40.5016], {
+            balloonContent: 'Михаил Сомов<br>64.5955, 40.5016'
+        }, {
+            preset: 'islands#circleDotIcon',
+            iconColor: 'red'
+        }));
+}
+ymaps.ready(init2);
+
+function func_look_som(){
+  document.getElementById('map2').style.visibility="visible";
+}
+
+//4 корабль
+function init3() {
+    var myMap = new ymaps.Map("map3", {
+            center: [64.5661, 40.5050],
+            zoom: 15
+        });
+    myMap.geoObjects
+		.add(new ymaps.Placemark([64.5661, 40.5050], {
+            balloonContent: 'Иван Петров<br>64.5661, 40.5050'
+        }, {
+            preset: 'islands#circleDotIcon',
+            iconColor: 'red'
+        }));
+}
+ymaps.ready(init3);
+
+function func_look_pet(){
+  document.getElementById('map3').style.visibility="visible";
+}
+
+//5 корабль
+function init4() {
+    var myMap = new ymaps.Map("map4", {
+            center: [71.3008, 38.5620],
+            zoom: 5
+        });
+    myMap.geoObjects
+		.add(new ymaps.Placemark([71.3008, 38.5620], {
+            balloonContent: 'Профессор Молчанов<br>71.3008, 38.5620'
+        }, {
+            preset: 'islands#circleDotIcon',
+            iconColor: 'red'
+        }));
+}
+ymaps.ready(init4);
+
+function func_look_mol(){
+  document.getElementById('map4').style.visibility="visible";
+}
+</script>
+
+</body>
+</html>
+
+
+
