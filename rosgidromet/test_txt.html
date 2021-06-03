@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+    
+    textarea {
+        margin-top: 15px;
+        width: 50%;
+    }
+    </style>
+</head>
+<body>
+    
+    <div>
+        <button id="button1">HI</button>
+    </div>
+    
+    <script>
+/*
+        let input = document.querySelector('input');
+        let str;
+        
+        input.addEventListener('change', () => {
+            let files = input.files;
+        
+            if(files.length == 0) return;
+        
+            const file = files[0];
+        
+            let reader = new FileReader();
+        
+            reader.onload = (e) => {
+                const file = e.target.result;
+                const lines = file.split(/\r\n|\n/);
+
+                str=lines.join('\n');//тут лежит строка
+            };
+        
+            reader.onerror = (e) => alert(e.target.error.name);
+        
+            reader.readAsText(file); 
+        });
+
+        function hello(){
+            alert("ВСЕМ "+str);
+        }
+        */
+
+        document.getElementById("button1").addEventListener('click', loadTxt);
+        function loadTxt(){
+            fetch('hi.txt')
+            .then(function(response){
+                return response.text()
+            })
+            .then(function(data){
+                console.log(data);
+            })
+        }
+    </script>
+</body>
+</html>
