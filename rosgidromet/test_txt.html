@@ -23,7 +23,7 @@
     <div>
         <button id="button1">HI</button>
     </div>
-    
+    <p></p>
     <script>
 /*
         let input = document.querySelector('input');
@@ -55,14 +55,19 @@
         }
         */
 
+        var splits;
+        var p = document.querySelector('p');
         document.getElementById("button1").addEventListener('click', loadTxt);
         function loadTxt(){
             fetch('hi.txt')
             .then(function(response){
                 return response.text()
             })
-            .then(function(data){
-                console.log(data);
+            .then(function(fedorov){
+                //console.log(data);
+                splits_fed = fedorov.split(","); 
+                console.log("Координата х="+splits_fed[0],"Координата у="+splits_fed[1],"Название "+splits_fed[2]);
+                p.outerHTML="Координата х="+splits_fed[0]+"<br>Координата у="+splits_fed[1]+"<br>Название "+splits_fed[2];
             })
         }
     </script>
