@@ -3,6 +3,7 @@
 <html>
   <head>
     <!--<meta name="viewport" content="width=device-width" />-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
   </head>
 <style>
@@ -371,21 +372,46 @@ function func_close(){
 //яндекс карты
 
 //1 корабль
-function init() {
-    var myMap = new ymaps.Map("map", {
-            //center: [42.1166,-12.1403],02.06.21
-            center: [50.0098,-1.72256],
-            zoom: 7
-        });
-    myMap.geoObjects
-		.add(new ymaps.Placemark([50.0098,-1.72256], {
-            balloonContent: 'Академик Федоров<br>50.0098,-1.72256'
-        }, {
-            preset: 'islands#circleDotIcon',
-            iconColor: 'red'
-        }));
-}
-ymaps.ready(init);
+
+var splits_fed;
+var splits_fed1=[];
+
+fetch('fed.txt')
+    .then(function(response){
+        return response.text()
+    })
+    .then(function(fedorov){
+        //console.log(data);
+        splits_fed = fedorov.split(",");
+
+        //
+        splits_fed1+=fedorov+',';
+        splits_fed1=splits_fed1.split(","); 
+        console.log(splits_fed1);
+        //
+
+        console.log("Координата х="+splits_fed[0],"Координата у="+splits_fed[1],"Название "+splits_fed[2]);
+
+        function init() {
+          var myMap = new ymaps.Map("map", {
+                  //center: [42.1166,-12.1403],02.06.21
+                  //center: [50.0098,-1.72256],
+                  center: [parseFloat(splits_fed[0]),parseFloat(splits_fed[1])],
+                  zoom: 7
+              });
+          myMap.geoObjects
+          .add(new ymaps.Placemark([parseFloat(splits_fed[0]),parseFloat(splits_fed[1])], {
+                  balloonContent: 'Академик Федоров<br>50.0098,-1.72256'
+              }, {
+                  preset: 'islands#circleDotIcon',
+                  iconColor: 'red'
+              }));
+          }
+      ymaps.ready(init);
+      })
+
+
+
 
 function func_look_fed(){
   document.getElementById('map_track').style.visibility="hidden";
