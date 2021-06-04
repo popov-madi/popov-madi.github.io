@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--<meta name="viewport" content="width=device-width" />-->
+  </head>
+<style>
+  .filterDiv {
+    float: left;
+    cursor: pointer;
+    background-color:#f1f1f1;
+    width: 250px;
+    line-height: 70px;
+    text-align: center;
+    margin: 2px;
+    display: none;
+    border-radius: 10px;
+  }
+  .filterDiv:hover {
+    background-color:#ddd;
+    color:black;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .container {
+    margin-top: 20px;
+    overflow: hidden;
+  }
+
+  /* КНОПКИ */
+  .btn {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  .btn:hover {
+    background-color: #ddd;
+  }
+
+  .btn.active {
+    background-color: #666;
+    color: white;
+  }
+  a{
+      display:block;
+      text-decoration: none;
+      color:black;
+  }
+  a:hover{
+      display:block;
+      text-decoration: none;
+      color:black;
+  }
+
+  /* ВСПЛЫВАЮЩЕЕ ОПИСАНИЕ */
+
+  #fedorov,#treshnikov,#somov,#petrov,#molchanov{
+    position: absolute;
+    display: flex;
+    width: 80%;
+    height: 500px;
+    border:0px solid black;
+    visibility: hidden;
+  }
+  #part1{
+      width: 30%;
+      height: 100%;
+      border:1px solid black;
+      padding: 5px;
+      background-color: white;
+  }
+  #part2{
+      width: 70%;
+      height: 101.5%;
+      border:0px solid black;
+  }
+
+  iframe,#map{
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+  }
+  #look{
+    cursor: pointer;
+  }
+  .close{
+    width:20px;
+    cursor: pointer;
+    color:black;
+    margin: 0%;
+  }
+  .close:hover{
+    color:#ddd;
+  }
+</style>
+<body>
+
+<h2>СУДА</h2>
+
+<!--КНОПКИ-->
+
+<div id="myBtnContainer">
+  <button class="btn active" onclick="filterSelection('all')">Все</button>
+  <button class="btn" onclick="filterSelection('aanii')">СУДА ФГБУ «ААНИИ»</button>
+  <button class="btn" onclick="filterSelection('severnoe')"> СУДА ФГБУ «СЕВЕРНОЕ УГМС»</button>
+</div>
+
+<!--СПИСОК СУДОВ-->
+
+<div class="container">
+  <div class="filterDiv aanii" onclick="func_fedorov()">АКАДЕМИК  ФЁДОРОВ</div>
+  <div class="filterDiv aanii" onclick="func_treshnikov()">АКАДЕМИК ТРЁШНИКОВ</div>  
+  <div class="filterDiv severnoe" onclick="func_somov()">МИХАИЛ  СОМОВ</div>
+  <div class="filterDiv severnoe" onclick="func_petrov()">ИВАН  ПЕТРОВ</div>
+  <div class="filterDiv severnoe" onclick="func_molchanov()">ПРОФЕССОР МОЛЧАНОВ</div>
+</div>
+
+<!--ВСПЛЫВАЮЩИЯ ОКНА-->
+
+<div id="fedorov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <H2>АКАДЕМИК ФЁДОРОВ</H2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=349691&size=thumb600" width="200">
+    <p>
+      (АТЛАНТИЧЕСКИЙ ОКЕАН) РЕЙС № 47, РАБОТЫ ПО ПЛАНУ 66 РАЭ. *ЕТА В ПОРТ БРЕМЕРХАФЕН 05/06/2021
+    </p>
+    <H2 id="look" onclick="func_look_fed()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <iframe id="map_fed" src="https://goradar.ru/vessels_map.php?imo=8519837&is_widget=1"></iframe>
+  </div>
+</div>
+
+<div id="treshnikov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <H2>АКАДЕМИК ТРЁШНИКОВ</H2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=348863&size=thumb600" width="200">
+    <p>
+      (ЕНИСЕЙСКИЙ ЗАЛИВ) РАБОТЫ ПО ПЛАНУ ААНИИ *ETА В Р-Н БУХТЫ СЕВЕР (ЕНИСЕЙСКИЙ ЗАЛИВ) 25/05/2021
+    </p>
+    <H2 id="look" onclick="func_look_tre()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <iframe id="map_tre" src="https://goradar.ru/vessels_map.php?imo=9548536&is_widget=1"></iframe>
+  </div>
+</div>
+
+<div id="somov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <H2>МИХАИЛ СОМОВ</H2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=350768&size=thumb600" width="200">
+    <p>
+      РАБОТЫ В Р- НЕ БУХТЫ СЕВЕР (ЕНИСЕЙСКИЙ ЗАЛИВ) ПО ПЛАНУ СЕВЕРНОГО УГМС **ETD ИЗ Р-НА БУХТЫ СЕВЕР 27/05/2021
+    </p>
+    <H2 id="look" onclick="func_look_som()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <iframe id="map_som" src="https://goradar.ru/vessels_map.php?imo=7518202&is_widget=1"></iframe>
+  </div>
+</div>
+
+<div id="petrov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close_pet()">×</h1>
+    <H2>ИВАН ПЕТРОВ</H2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=350114&size=thumb600" width="200">
+    <p>
+      ПОРТ АРХАНГЕЛЬСК. ПОДГОТОВКА К НАВИГАЦИИ ПО ПЛАНУ СЕВЕРНОГО УГМС
+    </p>
+    <H2 id="look" onclick="func_look_pet()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <iframe id="map_pet" src="https://goradar.ru/vessels_map.php?imo=8606575&is_widget=1"></iframe>
+  </div>
+</div>
+
+<div id="molchanov">
+  <div id="part1">
+    <h1 class="close" onclick="func_close()">×</h1>
+    <H2>ПРОФЕССОР МОЛЧАНОВ</H2>
+    <img src="https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=350961&size=thumb600" width="200">
+    <p>
+      (НОРВЕЖСКОЕ МОРЕ) РАБОТЫ ПО МОНИТОРИНГУ РАДИАЦИОННОГО ЗАГРЯЗНЕНИЯ ВОД НОРВЕЖСКОГО МОРЯ СОВМЕСТНО С ФГБУ "НПО ТАЙФУН"
+    </p>
+    <H2 id="look" onclick="func_look_mol()">Посмотреть на карте</H2>
+  </div>
+  <div id="part2">
+    <iframe id="map_mol" src="https://goradar.ru/vessels_map.php?imo=8010348&is_widget=1"></iframe>
+  </div>
+</div>
+
+<!--СКРИПТЫ-->
+
+<script>
+
+// ФИЛЬТРАЦИЯ
+
+filterSelection("all")
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("filterDiv");
+  if (c == "all") c = "";
+  for (i = 0; i < x.length; i++) {
+    w3RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+  }
+}
+
+function w3AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+  }
+}
+
+function w3RemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);     
+    }
+  }
+  element.className = arr1.join(" ");
+}
+
+// Add active class to the current button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function(){
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+
+// ФУНКЦИИ ПОЯВЛЕНИЯ ОКОН
+
+function func_fedorov(){
+
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('map_fed').style.visibility="hidden";
+  document.getElementById('map_mol').style.visibility="hidden";
+  document.getElementById('map_som').style.visibility="hidden";
+  document.getElementById('map_tre').style.visibility="hidden";
+  document.getElementById('map_pet').style.visibility="hidden";
+
+  document.querySelector('iframe').style.visibility="hidden";
+  document.getElementById('fedorov').style.visibility="visible";
+}
+function func_treshnikov(){
+
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('map_fed').style.visibility="hidden";
+  document.getElementById('map_mol').style.visibility="hidden";
+  document.getElementById('map_som').style.visibility="hidden";
+  document.getElementById('map_tre').style.visibility="hidden";
+  document.getElementById('map_pet').style.visibility="hidden";
+
+  document.querySelector('iframe').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="visible";
+}
+function func_somov(){
+
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('map_fed').style.visibility="hidden";
+  document.getElementById('map_mol').style.visibility="hidden";
+  document.getElementById('map_som').style.visibility="hidden";
+  document.getElementById('map_tre').style.visibility="hidden";
+  document.getElementById('map_pet').style.visibility="hidden";
+
+  document.querySelector('iframe').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="visible";
+}
+function func_petrov(){
+
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('map_fed').style.visibility="hidden";
+  document.getElementById('map_mol').style.visibility="hidden";
+  document.getElementById('map_som').style.visibility="hidden";
+  document.getElementById('map_tre').style.visibility="hidden";
+  document.getElementById('map_pet').style.visibility="hidden";
+
+  document.querySelector('iframe').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="visible";
+}
+function func_molchanov(){
+
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+
+  document.getElementById('map_fed').style.visibility="hidden";
+  document.getElementById('map_mol').style.visibility="hidden";
+  document.getElementById('map_som').style.visibility="hidden";
+  document.getElementById('map_tre').style.visibility="hidden";
+  document.getElementById('map_pet').style.visibility="hidden";
+
+  document.getElementById('molchanov').style.visibility="visible";
+}
+
+function func_close(){
+  document.getElementById('fedorov').style.visibility="hidden";
+  document.getElementById('treshnikov').style.visibility="hidden";
+  document.getElementById('somov').style.visibility="hidden";
+  document.getElementById('petrov').style.visibility="hidden";
+  document.getElementById('molchanov').style.visibility="hidden";
+
+  document.getElementById('map_fed').style.visibility="hidden";
+  document.getElementById('map_mol').style.visibility="hidden";
+  document.getElementById('map_som').style.visibility="hidden";
+  document.getElementById('map_tre').style.visibility="hidden";
+  document.getElementById('map_pet').style.visibility="hidden";
+}
+
+function func_look_fed(){
+  document.getElementById('map_fed').style.visibility="visible";
+}
+function func_look_mol(){
+  document.getElementById('map_mol').style.visibility="visible";
+}
+function func_look_som(){
+  document.getElementById('map_som').style.visibility="visible";
+}
+function func_look_tre(){
+  document.getElementById('map_tre').style.visibility="visible";
+}
+function func_look_pet(){
+  document.getElementById('map_pet').style.visibility="visible";
+}
+</script>
+
+</body>
+</html>
+
+
+
