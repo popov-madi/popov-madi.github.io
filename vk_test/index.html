@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <style>
+            #c_5000{
+                width: 200px;
+                height: 100px;
+                border: 1px solid orange;
+            }
+            #c_2000{
+                width: 200px;
+                height: 100px;
+                border: 1px solid blue;
+            }
+            #c_1000{
+                width: 200px;
+                height: 100px;
+                border: 1px solid green;
+            }
+            #c_500{
+                width: 200px;
+                height: 100px;
+                border: 1px solid purple;
+            }
+            #c_200{
+                width: 200px;
+                height: 100px;
+                border: 1px solid lightgreen;
+            }
+            #c_100{
+                width: 200px;
+                height: 100px;
+                border: 1px solid brown;
+            }
+        </style>
+    </head>
+    <body>
+        <input id ="inp" type="text">
+        <button id="button1">Расчитать</button>
+        <p></p>
+        <div id='org_div1'></div>
+        <script>
+            var p = document.querySelector('p');
+            document.getElementById("button1").addEventListener('click', loadTxt);
+            function loadTxt(){
+                document.getElementById("button1").style.visibility="hidden";
+                var val = document.getElementById('inp').value;
+                fetch('money.txt')
+                .then(function(response){
+                    return response.text()
+                })
+                .then(function(amount){
+                    var splits = amount.split(","); 
+                    let all_money = 5000*splits[0]+2000*splits[1]+1000*splits[2]+500*splits[3]+200*splits[4]+100*splits[5];
+                    if(parseInt(val) > parseInt(all_money))
+                    {
+                        p.innerHTML="<p style='color:red;'>Невозможно собрать нужную сумму</p>"+"<img src='https://bipbap.ru/wp-content/uploads/2019/05/487-e1506184873865-640x642.png'>"+"<br>Сумма: "+val+"<br>5000: "+splits[0]+"<br>2000: "+splits[1]+"<br>1000: "+splits[2]+"<br>500: "+splits[3]+"<br>200: "+splits[4]+"<br>100: "+splits[5];;
+                    }
+                    else
+                    {
+                        if((val%100)!=0)
+                        {
+                            alert("Мы не сможем выдать Вам эту сумму, так как банкомат не выдает купюры номиналом 50 и 10 рублей!"+" Банкомат выдаст: " + (val-(val%100)) + " рублей. " + (val%100)+" рублей останется на карте");
+                            val = val - (val%100);
+                        }
+                        p.innerHTML="<br>Сумма: "+val+"<br>5000: "+splits[0]+"<br>2000: "+splits[1]+"<br>1000: "+splits[2]+"<br>500: "+splits[3]+"<br>200: "+splits[4]+"<br>100: "+splits[5];
+                        if(parseInt(val) > parseInt(splits[0]))
+                        {
+                            cashes = [0,0,0,0,0,0];
+                            den = [5000,2000,1000,500,200,100]
+                            for(i = 0; i<6;i++)
+                            {
+                                    
+                                if(Math.floor(val/den[i])<=splits[i])
+                                {
+                                    cashes[i] = Math.floor(val/den[i]);
+                                    val = val - cashes[i]*den[i];
+                                }
+                                
+                                if(val==0)
+                                {
+                                    for(j=0; j<6; j++)
+                                    {
+                                        newDiv = document.createElement("div");
+                                        newDiv.innerHTML = "Количество купюр: "+cashes[j]+"<div id='c_"+den[j]+"'><p>"+den[j]+"</p></div><br><br>";
+                                        my_div = document.getElementById("org_div1");
+                                        document.body.insertBefore(newDiv, my_div);
+                                    }
+                                    console.log("The End");
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>
+<!--
+    Ссылка на гитхаб
+-->
