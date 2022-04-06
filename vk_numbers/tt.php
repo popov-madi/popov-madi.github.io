@@ -51,7 +51,7 @@
     }
     function user($users)
     {
-        echo '<form method="POST"> <input name="tel" type="number" value=""> <input type="submit" name="but" value="Найти" /> <input id="users" type="text" name="user" value="'.$users.'" readonly/> </form>';
+        echo '<p>Введите номер</p><form method="POST"> <input name="tel" type="number" value=""> <input type="submit" name="but" value="Найти" /> <input id="users" type="text" name="user" value="'.$users.'" readonly/> </form>';
     }
     
     //Функция показа информации о номере(ах)
@@ -59,7 +59,7 @@
     {
         $users = $_POST['user'];
         $с = 0;
-        echo '<form method="POST"> <input name="tel" type="number"> <input type="submit" name="but" value="Найти" /> <input id="users" type="text" name="user" value="'.$users.'" readonly/>';
+        echo '<p>Введите номер</p><form method="POST"> <input name="tel" type="number"> <input type="submit" name="but" value="Найти" /> <input id="users" type="text" name="user" value="'.$users.'" readonly/>';
         echo 'Ваш поиск <input id ="num" name="val" type="text" value="'.$value.'" readonly><br><br>';
         for($i = 0; $i<count($data); $i++)
         {
