@@ -29,6 +29,7 @@
     </body>
 </html>
 <?php
+    //Если читаете это, то сайт находится по адресу http://e91545x6.beget.tech/site_iits/tt.php
     //Читаем json
     try {
         $jsonString = file_get_contents('tel.json');
