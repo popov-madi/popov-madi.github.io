@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Найди бездельника — Получение роли и правила игры</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin: 0; padding: 20px;
+    display: flex; justify-content: center;
+    color: #fff;
+    min-height: 100vh;
+  }
+  #container {
+    background: #1f1f38;
+    border-radius: 16px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    max-width: 480px;
+    width: 100%;
+    padding: 30px 30px;
+    overflow-y: auto;
+    max-height: 90vh;
+    box-sizing: border-box;
+  }
+  h1 {
+    margin: 0 0 25px;
+    font-weight: 600;
+    font-size: 2.2rem;
+    letter-spacing: 1.2px;
+    text-align: center;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
+  h2 {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    color: #d6bcfa;
+    text-align: center;
+  }
+  p, ul {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #cbd5e1;
+    margin: 10px 0;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  label {
+    display: block;
+    text-align: left;
+    font-weight: 600;
+    margin: 15px 0 6px;
+    font-size: 1rem;
+    color: #b3a1f9;
+  }
+  select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+    background: #2a2a4a;
+    color: #e0e0ff;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
+    box-sizing: border-box;
+    appearance: none;
+  }
+  select:focus {
+    box-shadow: 0 0 8px #9f7aea;
+  }
+  button {
+    margin-top: 30px;
+    width: 100%;
+    padding: 14px;
+    background: #9f7aea;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(159,122,234,0.6);
+    transition: background 0.3s ease;
+  }
+  button:disabled {
+    background: #6e5bbd;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  #result {
+    margin-top: 30px;
+    background: #2a2a4a;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.7);
+  }
+  .role-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #d6bcfa;
+  }
+  .project-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    color: #b3a1f9;
+  }
+
+  @media (max-width: 480px) {
+    #container {
+      padding: 20px 20px;
+      max-height: 95vh;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    label {
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    select {
+      font-size: 0.95rem;
+      padding: 10px 12px;
+    }
+    button {
+      font-size: 1.1rem;
+      padding: 12px;
+      margin-top: 25px;
+    }
+    #result {
+      font-size: 0.95rem;
+      padding: 15px;
+      margin-top: 25px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="container">
+    <h1>Найди бездельника</h1>
+
+    <h2>Правила игры</h2>
+    <p>Игра рассчитана на 4–10 человек. Ваша компания делится на три роли:</p>
+    <ul>
+      <li><strong>Менеджер проекта</strong> — ведёт проект, следит за прогрессом и пытается выявить бездельника.</li>
+      <li><strong>Бездельник</strong> — не знает деталей проекта, пытается не выдать себя и продержаться все 3 дейлика.</li>
+      <li><strong>Сотрудники</strong> — настоящие члены команды, выполняющие задачи в рамках проекта.</li>
+    </ul>
+    <p>Ход игры:</p>
+    <ul>
+      <li>Роли закреплены за номерами игроков в каждой комнате и зависят от количества игроков.</li>
+      <li>Менеджер показывает свою роль всем и начинает первый дейлик.</li>
+      <li>Каждый игрок докладывает статус своей работы по очереди.</li>
+      <li>После каждого дейлика наступает этап обсуждения. По итогам обсуждения каждый может вынести на голосование любого игрока. 
+      В таком случае, менеджер может прислушаться к большинству и сделать предположение, кто бездельник.
+      Но может также оставить выбор за собой - выбрать другого игрока или никого.</li>
+      <li>Если голосования не было, менеджер все равно может сделать предположение, кто бездельник.</li>
+    </ul>
+    <p>Цель менеджера — раскрыть бездельника до конца третьего дейлика.</p>
+
+    <label for="room">Номер комнаты (1–10):</label>
+    <select id="room" aria-label="Выберите номер комнаты">
+      <option value="">Выберите комнату</option>
+      <option value="1">Комната 1</option>
+      <option value="2">Комната 2</option>
+      <option value="3">Комната 3</option>
+      <option value="4">Комната 4</option>
+      <option value="5">Комната 5</option>
+      <option value="6">Комната 6</option>
+      <option value="7">Комната 7</option>
+      <option value="8">Комната 8</option>
+      <option value="9">Комната 9</option>
+      <option value="10">Комната 10</option>
+    </select>
+
+    <label for="playersCount">Количество игроков (4–10):</label>
+    <select id="playersCount" aria-label="Выберите количество игроков" disabled>
+      <option value="">Выберите количество игроков</option>
+    </select>
+
+    <label for="playerNumber">Ваш номер игрока:</label>
+    <select id="playerNumber" aria-label="Выберите номер игрока" disabled>
+      <option value="">Выберите номер игрока</option>
+    </select>
+
+    <button id="getRoleBtn" disabled>Получить роль</button>
+
+    <div id="result" role="region" aria-live="polite"></div>
+  </div>
+
+<script>
+  const projects = {
+    1: {
+      name: "Разработка мобильного приложения",
+      description: "Проект по созданию кроссплатформенного мобильного приложения для заказа еды."
+    },
+    2: {
+      name: "Веб-платформа для онлайн-обучения",
+      description: "Создание интерактивной платформы с курсами и тестами для студентов."
+    },
+    3: {
+      name: "Система управления складом",
+      description: "Автоматизация учета и логистики на складе с использованием RFID."
+    },
+    4: {
+      name: "CRM-система для малого бизнеса",
+      description: "Разработка удобной CRM для управления клиентами и продажами."
+    },
+    5: {
+      name: "Игровой проект",
+      description: "Создание многопользовательской онлайн-игры с элементами стратегии."
+    },
+    6: {
+      name: "Сайт для бронирования отелей",
+      description: "Платформа для поиска и бронирования гостиниц по всему миру."
+    },
+    7: {
+      name: "Аналитика больших данных",
+      description: "Система сбора и анализа данных для бизнес-решений."
+    },
+    8: {
+      name: "Платформа для фрилансеров",
+      description: "Маркетплейс для поиска и найма удаленных специалистов."
+    },
+    9: {
+      name: "Автоматизация бухгалтерии",
+      description: "Программа для ведения бухгалтерского учета и отчетности."
+    },
+    10: {
+      name: "Социальная сеть для путешественников",
+      description: "Платформа для обмена опытом и планирования путешествий."
+    }
+  };
+
+  const employeeRoles = [
+    {
+      role: "Бэкенд инженер",
+      description: "Разрабатывает серверную часть приложения, работает с базами данных и логикой."
+    },
+    {
+      role: "Фронтенд инженер",
+      description: "Создает пользовательский интерфейс, отвечает за визуальную часть и взаимодействие."
+    },
+    {
+      role: "QA инженер",
+      description: "Тестирует продукт, ищет баги и следит за качеством."
+    },
+    {
+      role: "Бизнес-аналитик",
+      description: "Собирает требования, анализирует бизнес-процессы и формирует задачи для команды."
+    },
+    {
+      role: "Системный аналитик",
+      description: "Проектирует архитектуру системы, анализирует технические требования и интеграции."
+    }
+  ];
+
+  function generatePositions(roomNumber, playersCount) {
+    const seed = roomNumber * 31 + playersCount;
+    const hash = (seed * 2654435761) >>> 0;
+
+    let managerPos = (hash % playersCount) + 1;
+
+    let slackerPos = (hash % (playersCount - 1)) + 1;
+    if (slackerPos >= managerPos) slackerPos++;
+
+    return { managerPos, slackerPos };
+  }
+
+  function createRoomRoles(roomNumber) {
+    const roomConfig = {};
+    for (let playersCount = 4; playersCount <= 10; playersCount++) {
+      const roles = {};
+
+      const { managerPos, slackerPos } = generatePositions(roomNumber, playersCount);
+
+      roles[managerPos] = { mainRole: "Менеджер проекта", detailRole: null };
+      roles[slackerPos] = { mainRole: "Бездельник", detailRole: null };
+
+      let roleIndex = 0;
+      for (let playerNum = 1; playerNum <= playersCount; playerNum++) {
+        if (!roles[playerNum]) {
+          roles[playerNum] = {
+            mainRole: "Сотрудник",
+            detailRole: employeeRoles[roleIndex % employeeRoles.length]
+          };
+          roleIndex++;
+        }
+      }
+
+      roomConfig[playersCount] = {
+        playersCount,
+        roles
+      };
+    }
+    return roomConfig;
+  }
+
+  const roomsRoles = {
+    1: createRoomRoles(1),
+    2: createRoomRoles(2),
+    3: createRoomRoles(3),
+    4: createRoomRoles(4),
+    5: createRoomRoles(5),
+    6: createRoomRoles(6),
+    7: createRoomRoles(7),
+    8: createRoomRoles(8),
+    9: createRoomRoles(9),
+    10: createRoomRoles(10)
+  };
+
+  const roomSelect = document.getElementById("room");
+  const playersCountSelect = document.getElementById("playersCount");
+  const playerNumberSelect = document.getElementById("playerNumber");
+  const getRoleBtn = document.getElementById("getRoleBtn");
+  const resultDiv = document.getElementById("result");
+
+  function fillPlayersCountOptions() {
+    playersCountSelect.innerHTML = '<option value="">Выберите количество игроков</option>';
+    for (let i = 4; i <= 10; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      playersCountSelect.appendChild(option);
+    }
+  }
+
+  function fillPlayerNumberOptions(count) {
+    playerNumberSelect.innerHTML = '<option value="">Выберите номер игрока</option>';
+    for (let i = 1; i <= count; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      playerNumberSelect.appendChild(option);
+    }
+  }
+
+  roomSelect.addEventListener("change", () => {
+    resultDiv.textContent = "";
+    playersCountSelect.value = "";
+    playerNumberSelect.value = "";
+    getRoleBtn.disabled = true;
+    playerNumberSelect.disabled = true;
+
+    if (!roomSelect.value) {
+      playersCountSelect.disabled = true;
+      return;
+    }
+    playersCountSelect.disabled = false;
+    fillPlayersCountOptions();
+  });
+
+  playersCountSelect.addEventListener("change", () => {
+    resultDiv.textContent = "";
+    playerNumberSelect.value = "";
+    getRoleBtn.disabled = true;
+
+    const room = roomSelect.value;
+    const count = parseInt(playersCountSelect.value);
+
+    if (!room || isNaN(count)) {
+      playerNumberSelect.disabled = true;
+      return;
+    }
+
+    if (!roomsRoles[room] || !roomsRoles[room][count]) {
+      playerNumberSelect.disabled = true;
+      return;
+    }
+
+    playerNumberSelect.disabled = false;
+    fillPlayerNumberOptions(count);
+  });
+
+  playerNumberSelect.addEventListener("change", () => {
+    resultDiv.textContent = "";
+    const count = parseInt(playersCountSelect.value);
+    const playerNum = parseInt(playerNumberSelect.value);
+
+    if (
+      !isNaN(count) && !isNaN(playerNum) &&
+      playerNum >= 1 && playerNum <= count
+    ) {
+      getRoleBtn.disabled = false;
+    } else {
+      getRoleBtn.disabled = true;
+    }
+  });
+
+  getRoleBtn.addEventListener("click", () => {
+    const room = roomSelect.value;
+    const count = parseInt(playersCountSelect.value);
+    const playerNumber = parseInt(playerNumberSelect.value);
+
+    if (!room || !count || !playerNumber) {
+      alert("Пожалуйста, заполните все поля корректно.");
+      return;
+    }
+
+    const roomData = roomsRoles[room];
+    if (!roomData || !roomData[count]) {
+      alert("Для выбранной комнаты и количества игроков нет данных о ролях.");
+      return;
+    }
+
+    const roleData = roomData[count].roles[playerNumber];
+    const project = projects[room];
+
+    if (!roleData) {
+      resultDiv.textContent = "Роль для данного игрока не задана.";
+      return;
+    }
+
+    let message = `<div class="role-title">Ваша роль: ${roleData.mainRole}</div>`;
+
+    if (roleData.mainRole === "Менеджер проекта") {
+      message += `<div><strong>Задача менеджера:</strong> Организовать работу команды, контролировать прогресс и выявить бездельника до конца третьего дейлика.</div>`;
+      message += `<div class="project-name">Проект: ${project.name}</div>`;
+      message += `<div>${project.description}</div>`;
+    } else if (roleData.mainRole === "Бездельник") {
+      message += `<div>Ваша задача — не выдавать себя и продержаться все 3 дейлика.</div>`;
+    } else if (roleData.mainRole === "Сотрудник") {
+      message += `<div><strong>Роль сотрудника:</strong> ${roleData.detailRole.role}</div>`;
+      message += `<div>${roleData.detailRole.description}</div>`;
+      message += `<div class="project-name">Проект: ${project.name}</div>`;
+      message += `<div>${project.description}</div>`;
+    }
+
+    resultDiv.innerHTML = message;
+  });
+</script>
+</body>
+  </html>
+  
