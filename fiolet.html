@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FIOLET · Сборник рецептов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;800&family=Noto+Serif:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cover:#3f2b3d;--paper:#f6f1ee;--ink:#2b2420;--acc:#6b4a68;--rule:#e3d6d0;--chip:#e9dce4;--muted:#6f6560;--bg1:#2c1e2b;--bg2:#1c131b;--sans:'Montserrat',system-ui,sans-serif;--serif:'Noto Serif',Georgia,serif}
+@media (prefers-color-scheme:dark){:root{--bg1:#241824;--bg2:#150e15}}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:radial-gradient(ellipse at 50% 40%,var(--bg1),var(--bg2));font-family:var(--sans);color:var(--ink);overflow:hidden;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);-webkit-user-select:none;user-select:none}
+.scene{position:absolute;inset:0 0 64px 0;perspective:2600px;overflow:hidden}
+.book{position:absolute;left:50%;top:50%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.645,.045,.355,1)}
+.leaf{position:absolute;top:0;left:0;transform-origin:left center;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.645,.045,.355,1)}
+.leaf.flip{transform:rotateY(-180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:var(--paper);border-radius:2px 8px 8px 2px;box-shadow:0 12px 40px rgba(0,0,0,.45)}
+.face.back{transform:rotateY(180deg);border-radius:8px 2px 2px 8px}
+.face::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(60,35,55,.22),rgba(60,35,55,0) 9%)}
+.face.back::after{background:linear-gradient(270deg,rgba(60,35,55,.22),rgba(60,35,55,0) 9%)}
+.pg{position:absolute;inset:0;padding:30px 28px 0;display:flex;flex-direction:column}
+.cv{background:var(--cover);color:#f6efee;align-items:center;justify-content:center;text-align:center;padding:30px}
+.cv .brand{font-size:11px;letter-spacing:.55em;font-weight:600;padding-left:.55em}
+.cv hr{width:34px;height:3px;border:0;background:#a98fa6;margin:16px 0 22px;border-radius:2px}
+.cv h1{font-size:44px;line-height:1.12;font-weight:800}
+.cv a,.cv p{margin-top:34px;font-size:11px;letter-spacing:.3em;color:#e9dce4;text-decoration:none;text-transform:uppercase}
+.cv a:hover{color:#fff}
+.hint{position:absolute;bottom:26px;left:0;right:0;font-size:10px;letter-spacing:.2em;color:#a98fa6;text-transform:uppercase}
+.eyebrow{font-size:9.5px;letter-spacing:.3em;font-weight:600;color:var(--acc);text-transform:uppercase}
+h2{font-size:calc(27px*var(--u,1));line-height:1.1;font-weight:800;margin:6px 0 calc(10px*var(--u,1))}
+.mac{font-size:11.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+.mac b{color:var(--ink);font-weight:800}
+.vid{display:inline-block;align-self:flex-start;margin:calc(10px*var(--u,1)) 0 calc(12px*var(--u,1));padding:6px 13px;border:1px solid var(--rule);border-radius:99px;font-size:10.5px;font-weight:600;color:var(--acc);text-decoration:none;transition:background .2s}
+.vid:hover{background:var(--chip)}
+.mid{display:flex;gap:14px;align-items:flex-start}
+.art{flex:0 0 26%;padding-top:14px}
+.art svg{width:100%;height:auto;display:block}
+.ing{flex:1}
+.ing .eyebrow{display:block;margin-bottom:8px;color:var(--muted);font-size:9px}
+.row{display:grid;grid-template-columns:54px 1fr;gap:6px;padding:calc(3.5px*var(--u,1)) 0;border-bottom:1px solid var(--rule);font-family:var(--serif);font-size:calc(9.5px*var(--u,1));line-height:1.25}
+.row i{font-style:normal;font-family:var(--sans);font-weight:800;font-size:9px;color:var(--acc);padding-top:1px}
+.sec{border-top:1px solid var(--rule);margin-top:calc(12px*var(--u,1));padding-top:calc(11px*var(--u,1))}
+.sec .eyebrow{color:var(--muted)}
+ol{list-style:none;padding:0;margin-top:9px;display:grid;gap:calc(7px*var(--u,1))}
+li{display:grid;grid-template-columns:24px 1fr;gap:10px;font-family:var(--serif);font-size:calc(11.5px*var(--u,1));line-height:1.4;align-items:start}
+li span{width:22px;height:22px;border-radius:50%;background:var(--chip);color:var(--ink);font:800 10px var(--sans);display:grid;place-items:center}
+.ft{position:absolute;bottom:20px;left:30px;right:30px;display:flex;justify-content:space-between;font-size:10px;letter-spacing:.25em;color:var(--muted);font-weight:600}
+.toc h2{margin-bottom:20px}
+.toc h3{font-size:9.5px;letter-spacing:.3em;color:var(--acc);margin:18px 0 6px;font-weight:600}
+.toc button{all:unset;cursor:pointer;display:flex;justify-content:space-between;width:100%;padding:8px 0;border-bottom:1px solid var(--rule);font-family:var(--serif);font-size:14.5px;transition:color .2s}
+.toc button:hover,.toc button:focus-visible{color:var(--acc)}
+.toc button b{font:800 11px var(--sans);color:var(--acc)}
+.bar{position:absolute;left:0;right:0;bottom:env(safe-area-inset-bottom,0px);height:64px;display:flex;align-items:center;justify-content:center;gap:18px;color:#cdb9ca;font-size:11px;letter-spacing:.2em}
+.bar button{all:unset;cursor:pointer;width:42px;height:42px;border-radius:50%;border:1px solid #6b4a68;display:grid;place-items:center;color:#f6efee;font-size:18px;transition:background .2s,opacity .2s}
+.bar button:hover,.bar button:focus-visible{background:#6b4a68}
+.bar button:disabled{opacity:.25;cursor:default;background:none}
+.bar span{min-width:70px;text-align:center}
+@media (prefers-reduced-motion:reduce){.leaf,.book{transition-duration:.01s}}
+</style>
+</head>
+<body>
+<div class="scene" id="scene"><div class="book" id="book"></div></div>
+<div class="bar"><button id="prev" aria-label="Назад">‹</button><span id="ind"></span><button id="next" aria-label="Вперёд">›</button></div>
+<script>
+// Ссылки на видео в Instagram: вставьте адреса по номеру рецепта
+const VIDEO={1:'',2:'',3:'',4:'',5:'',6:''};
+const W=440,H=620;
+const tile=(bg,x)=>`<svg viewBox="0 0 130 120"><ellipse cx="65" cy="106" rx="52" ry="7" fill="#000" opacity=".08"/><rect x="10" y="12" width="110" height="92" rx="14" fill="#faf7f5" stroke="#6b4a68" stroke-width="3"/><rect x="20" y="22" width="90" height="72" rx="8" fill="${bg}"/>${x}</svg>`;
+const dots=(c,pts,r=3)=>pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="${r}" fill="${c}"/>`).join('');
+const ART={
+jar:`<svg viewBox="0 0 130 140"><ellipse cx="65" cy="128" rx="46" ry="6" fill="#000" opacity=".08"/><rect x="22" y="22" width="86" height="98" rx="10" fill="#fff" stroke="#6b4a68" stroke-width="3"/><rect x="26" y="68" width="78" height="48" rx="6" fill="#efe3d3"/><rect x="18" y="10" width="94" height="14" rx="5" fill="#3f2b3d"/><circle cx="46" cy="52" r="7" fill="#4b4570"/><circle cx="54" cy="58" r="7" fill="#4b4570"/><circle cx="42" cy="60" r="6" fill="#4b4570"/><circle cx="72" cy="56" r="9" fill="#e8c878" stroke="#c9a24f"/><circle cx="90" cy="60" r="8" fill="#b84d5f"/>${dots('#cdbca8',[[38,80],[56,76],[70,88],[84,80],[46,96],[68,100],[90,96]],1.5)}</svg>`,
+buck:tile('#d9b88f',`<circle cx="42" cy="38" r="5" fill="#c45a4b"/><ellipse cx="40" cy="55" rx="10" ry="6" fill="#efe0c0"/><ellipse cx="68" cy="48" rx="10" ry="6" fill="#efe0c0"/><ellipse cx="62" cy="76" rx="10" ry="6" fill="#efe0c0"/><circle cx="30" cy="78" r="6" fill="#c45a4b"/><rect x="82" y="32" width="6" height="6" fill="#e07f2c"/><rect x="92" y="64" width="6" height="6" fill="#e07f2c"/><rect x="28" y="64" width="6" height="6" fill="#e07f2c"/>`),
+brow:tile('#4a2e26',`<ellipse cx="40" cy="38" rx="11" ry="5" fill="#7d5042"/><ellipse cx="82" cy="46" rx="11" ry="5" fill="#7d5042"/><ellipse cx="46" cy="64" rx="12" ry="5" fill="#7d5042"/><ellipse cx="72" cy="72" rx="12" ry="5" fill="#7d5042"/><ellipse cx="94" cy="84" rx="8" ry="4" fill="#7d5042"/><rect x="48" y="46" width="5" height="5" fill="#2a1712"/><rect x="74" y="58" width="5" height="5" fill="#2a1712"/>`),
+cass:tile('#f4ead2',`${dots('#d9663a',[[34,36],[52,58],[76,66],[64,84],[90,46]],6)}${dots('#e8c349',[[30,66],[58,34],[84,80],[96,60]],2.5)}<path d="M30 28l5 14M50 26l5 14M70 30l5 14M92 36l5 14" stroke="#e8c349" stroke-width="2"/>`),
+salad:`<svg viewBox="0 0 130 120"><ellipse cx="65" cy="104" rx="52" ry="7" fill="#000" opacity=".08"/><circle cx="65" cy="58" r="50" fill="#faf7f5" stroke="#6b4a68" stroke-width="3"/><circle cx="65" cy="58" r="40" fill="#eaf0dc"/><ellipse cx="42" cy="38" rx="14" ry="8" fill="#9ab86b" transform="rotate(-25 42 38)"/><ellipse cx="42" cy="80" rx="12" ry="8" fill="#9ab86b"/><ellipse cx="86" cy="82" rx="12" ry="8" fill="#9ab86b"/><ellipse cx="62" cy="42" rx="11" ry="9" fill="#7d4333"/><ellipse cx="78" cy="50" rx="9" ry="7" fill="#7d4333"/><ellipse cx="60" cy="62" rx="12" ry="9" fill="#7d4333"/><circle cx="62" cy="42" r="3" fill="#e8c878"/><circle cx="60" cy="62" r="3" fill="#e8c878"/><rect x="48" y="78" width="14" height="14" fill="#c9503f" transform="rotate(25 55 85)"/><circle cx="90" cy="66" r="5" fill="none" stroke="#9a5b8c" stroke-width="2"/></svg>`,
+pep:`<svg viewBox="0 0 130 120"><ellipse cx="65" cy="106" rx="56" ry="6" fill="#000" opacity=".08"/><rect x="10" y="10" width="52" height="86" rx="22" fill="#d9632c" stroke="#c4501c" stroke-width="2"/><rect x="68" y="10" width="52" height="86" rx="22" fill="#ee8043" stroke="#c4501c" stroke-width="2"/><rect x="18" y="18" width="36" height="70" rx="16" fill="#f4ead2"/><rect x="76" y="18" width="36" height="70" rx="16" fill="#f4ead2"/><circle cx="36" cy="64" r="9" fill="#c9503f"/><ellipse cx="94" cy="66" rx="9" ry="5" fill="#fff" stroke="#e5ddd3"/>${dots('#e5cc8a',[[30,30],[44,44],[86,32],[102,50],[40,78],[94,80]],3)}</svg>`};
+const R=[
+{n:1,c:'ЗАВТРАК',t:'Ленивая овсянка',k:'369 ккал',m:[13,10,63],h:'1 ПОРЦИЯ',a:'jar',i:[['40 г','Геркулес быстрой варки'],['1 ст.л.','Семена чиа'],['1,5 ч.л.','Мёд'],['100 мл','Молоко'],['1 ч.л.','Какао или арахисовая паста'],['по вкусу','Банан, клубника, голубика']],s:['Смешай геркулес, семена чиа, мёд и молоко в банке или контейнере.','Добавь какао или арахисовую пасту, перемешай до однородности.','Убери в холодильник на ночь.','Утром достань и укрась бананом, клубникой и голубикой.']},
+{n:2,c:'ПП',t:'Гречка с курицей',k:'860 ккал',m:[94,30,54],h:'1 ПОРЦИЯ',a:'buck',i:[['200 г','Куриная грудка'],['70 г','Гречневая крупа'],['1/2 шт','Луковица'],['1/2 шт','Морковь'],['2-3 шт','Помидор кружочками'],['140 мл','Вода'],['по вкусу','Специи'],['2 ст.л.','Греческий йогурт'],['1 шт','Яйцо'],['40 г','Сыр тёртый']],s:['Мелко нарежь курицу. Засыпь гречку в контейнер, сверху выложи курицу и специи.','Мелко нарежь лук и морковь, добавь вместе с кружочками помидора.','Залей водой (ровно в 2 раза больше, чем гречки).','В отдельной ёмкости смешай яйцо, йогурт и тёртый сыр, залей соусом сверху.','Разогрей духовку до 180°C и поставь на 45 минут.']},
+{n:3,c:'ДЕСЕРТ',t:'Шоколадный брауни',k:'444 ккал/100г',m:[6,29,43],h:'НА 2 КОНТЕЙНЕРА (670 МЛ)',a:'brow',i:[['1 шт','Тёмный шоколад (плитка)'],['1 шт','Молочный шоколад (плитка)'],['80 г','Мука'],['5 г','Разрыхлитель'],['2 ст.л.','Какао'],['150 г','Сахар'],['160 г','Сливочное масло'],['3 г','Ванилин'],['3 шт','Яйца']],s:['Разбей яйца, добавь сахар, перемешай.','Смешай муку с какао, разрыхлителем и ванилином.','Просей мучную смесь к яйцам, перемешай.','В отдельной посуде растопи вместе масло и оба шоколада.','Влей шоколадную массу в тесто, перемешай.','Разлей массу по контейнерам.','Выпекай в разогретой до 180°C духовке 30 минут.']},
+{n:4,c:'ЗАВТРАК',t:'Творожная запеканка с ветчиной',k:'455 ккал',m:[50,21,18],h:'1 ПОРЦИЯ',a:'cass',i:[['2 шт','Яйца'],['120 г','Зернистый творог'],['100 г','Ветчина 3%'],['100 г','Болгарский перец'],['40 г','Кукуруза'],['20 г','Тёртый сыр 15%']],s:['Нарежь ветчину и перец небольшими кубиками.','Выложи творог в форму для запекания, разбей туда яйца, добавь соль и специи, перемешай.','Добавь ветчину, перец и кукурузу, перемешай ещё раз.','Сверху посыпь тёртым сыром.','Запекай в разогретой до 180°C духовке 45 минут.']},
+{n:5,c:'УЖИН',t:'Салат «Биг Тейсти»',k:'809 ккал',m:[112,31,23],h:'1 ПОРЦИЯ',a:'salad',i:[['400 г','Говяжья вырезка (фарш, без жира)'],['1 шт','Помидор'],['30 г','Корнишоны'],['1 пучок','Листья салата'],['40 г','Легкий сыр 15%'],['120 г','Греческий йогурт 2%'],['3 ч.л.','Кетчуп'],['2 ч.л.','Дижонская горчица'],['1/2 шт','Красный лук']],s:['Обжарь фарш на сковороде без масла до готовности. За пару минут до конца добавь сыр, чтобы он расплавился прямо в фарш.','Параллельно нарежь листья салата, помидор и красный лук, выложи в салатницу.','Для соуса мелко нарежь корнишоны и смешай с греческим йогуртом, дижонской горчицей и кетчупом.','Выложи к овощам жареный фарш с сыром и залей соусом сверху.']},
+{n:6,c:'ПП',t:'Фаршированные перцы с курицей',k:'494 ккал',m:[57,23,16],h:'НА 2 ПОРЦИИ (4 ПОЛОВИНКИ)',a:'pep',i:[['2 шт','Болгарский перец'],['250 г','Куриная грудка'],['3 шт','Яйца'],['50 г','Лёгкий сыр 15%'],['100 г','Моцарелла'],['1 шт','Помидор']],s:['Разрежь перцы пополам вдоль, удали семена и перегородки.','Нарежь курицу мелкими кубиками, помидор кружочками, моцареллу половинками шариков.','Разбей яйца в миску, посоли, поперчи и взболтай вилкой.','Разложи курицу по половинкам перца, сверху положи кружочки помидора и половинки моцареллы.','Залей каждую половинку яичной смесью, посыпь тёртым сыром.','Запекай в разогретой до 180°C духовке 35 минут под фольгой, затем ещё 10 минут без фольги, чтобы верх подрумянился.']}];
+// порядок страниц: 0 обложка, 1 содержание, 2-7 рецепты, 8 финал, 9 задняя обложка
+const TOC=[['ЗАВТРАКИ',[1,4]],['УЖИНЫ',[5]],['ДЕСЕРТЫ',[3]],['ПОЛЕЗНАЯ ЕДА (ПП)',[2,6]]];
+const pad=n=>String(n).padStart(2,'0');
+function page(p){
+ if(p==0)return `<div class="pg cv"><div class="brand">FIOLET</div><hr><h1>Сборник<br>рецептов</h1><a href="https://t.me/fiolet_artem" target="_blank" rel="noopener">t.me/fiolet_artem</a><div class="hint">Листай →</div></div>`;
+ if(p==1)return `<div class="pg toc"><div class="eyebrow">FIOLET · Сборник рецептов</div><h2>Содержание</h2>${TOC.map(([g,l])=>`<h3>${g}</h3>${l.map(n=>`<button data-go="${n+1}"><span>${R[n-1].t}</span><b>${pad(n)}</b></button>`).join('')}`).join('')}</div>`;
+ if(p<=7){const r=R[p-2];return `<div class="pg" data-r><div class="eyebrow">Рецепт №${r.n} · ${r.c}</div><h2>${r.t}</h2><div class="mac"><span><b>${r.k.split(' ')[0]}</b> ${r.k.split(' ')[1]}</span><span><b>${r.m[0]} г</b> белки</span><span><b>${r.m[1]} г</b> жиры</span><span><b>${r.m[2]} г</b> углеводы</span></div><a class="vid" href="${VIDEO[r.n]||'#'}" target="_blank" rel="noopener">Смотреть видео в Instagram →</a><div class="mid"><div class="art">${ART[r.a]}</div><div class="ing"><span class="eyebrow">Ингредиенты · ${r.h}</span>${r.i.map(x=>`<div class="row"><i>${x[0]}</i><span>${x[1]}</span></div>`).join('')}</div></div><div class="sec"><span class="eyebrow">Способ приготовления</span><ol>${r.s.map((s,i)=>`<li><span>${i+1}</span><p>${s}</p></li>`).join('')}</ol></div><div class="ft"><span>FIOLET</span><span>${pad(r.n)}</span></div></div>`}
+ if(p==8)return `<div class="pg cv"><div class="brand">FIOLET</div><hr><h1 style="font-size:32px">Приятного<br>аппетита</h1><a href="https://t.me/fiolet_artem" target="_blank" rel="noopener">t.me/fiolet_artem</a></div>`;
+ return `<div class="pg cv"></div>`;
+}
+const book=document.getElementById('book'),scene=document.getElementById('scene'),ind=document.getElementById('ind');
+let mob,leaves=[],k=0,N=0,busy=0;
+function build(){
+ mob=innerWidth<760;book.innerHTML='';leaves=[];
+ const bw=mob?W:2*W;book.style.width=bw+'px';book.style.height=H+'px';book.style.margin=`${-H/2}px 0 0 ${-bw/2}px`;
+ N=mob?10:5;
+ for(let i=0;i<N;i++){
+  const L=document.createElement('div');L.className='leaf';L.style.cssText=`width:${W}px;height:${H}px;left:${mob?0:W}px`;
+  L.innerHTML=`<div class="face">${page(mob?i:2*i)}</div><div class="face back">${mob?'':page(2*i+1)}</div>`;
+  book.appendChild(L);leaves.push(L);
+ }
+ k=Math.min(k,max());layout(false);fit();fitText();
+}
+const max=()=>mob?N-1:N;
+function z(i){return leaves[i].classList.contains('flip')?i+1:N-i}
+function layout(anim){
+ leaves.forEach((L,i)=>{const f=i<k;if(anim&&L.classList.contains('flip')!==f){L.style.zIndex=100;setTimeout(()=>L.style.zIndex=z(i),480)}L.classList.toggle('flip',f);if(!anim||L.style.zIndex!=100)L.style.zIndex=z(i)});
+ ind.textContent=(mob?k+1:k==0?'Обложка':k==N?'Конец':k)+(mob?' / '+N:'');
+ if(!mob)ind.textContent=k==0?'Обложка':k==N?'Конец':'Разворот '+k+' / '+(N-1);
+ prev.disabled=k==0;next.disabled=k==max();
+ fit();
+}
+function fit(){
+ const s=mob?Math.min(1,(innerWidth-16)/W,(scene.clientHeight-10)/H):Math.min(1.5,(innerWidth-40)/(2*W),(scene.clientHeight-20)/H);
+ const sh=mob?0:(k==0?-W/2:k==N?W/2:0);
+ book.style.transform=`scale(${s}) translateX(${sh}px)`;
+}
+function go(d){const n=k+d;if(n<0||n>max())return;k=n;layout(true)}
+function goPage(p){k=mob?Math.min(p,max()):(p%2?(p+1)/2:p/2);layout(true)}
+document.getElementById('prev').onclick=()=>go(-1);document.getElementById('next').onclick=()=>go(1);
+addEventListener('keydown',e=>{if(e.key=='ArrowRight'||e.key==' ')go(1);if(e.key=='ArrowLeft')go(-1)});
+addEventListener('resize',()=>{const m=innerWidth<760;m!=mob?build():fit()});
+book.addEventListener('click',e=>{
+ const b=e.target.closest('[data-go]');if(b){goPage(+b.dataset.go);return}
+ if(e.target.closest('a'))return;
+ const r=book.getBoundingClientRect();go(e.clientX>r.left+r.width/2?1:-1);
+});
+let sx=0;scene.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+scene.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>45)go(d<0?1:-1)},{passive:true});
+function fitText(){document.querySelectorAll('.pg[data-r]').forEach(pg=>{let u=1;const sec=pg.querySelector('.sec');pg.style.setProperty('--u',1);while(u>.72&&sec.offsetTop+sec.offsetHeight>H-48){u-=.03;pg.style.setProperty('--u',u.toFixed(2))}})}
+document.fonts&&document.fonts.ready.then(fitText);
+build();
+</script>
+</body>
+</html>
