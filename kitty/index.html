@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D котик (реалистичный v2)</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(circle at 50% 40%,#4d453c,#1d1916);font-family:system-ui,sans-serif}
+  canvas{display:block;touch-action:none;cursor:grab}
+  canvas:active{cursor:grabbing}
+  #ui{position:fixed;left:12px;bottom:12px;display:flex;gap:8px;flex-wrap:wrap;color:#eee;font-size:14px}
+  #ui label,#ui button{background:rgba(0,0,0,.45);border:0;color:#eee;padding:8px 12px;border-radius:8px;font-size:14px}
+  #hint{position:fixed;top:12px;left:0;right:0;text-align:center;color:#cbbfae;font-size:13px;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="hint">Тяни — вращать · колесо / щипок — приблизить</div>
+<div id="ui">
+  <label><input type="checkbox" id="auto"> автовращение</label>
+  <label><input type="checkbox" id="chair" checked> кресло</label>
+  <label><input type="checkbox" id="fur" checked> шерсть</label>
+  <button id="reset">сбросить вид</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const V=(x,y,z)=>new THREE.Vector3(x,y,z), C=h=>new THREE.Color(h);
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(38,innerWidth/innerHeight,0.1,100);
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+document.body.appendChild(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0xfff2e0,0x6a5a4a,0.9));
+const sun=new THREE.DirectionalLight(0xffffff,1.0); sun.position.set(3,6,6); scene.add(sun);
+const rimL=new THREE.DirectionalLight(0xffd9b0,0.4); rimL.position.set(-5,3,-4); scene.add(rimL);
+const root=new THREE.Group(); scene.add(root);
+const cat=new THREE.Group(); root.add(cat);
+const chairG=new THREE.Group(); root.add(chairG);
+root.position.set(-0.2,-1.5,0);
+
+/* ---------- процедурная текстура шерсти: R = длина волоска, G = оттенок ---------- */
+function furTex(){
+  const c=document.createElement('canvas'); c.width=c.height=512; const g=c.getContext('2d');
+  g.fillStyle='#000'; g.fillRect(0,0,512,512);
+  for(let i=0;i<5200;i++){
+    const x=Math.random()*512,y=Math.random()*512,r=1.8+Math.random()*2;
+    g.fillStyle=`rgb(${80+Math.random()*175|0},${Math.random()*255|0},0)`;
+    for(const dx of[-512,0,512])for(const dy of[-512,0,512]){g.beginPath();g.arc(x+dx,y+dy,r,0,6.283);g.fill();}
+  }
+  const t=new THREE.CanvasTexture(c); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.anisotropy=4; return t;
+}
+const TEX=furTex();
+const VS=`uniform float uH,uLen; attribute vec3 fcol; varying vec2 vUv; varying vec3 vN,vC,vW;
+void main(){vec3 p=position+normal*uH*uLen; p.y-=uH*uH*uLen*0.35;
+ vUv=uv; vC=fcol; vN=normalize(mat3(modelMatrix)*normal); vW=(modelMatrix*vec4(p,1.)).xyz;
+ gl_Position=projectionMatrix*viewMatrix*vec4(vW,1.);}`;
+const FS=`uniform sampler2D uTex; uniform float uH,uRep; varying vec2 vUv; varying vec3 vN,vC,vW;
+void main(){
+ vec4 s=texture2D(uTex,vUv*uRep);
+ if(uH>0.001 && s.r<uH*0.85+0.1) discard;
+ float band=smoothstep(0.35,0.55,fract(uH*1.6+s.g*0.9));
+ vec3 col=vC*mix(0.62,1.2,band)*(0.8+0.4*s.g)*mix(0.5,1.0,uH);
+ vec3 n=normalize(vN), Vv=normalize(cameraPosition-vW);
+ float d1=dot(n,normalize(vec3(3.,6.,6.)))*.5+.5, d2=dot(n,normalize(vec3(-5.,3.,-4.)))*.5+.5;
+ float L=0.38+0.22*n.y+0.75*d1*d1+0.18*d2;
+ float rim=pow(1.-max(dot(n,Vv),0.),3.);
+ gl_FragColor=vec4(col*L+vec3(1.,.75,.5)*rim*0.22*uH,1.);}`;
+const SHELLS=16, shellMeshes=[];
+function furify(geo,len,parent){
+  let base;
+  for(let k=0;k<=SHELLS;k++){
+    const m=new THREE.Mesh(geo,new THREE.ShaderMaterial({vertexShader:VS,fragmentShader:FS,side:THREE.DoubleSide,
+      uniforms:{uTex:{value:TEX},uH:{value:k/SHELLS},uLen:{value:len},uRep:{value:0.9}}}));
+    parent.add(m); if(k===0)base=m; else shellMeshes.push(m);
+  }
+  return base;
+}
+
+/* ---------- гладкие анатомические "трубы" с куполами на концах ---------- */
+const cTop=C(0x4a200c), cSide=C(0x8d3d14), cBelly=C(0xae6431), cLight=C(0xc78a58), cDark=C(0x2a130a);
+function furCol(n){const c=cSide.clone(); return n.y>0? c.lerp(cTop,Math.min(1,n.y*1.15)) : c.lerp(cBelly,Math.min(1,-n.y*1.2));}
+const ip=(a,t)=>{const f=t*(a.length-1),i=Math.min(a.length-2,Math.floor(f));return a[i]+(a[i+1]-a[i])*(f-i);};
+const smooth=(pts,k)=>new THREE.CatmullRomCurve3(pts.map(p=>V(...p))).getPoints(k);
+function tube(P,A,B,sides,ref,fn,len,parent){
+  const n=P.length, fr=[];
+  for(let i=0;i<n;i++){
+    const t=P[Math.min(i+1,n-1)].clone().sub(P[Math.max(i-1,0)]).normalize();
+    let u=new THREE.Vector3().crossVectors(t,ref); if(u.lengthSq()<1e-4)u.crossVectors(t,V(1,0,0)); u.normalize();
+    fr.push({c:P[i],t,u,v:new THREE.Vector3().crossVectors(t,u).normalize(),ra:ip(A,i/(n-1)),rb:ip(B,i/(n-1))});
+  }
+  const M=5, R=[];
+  const f0=fr[0], f1=fr[n-1];
+  for(let q=M;q>=1;q--){const a=q/M*Math.PI/2;
+    R.push({...f0,c:f0.c.clone().addScaledVector(f0.t,-Math.sin(a)*f0.ra*0.85),s:Math.cos(a),dir:-1,ang:a});}
+  fr.forEach(f=>R.push({...f,s:1,dir:0,ang:0}));
+  for(let q=1;q<=M;q++){const a=q/M*Math.PI/2;
+    R.push({...f1,c:f1.c.clone().addScaledVector(f1.t,Math.sin(a)*f1.ra*0.85),s:Math.cos(a),dir:1,ang:a});}
+  const S=sides+1, pos=[],nor=[],uv=[],col=[],idx=[]; let dist=0;
+  R.forEach((r,i)=>{
+    if(i)dist+=r.c.distanceTo(R[i-1].c);
+    for(let j=0;j<=sides;j++){
+      const a=j/sides*Math.PI*2, ca=Math.cos(a), sa=Math.sin(a);
+      const p=r.c.clone().addScaledVector(r.u,ca*r.ra*r.s).addScaledVector(r.v,sa*r.rb*r.s);
+      const rad=r.u.clone().multiplyScalar(r.rb*ca).addScaledVector(r.v,r.ra*sa).normalize();
+      const nn=rad.multiplyScalar(Math.cos(r.ang)).addScaledVector(r.t,r.dir*Math.sin(r.ang)).normalize();
+      const k=fn(nn,p);
+      pos.push(p.x,p.y,p.z); nor.push(nn.x,nn.y,nn.z); col.push(k.r,k.g,k.b);
+      uv.push(j/sides*Math.PI*(r.ra+r.rb),dist);
+    }
+  });
+  for(let i=0;i<R.length-1;i++)for(let j=0;j<sides;j++){const a=i*S+j; idx.push(a,a+S,a+1,a+1,a+S,a+S+1);}
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  g.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3));
+  g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));
+  g.setAttribute('fcol',new THREE.Float32BufferAttribute(col,3));
+  g.setIndex(idx);
+  return furify(g,len,parent||cat);
+}
+
+/* ---------- туловище ---------- */
+tube(smooth([[-1.85,0.70,0],[-1.45,0.85,0],[-0.85,1.00,0],[-0.10,1.15,0],[0.45,1.45,0],[0.70,1.95,0],[0.78,2.40,0]],22),
+  [0.35,0.70,0.95,0.95,0.80,0.50,0.38],[0.35,0.65,0.90,0.85,0.70,0.50,0.40],28,V(0,0,1),
+  (n,p)=>(p.x>0.3&&p.y<1.9&&n.z>0.3)?cLight.clone().lerp(cSide,0.35):furCol(n),0.05);
+// бедро и задняя лапа
+tube(smooth([[-1.25,1.00,0.45],[-0.65,0.80,0.72],[-0.10,0.45,0.82],[0.40,0.20,0.88]],12),
+  [0.55,0.64,0.46,0.22],[0.40,0.44,0.36,0.20],20,V(0,0,1),n=>furCol(n),0.045);
+
+/* ---------- голова ---------- */
+const head=new THREE.Group(); head.position.set(0.80,2.68,0.12); head.rotation.set(0.20,-0.04,-0.07); cat.add(head);
+const headMesh=tube(smooth([[0,0,-0.45],[0,0.03,-0.30],[0,0.03,-0.10],[0,0,0.10],[0,-0.07,0.30],[0,-0.14,0.45],[0,-0.19,0.58],[0,-0.21,0.67]],20),
+  [0.30,0.50,0.60,0.58,0.43,0.30,0.22,0.13],[0.30,0.47,0.52,0.48,0.36,0.26,0.19,0.11],28,V(0,1,0),
+  (n,p)=>{
+    if(p.z>0.3&&p.y<0.0) return cLight.clone().lerp(cSide,0.25);
+    if(p.z>0.0&&p.y<-0.14) return cLight.clone().lerp(cSide,0.55);
+    if(n.y>0.25&&p.z<0.32) return cTop.clone().lerp(cSide,0.15);
+    return furCol(n);
+  },0.028,head);
+
+// ---- уши: чашеобразные, широкое основание, округлый кончик, внутри розовая кожа ----
+function earGeo(W,H,off,mode){
+  const nu=18,nv=14,pos=[],uv=[],col=[],idx=[];
+  for(let i=0;i<=nu;i++){const u=i/nu, w=W*Math.pow(1-Math.pow(u,1.7),1.15);
+    for(let j=0;j<=nv;j++){const v=-1+2*j/nv;
+      const x=v*w, y=u*H, z=-0.26*(1-v*v)*(1-0.2*u)-0.10*u*u+off;
+      pos.push(x,y,z); uv.push(x,y);
+      const k=mode==='out'? cSide.clone().lerp(cDark,Math.pow(u,2.2))
+        : C(0xd8a08e).lerp(C(0x6e3626),Math.max(0,1-u*2.2)*0.9).lerp(C(0x7a3d2a),Math.pow(Math.abs(v),6)*0.7);
+      col.push(k.r,k.g,k.b);
+    }}
+  for(let i=0;i<nu;i++)for(let j=0;j<nv;j++){const a=i*(nv+1)+j; idx.push(a,a+1,a+nv+1,a+1,a+nv+2,a+nv+1);}
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));
+  g.setAttribute(mode==='out'?'fcol':'color',new THREE.Float32BufferAttribute(col,3));
+  g.setIndex(idx); g.computeVertexNormals();
+  const na=g.attributes.normal, mid=Math.floor(nu*0.4)*(nv+1)+nv/2;
+  if((mode==='out')===(na.getZ(mid)>0)) for(let i=0;i<na.count;i++)na.setXYZ(i,-na.getX(i),-na.getY(i),-na.getZ(i));
+  return g;
+}
+function ear(x,tilt,turn){
+  const g=new THREE.Group(); g.position.set(x,0.34,-0.08); g.rotation.set(-0.15,turn,tilt); g.scale.setScalar(2/3); head.add(g);
+  furify(earGeo(0.31,0.98,-0.022,'out'),0.02,g);
+  g.add(new THREE.Mesh(earGeo(0.31,0.98,0.022,'in'),
+    new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.8,side:THREE.DoubleSide,emissive:0x2a0e08})));
+}
+ear(-0.34,0.85,0.2); ear(0.36,-0.32,-0.12);
+
+// ---- привязка деталей лица к поверхности головы лучом ----
+scene.updateMatrixWorld(true);
+const rc=new THREE.Raycaster();
+function onFace(x,y){
+  const o=head.localToWorld(V(x,y,3)), d=V(0,0,-1).transformDirection(head.matrixWorld);
+  rc.set(o,d); const h=rc.intersectObject(headMesh)[0];
+  if(!h) return {p:V(x,y,0.5),n:V(0,0,1)};
+  const na=headMesh.geometry.attributes.normal, a=h.face.a;
+  const nn=V(na.getX(a),na.getY(a),na.getZ(a)); if(nn.z<0)nn.negate();
+  return {p:head.worldToLocal(h.point.clone()),n:nn.add(V(0,0,0.6)).normalize()};
+}
+function surfCurve(pts,r,color,lift){
+  const P=pts.map(([x,y])=>{const f=onFace(x,y);return f.p.clone().addScaledVector(f.n,lift);});
+  head.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(P),24,r,6,false),new THREE.MeshBasicMaterial({color})));
+}
+
+// ---- глаза: настоящие глазные яблоки с радужкой, веки покрыты шерстью ----
+function eyeTex(){
+  const c=document.createElement('canvas'); c.width=512; c.height=256; const g=c.getContext('2d');
+  g.fillStyle='#2b1d0c'; g.fillRect(0,0,512,256);
+  const cx=128,cy=128, gr=g.createRadialGradient(cx,cy,6,cx,cy,64);
+  [[0,'#e6e67c'],[0.35,'#b9d156'],[0.75,'#6f9a32'],[0.92,'#37561a'],[1,'#1c2a0c']].forEach(s=>gr.addColorStop(s[0],s[1]));
+  g.fillStyle=gr; g.beginPath(); g.arc(cx,cy,64,0,6.283); g.fill();
+  for(let i=0;i<280;i++){const a=Math.random()*6.283,r1=9+Math.random()*10,r2=r1+18+Math.random()*40;
+    g.strokeStyle=Math.random()<0.5?'rgba(255,250,150,0.2)':'rgba(30,60,10,0.25)'; g.lineWidth=0.6+Math.random();
+    g.beginPath(); g.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1); g.lineTo(cx+Math.cos(a)*r2,cy+Math.sin(a)*r2); g.stroke();}
+  g.fillStyle='rgba(5,4,3,0.35)'; g.beginPath(); g.ellipse(cx,cy,13,50,0,0,6.283); g.fill();
+  g.fillStyle='#050403'; g.beginPath(); g.ellipse(cx,cy,8,44,0,0,6.283); g.fill();
+  const t=new THREE.CanvasTexture(c); t.anisotropy=4; return t;
+}
+const EYEMAT=new THREE.MeshStandardMaterial({map:eyeTex(),roughness:0.12,metalness:0});
+const LINER=new THREE.MeshStandardMaterial({color:0x140a05,roughness:0.6});
+function lidGeo(R,thS,thL,col){
+  const g=new THREE.SphereGeometry(R,40,20,0,Math.PI*2,thS,thL), n=g.attributes.position.count, a=[];
+  for(let i=0;i<n;i++)a.push(col.r,col.g,col.b);
+  g.setAttribute('fcol',new THREE.Float32BufferAttribute(a,3));
+  const uv=g.attributes.uv; for(let i=0;i<uv.array.length;i++)uv.array[i]*=0.7;
+  return g;
+}
+function makeEye(x,y,slant){
+  const f=onFace(x,y), g=new THREE.Group(), R=0.115, R1=R*1.1, thU=1.607, thL=1.257;
+  g.position.copy(f.p).addScaledVector(f.n,-0.055);
+  g.quaternion.setFromUnitVectors(V(0,0,1),f.n); g.rotateZ(slant); head.add(g);
+  g.add(new THREE.Mesh(new THREE.SphereGeometry(R,40,28),EYEMAT));
+  const gl=new THREE.Mesh(new THREE.SphereGeometry(0.013,10,8),new THREE.MeshBasicMaterial({color:0xffffff}));
+  gl.position.set(0.28,-0.02,0.96).normalize().multiplyScalar(R*1.004); g.add(gl);
+  const lc=C(0x3b1a0b);
+  const up=new THREE.Group(); up.rotation.x=-0.15; g.add(up);                       // верхнее веко (дугой вверх)
+  furify(lidGeo(R1,0,thU,lc),0.012,up);
+  const ur=new THREE.Mesh(new THREE.TorusGeometry(R1*Math.sin(thU),0.0075,8,48),LINER);
+  ur.rotation.x=Math.PI/2; ur.position.y=R1*Math.cos(thU); up.add(ur);
+  const lo=new THREE.Group(); lo.rotation.x=0.08; g.add(lo);                         // нижнее веко
+  furify(lidGeo(R1,Math.PI-thL,thL,lc),0.010,lo);
+  const lr=new THREE.Mesh(new THREE.TorusGeometry(R1*Math.sin(thL),0.006,8,48),LINER);
+  lr.rotation.x=Math.PI/2; lr.position.y=-R1*Math.cos(thL); lo.add(lr);
+}
+makeEye(-0.26,0.09,-0.22); makeEye(0.29,0.10,0.22);
+
+// ---- нос: объёмная кожаная подушечка с тёмным контуром и ноздрями ----
+(function(){
+  const s=new THREE.Shape();
+  s.moveTo(-0.075,0.045); s.quadraticCurveTo(0,0.065,0.075,0.045);
+  s.quadraticCurveTo(0.085,0.0,0.03,-0.04); s.quadraticCurveTo(0,-0.06,-0.03,-0.04);
+  s.quadraticCurveTo(-0.085,0.0,-0.075,0.045);
+  const geo=new THREE.ExtrudeGeometry(s,{depth:0.012,bevelEnabled:true,bevelThickness:0.012,bevelSize:0.012,bevelSegments:4,curveSegments:14});
+  const g=new THREE.Group(); g.scale.setScalar(0.85);
+  g.add(new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xb87a72,roughness:0.3})));
+  const ol=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x3a1d14,roughness:0.8})); ol.scale.set(1.17,1.2,0.6); ol.position.z=-0.004; g.add(ol);
+  [-1,1].forEach(k=>{const sh=new THREE.Shape(); sh.moveTo(-0.016,0); sh.quadraticCurveTo(0,0.011,0.016,0); sh.quadraticCurveTo(0,-0.004,-0.016,0);
+    const n=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshBasicMaterial({color:0x1a0a06,side:THREE.DoubleSide}));
+    n.position.set(k*0.036,-0.026,0.027); n.rotation.z=k*0.6; g.add(n);});
+  const f=onFace(0,-0.13); g.position.copy(f.p); g.quaternion.setFromUnitVectors(V(0,0,1),f.n); head.add(g);
+})();
+// губы: «фильтрум» и W-образная линия рта
+surfCurve([[0,-0.185],[0,-0.215],[0,-0.25]],0.0045,0x2b1409,0.02);
+[-1,1].forEach(s=>surfCurve([[0,-0.25],[s*0.05,-0.285],[s*0.11,-0.285],[s*0.17,-0.255]],0.0045,0x2b1409,0.02));
+const wm=new THREE.LineBasicMaterial({color:0xf2eadb,transparent:true,opacity:0.9});
+[-1,1].forEach(s=>{for(let k=0;k<5;k++){
+  const a=V(s*0.14,-0.20+k*0.028,0.50), b=V(s*0.55,-0.17+k*0.05-0.02,0.52), c=V(s*1.05,-0.12+k*0.09-0.14,0.38);
+  head.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(new THREE.QuadraticBezierCurve3(a,b,c).getPoints(14)),wm));}});
+
+/* ---------- передние лапы (скрещены) ---------- */
+const legCol=n=>furCol(n);
+tube(smooth([[0.50,1.55,0.35],[0.90,0.95,0.55],[1.30,0.48,0.85],[1.70,0.22,1.05],[2.00,0.17,1.12]],16),
+  [0.22,0.19,0.16,0.17,0.15],[0.20,0.17,0.15,0.20,0.16],20,V(1,0,0),legCol,0.035);
+tube(smooth([[1.00,1.45,0.05],[1.35,0.95,0.30],[1.52,0.50,0.52],[1.38,0.22,0.82],[1.18,0.17,1.00]],16),
+  [0.20,0.17,0.15,0.16,0.14],[0.19,0.16,0.14,0.18,0.15],20,V(1,0,0),legCol,0.035);
+
+/* ---------- хвост ---------- */
+tube(smooth([[-1.75,0.45,-0.35],[-1.60,0.22,0.40],[-0.90,0.17,0.98],[0.00,0.17,1.18],[0.85,0.17,1.14]],26),
+  [0.17,0.16,0.14,0.12,0.10],[0.17,0.16,0.14,0.12,0.10],14,V(0,1,0),
+  (n,p)=>p.x>0.5?cDark.clone().lerp(cSide,Math.max(0,(0.8-p.x)*2)):furCol(n),0.04);
+
+/* ---------- кресло и мягкая тень ---------- */
+const sand=new THREE.MeshStandardMaterial({color:0xc9b48a,roughness:1,side:THREE.DoubleSide});
+const seat=new THREE.Mesh(new THREE.CylinderGeometry(3.0,3.0,0.3,64),sand); seat.position.set(0.2,-0.15,0); chairG.add(seat);
+const back=new THREE.Mesh(new THREE.CylinderGeometry(3.0,3.0,3.8,64,1,true,Math.PI*0.62,Math.PI*0.76),sand);
+back.position.set(0.2,1.9,-0.2); chairG.add(back);
+(function(){const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
+  const gr=g.createRadialGradient(64,64,6,64,64,64);gr.addColorStop(0,'rgba(0,0,0,.65)');gr.addColorStop(1,'rgba(0,0,0,0)');
+  g.fillStyle=gr;g.fillRect(0,0,128,128);
+  const sh=new THREE.Mesh(new THREE.PlaneGeometry(5.4,4.2),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false}));
+  sh.rotation.x=-Math.PI/2; sh.position.set(0.0,0.012,0.35); chairG.add(sh);})();
+
+/* ---------- камера и управление ---------- */
+const home={rx:0.12,ry:-0.05,dist:11.5}; let rx=home.rx,ry=home.ry,dist=home.dist;
+function place(){root.rotation.set(rx,ry,0);camera.position.set(0,1.2,dist);camera.lookAt(0,0.3,0);}
+place();
+const el=renderer.domElement,ptrs=new Map();let pinch=0;
+el.addEventListener('pointerdown',e=>{el.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,[e.clientX,e.clientY]);});
+['pointerup','pointercancel'].forEach(t=>el.addEventListener(t,e=>{ptrs.delete(e.pointerId);pinch=0;}));
+el.addEventListener('pointermove',e=>{
+  if(!ptrs.has(e.pointerId))return; const p=ptrs.get(e.pointerId);
+  if(ptrs.size===1){ry+=(e.clientX-p[0])*0.008;rx=Math.max(-0.6,Math.min(1.3,rx+(e.clientY-p[1])*0.006));}
+  ptrs.set(e.pointerId,[e.clientX,e.clientY]);
+  if(ptrs.size===2){const [a,b]=[...ptrs.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);
+    if(pinch)dist=Math.max(5,Math.min(20,dist*pinch/d)); pinch=d;}
+  place();
+});
+el.addEventListener('wheel',e=>{e.preventDefault();dist=Math.max(5,Math.min(20,dist*(1+e.deltaY*0.001)));place();},{passive:false});
+document.getElementById('reset').onclick=()=>{rx=home.rx;ry=home.ry;dist=home.dist;place();};
+document.getElementById('chair').onchange=e=>{chairG.visible=e.target.checked;};
+document.getElementById('fur').onchange=e=>{shellMeshes.forEach(m=>m.visible=e.target.checked);};
+const auto=document.getElementById('auto');
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+(function loop(){requestAnimationFrame(loop); if(auto.checked&&!ptrs.size){ry+=0.006;place();} renderer.render(scene,camera);})();
+</script>
+</body>
+</html>
