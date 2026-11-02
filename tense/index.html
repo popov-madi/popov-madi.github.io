@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Времена английского на линии времени</title>
+<style>
+:root{--bg:#fff;--fg:#2c2c2a;--muted:#5f5e5a;--card:#f7f6f2;--line:#d3d1c7;--past:#f1efe8;--pres:#e1f5ee;--fut:#eeedfe;--act:#1d9e75;--bar:#5dcaa5;--barl:#0f6e56;--ref:#534ab7;--ok:#0f6e56;--bad:#a32d2d;--sel:#534ab7;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bar:#5dcaa5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f1e1c;--fg:#f1efe8;--muted:#b4b2a9;--card:#2a2926;--line:#444441;--past:#2f2e2b;--pres:#16342b;--fut:#2a2750;--act:#5dcaa5;--bar:#1d9e75;--barl:#9fe1cb;--ref:#afa9ec;--ok:#9fe1cb;--bad:#f09595;--sel:#afa9ec}}
+:root[data-theme="dark"]{--bg:#1f1e1c;--fg:#f1efe8;--muted:#b4b2a9;--card:#2a2926;--line:#444441;--past:#2f2e2b;--pres:#16342b;--fut:#2a2750;--act:#5dcaa5;--bar:#1d9e75;--barl:#9fe1cb;--ref:#afa9ec;--ok:#9fe1cb;--bad:#f09595;--sel:#afa9ec}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:24px;margin:0 0 4px;font-weight:600}
+h2{font-size:19px;margin:0;font-weight:600}
+.sub{color:var(--muted);margin:0 0 18px}
+.tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+button{font:inherit;color:inherit;cursor:pointer}
+.tab{padding:7px 14px;border:1px solid var(--line);background:var(--card);border-radius:999px}
+.tab[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.grid{display:grid;grid-template-columns:minmax(64px,auto) repeat(3,1fr);gap:6px;align-items:stretch;margin-bottom:16px}
+.ch{text-align:center;font-weight:600;padding:4px 0;font-size:14px}
+.rl{font-size:12px;color:var(--muted);display:flex;align-items:center;line-height:1.25}
+.cell{border:2px solid transparent;border-radius:10px;padding:8px 6px;text-align:center;font-size:13px;line-height:1.25;min-height:54px}
+.cell small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.c0{background:var(--past)}.c1{background:var(--pres)}.c2{background:var(--fut)}
+.cell[aria-pressed="true"]{border-color:var(--sel);box-shadow:0 0 0 1px var(--sel)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:20px}
+.head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.chip{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:1px 8px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.tl svg{width:100%;height:auto;display:block;overflow:visible}
+.tl text{fill:var(--fg);font-size:17px;font-family:inherit}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:2px 0 12px}
+.legend i{display:inline-block;vertical-align:middle;margin-right:5px}
+dl{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
+dt{color:var(--muted);font-size:14px}dd{margin:0}
+.en{font-style:italic}
+.uh{font-size:16px;margin:16px 0 4px;font-weight:600}
+.uses{margin:0;padding-left:22px}
+.uses>li{margin:8px 0}
+.uses ul{margin:3px 0 0;padding-left:18px;list-style:disc}
+.uses ul li{font-size:15px;margin:1px 0}
+.quiz{margin-top:4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:12px 0}
+.opt{padding:10px;border:1px solid var(--line);background:var(--bg);border-radius:10px;text-align:left}
+.opt.ok{border-color:var(--ok);background:var(--pres);color:var(--fg)}
+.opt.bad{border-color:var(--bad)}
+.fb{min-height:24px;margin:6px 0 10px}
+.act{padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);margin-right:8px}
+.q{font-size:20px;font-style:italic;margin:6px 0 0}
+@media (max-width:520px){.cell{font-size:12px;padding:6px 3px}}
+@media (prefers-reduced-motion:no-preference){.tl svg{animation:f .3s ease}@keyframes f{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}}
+.head{scroll-margin-top:16px}
+.totop{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--fg);color:var(--bg);font-size:22px;line-height:1;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;padding:0}
+.totop.show{opacity:1;pointer-events:auto}
+/*[hidden]{display:none!important}
+html,body{height:100%;overflow:hidden}
+main{height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));max-width:1100px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto minmax(0,1fr);gap:8px 10px}
+h1{font-size:17px;margin:0;align-self:center;line-height:1.2}
+.sub{display:none}
+.tabs{margin:0;flex-wrap:nowrap}
+.tab{padding:5px 12px;font-size:14px}
+#one,#quiz{grid-column:1/-1;grid-row:2;min-height:0}
+#one{display:flex;flex-direction:column;gap:8px}
+.grid{gap:4px;margin:0;flex:none;grid-template-columns:minmax(46px,auto) repeat(3,1fr)}
+.ch{font-size:12px;padding:0}
+.rl{font-size:10px}
+.cell{min-height:36px;padding:3px 2px;font-size:12px}
+.cell small{display:none}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;margin:0;padding:10px 12px;gap:4px;overflow:hidden}
+.head{margin:0}
+.legend{margin:0 0 2px;font-size:11px}
+.tl{flex:0 1 auto;min-height:0}
+.tl svg{max-height:100%}
+.card{flex:1;min-height:0;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;touch-action:pan-y}
+.card .ct{font-size:13px;color:var(--muted);margin:0 0 4px}
+.card .cb{margin:0 0 4px}
+.card ul{margin:2px 0 0;padding-left:18px;list-style:disc}
+.card li{font-size:15px}
+.card dl{margin:0}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none}
+.nb{padding:4px 18px;border:1px solid var(--line);background:var(--bg);border-radius:8px;font-size:18px;line-height:1.2}
+.nb:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:6px}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--sel)}
+#quiz{display:flex;flex-direction:column;overflow:auto}
+.q{font-size:17px;margin:0}
+.opts{grid-template-columns:1fr 1fr;margin:8px 0}
+.opt{padding:8px;font-size:14px}
+@media (min-width:880px){#one{flex-direction:row}.grid{width:400px;flex:none;align-self:flex-start}.cell{min-height:56px;font-size:14px}.rl{font-size:12px}.panel{padding:14px 16px}}
+@media (max-height:700px){.legend{display:none}}
+*/
+</style>
+</head>
+<body>
+<main>
+<h1>Времена английского на линии времени</h1>
+<p class="sub">Выберите время и посмотрите, где на оси лежит действие относительно «сейчас» и точки отсчёта.</p>
+
+<div class="tabs" role="group" aria-label="Режим">
+<button class="tab" id="v1" aria-pressed="true">Времена</button>
+<button class="tab" id="v2" aria-pressed="false">Тест</button>
+</div>
+
+<div id="one">
+<div class="grid" id="grid"></div>
+<div class="panel" id="panel"></div>
+</div>
+<section class="quiz" id="quiz" hidden>
+<h2>Проверь себя</h2>
+<p class="q" id="qt"></p>
+<div class="opts" id="opts"></div>
+<div class="fb" id="fb" aria-live="polite"></div>
+<button class="act" id="show" hidden>Показать на линии</button>
+<button class="act" id="next" hidden>Дальше</button>
+<span class="sub" id="score"></span>
+</section>
+</main>
+
+<script>
+var T=[
+{id:"past-s",r:0,c:0,n:"Past Simple",f:"V2 / -ed",u:[["Одно действие или состояние в прошлом.",[]],["Последовательность действий в прошлом.",["I entered the office, looked around and came up to the desk."]]],neg:"did not (didn’t) + V1",q:"Did + подлежащее + V1?",en:"I worked yesterday.",ru:"Я работал вчера.",mk:"yesterday, ago, last week, in 2020",note:"Законченное действие в прошлом. Связи с «сейчас» нет.",tl:{pts:[.25],above:[.25,"действие"],below:[[.5,"сейчас"]]}},
+{id:"pres-s",r:0,c:1,n:"Present Simple",f:"V1 / V-s",u:[["Привычки и регулярно повторяющиеся действия.",["He often works till midnight.","My brother plays tennis every other day.","Are you never late for classes?","Do you generally speak English in class?"]],["Общеизвестные истины (законы природы), постоянные характеристики, ситуации и состояния.",["The sun sets in the west.","She teaches English at school.","Do you like rainy weather?","His parents live in London."]],["Запланированные факты и события по официальному расписанию (рейсы, прибытие и отправление поездов, маршруты), которые точно произойдут.",["The flight leaves at 2 p.m. (according to the timetable)","You arrive at Basel at 6.30 a.m. local time. (according to the itinerary)","The meeting is on Monday next week."]]],neg:"do/does not + V1",q:"Do/Does + подлежащее + V1?",en:"I work every day.",ru:"Я работаю каждый день.",mk:"every day, usually, always, often",note:"Привычка, факт, расписание: действие повторяется и вокруг «сейчас».",tl:{pts:[.3,.4,.5,.6,.7],above:[.5,"повторяется"],below:[[.5,"сейчас"]]}},
+{id:"fut-s",r:0,c:2,n:"Future Simple",f:"will + V1",u:[["Предсказание будущего действия; событие, которое неизбежно и не зависит от говорящего.",[]],["Действие, решённое спонтанно, по обстоятельствам (не часть плана).",[]],["Действие, которое говорящий считает возможным, вероятным или правдоподобным в будущем.",[]]],neg:"will not (won’t) + V1",q:"Will + подлежащее + V1?",en:"I will work tomorrow.",ru:"Я буду работать завтра.",mk:"tomorrow, next week, soon",note:"Действие произойдёт в будущем (решение, прогноз, обещание).",tl:{pts:[.75],above:[.75,"действие"],below:[[.5,"сейчас"]]}},
+{id:"past-c",r:1,c:0,n:"Past Continuous",f:"was/were + V-ing",u:[["Действие в процессе в определённый момент в прошлом.",["When I came home, my mother was cooking dinner."]],["Раздражение по поводу действий в прошлом (с always).",["When he worked here, he was always making trouble."]]],neg:"was/were not + V-ing",q:"Was/Were + подлежащее + V-ing?",en:"At 5 pm yesterday I was working.",ru:"Вчера в 5 вечера я работал.",mk:"at 5 pm yesterday, while, when",note:"Процесс шёл в конкретный момент в прошлом. Этот момент лежит внутри полосы.",tl:{bar:[.1,.34],ref:[.22],above:[.22,"процесс шёл"],below:[[.22,"5 pm вчера"],[.5,"сейчас"]]}},
+{id:"pres-c",r:1,c:1,n:"Present Continuous",f:"am/is/are + V-ing",u:[["Действие происходит сейчас: в момент речи или в период, который включает момент речи.",["We are packing the things now and the kids are playing in their room.","Peter is still sleeping. Don’t wake him up.","It’s raining all day.","He is studying at Oxford.","I am doing this project right now."]],["Заранее запланированные действия в будущем (план или намерение говорящего).",["My father is leaving for Rome tonight.","We are having a party on Saturday.","Nick is running a marathon next week."]],["Действия с необычной частотой: выражают раздражение.",["You are always finding fault with me.","Why are you complaining all the time?","You are always losing things!","I am being so slow today."]]],neg:"am/is/are not + V-ing",q:"Am/Is/Are + подлежащее + V-ing?",en:"I am working now.",ru:"Я сейчас работаю.",mk:"now, at the moment, currently",note:"Процесс идёт прямо в момент речи.",tl:{bar:[.38,.62],above:[.5,"идёт сейчас"],below:[[.5,"сейчас"]]}},
+{id:"fut-c",r:1,c:2,n:"Future Continuous",f:"will be + V-ing",u:[["Действие, которое будет идти в определённый момент в будущем.",[]],["Вопросы, когда мы собираемся попросить об одолжении (вежливая просьба).",["Will you be using your bike today?","Will you be passing the pharmacy today?"]]],neg:"will not be + V-ing",q:"Will + подлежащее + be + V-ing?",en:"At 5 pm tomorrow I will be working.",ru:"Завтра в 5 вечера я буду работать.",mk:"at 5 pm tomorrow, this time next week",note:"Процесс будет идти в конкретный момент в будущем.",tl:{bar:[.62,.88],ref:[.75],above:[.75,"процесс будет идти"],below:[[.5,"сейчас"],[.75,"5 pm завтра"]]}},
+{id:"past-p",r:2,c:0,n:"Past Perfect",f:"had + V3",neg:"had not (hadn’t) + V3",q:"Had + подлежащее + V3?",en:"I had worked before he came.",ru:"Я уже отработал до того, как он пришёл.",mk:"before, by the time, already, after",note:"Действие закончилось ДО другого момента в прошлом: прошлое в прошлом.",tl:{pts:[.08],ref:[.28],arrow:[.08,.28],above:[.08,"закончилось"],below:[[.28,"he came"],[.5,"сейчас"]]}},
+{id:"pres-p",r:2,c:1,n:"Present Perfect",f:"have/has + V3",neg:"have/has not + V3",q:"Have/Has + подлежащее + V3?",en:"I have finished the report.",ru:"Я закончил отчёт (и он готов).",mk:"already, yet, just, ever, never, since, for",note:"Действие закончилось раньше, но важен результат СЕЙЧАС. Когда именно, неважно.",tl:{pts:[.22],ref:[.5],arrow:[.22,.5],above:[.36,"результат виден сейчас"],below:[[.5,"сейчас"]]}},
+{id:"fut-p",r:2,c:2,n:"Future Perfect",f:"will have + V3",u:[["Действие, рассматриваемое как завершённое до определённого момента в будущем.",[]]],neg:"will not have + V3",q:"Will + подлежащее + have + V3?",en:"I will have finished by 5 pm.",ru:"К 5 вечера я уже закончу.",mk:"by 5 pm, by tomorrow, by the time",note:"Действие завершится ДО определённого момента в будущем.",tl:{pts:[.62],ref:[.86],arrow:[.62,.86],above:[.62,"закончится"],below:[[.5,"сейчас"],[.86,"5 pm завтра"]]}},
+{id:"past-pc",r:3,c:0,n:"Past Perfect Continuous",f:"had been + V-ing",u:[["Действия или ситуации, которые длились какой-то период вплоть до определённого момента в прошлом (включающее значение: действие доходит до этого момента).",[]],["Прошлые действия определённой длительности, давшие видимый результат в прошлом (исключающее значение: действие уже закончилось).",[]]],neg:"had not been + V-ing",q:"Had + подлежащее + been + V-ing?",en:"I had been working for 2 hours before he came.",ru:"Я работал уже 2 часа, когда он пришёл.",mk:"for … before, since … before",note:"Действие длилось и дошло до момента в прошлом. Важна длительность.",tl:{bar:[.03,.28],ref:[.28],above:[.15,"длилось 2 часа"],below:[[.28,"he came"],[.5,"сейчас"]]}},
+{id:"pres-pc",r:3,c:1,n:"Present Perfect Continuous",f:"have/has been + V-ing",u:[["Действия, которые начались в прошлом и продолжаются прямо сейчас или только что закончились (с очевидным результатом).",["I have been working in this company for 5 years.","I have worked in this company for 5 years."]]],neg:"have/has not been + V-ing",q:"Have/Has + подлежащее + been + V-ing?",en:"I have been working for 2 hours.",ru:"Я работаю уже 2 часа.",mk:"for, since, all day, lately",note:"Началось в прошлом, длится до «сейчас» и может продолжиться.",tl:{bar:[.2,.5],ref:[.5],arrow:[.5,.68],above:[.35,"длится до сих пор"],below:[[.5,"сейчас"]]}},
+{id:"fut-pc",r:3,c:2,n:"Future Perfect Continuous",f:"will have been + V-ing",u:[["Действие, которое длится какой-то период вплоть до определённого момента в будущем или включая его. Подчёркивает процесс, длительный характер действия.",[]]],neg:"will not have been + V-ing",q:"Will + подлежащее + have been + V-ing?",en:"By 5 pm I will have been working for 3 hours.",ru:"К 5 вечера я буду работать уже 3 часа.",mk:"by … for …, by next year",note:"К моменту в будущем действие будет длиться уже какое-то время.",tl:{bar:[.44,.86],ref:[.86],above:[.65,"будет длиться 3 часа"],below:[[.5,"сейчас"],[.86,"5 pm завтра"]]}}
+];
+var ROWS=["Simple","Continuous","Perfect","Perfect Continuous"],COLS=["Past · прошлое","Present · настоящее","Future · будущее"];
+var byId={};T.forEach(function(t){byId[t.id]=t});
+var sel="pres-s";
+function $(i){return document.getElementById(i)}
+function X(f){return 40+f*600}
+function timeline(s){
+var Y=105,o='<svg viewBox="0 0 680 190" role="img" aria-label="Линия времени"><line x1="40" y1="'+Y+'" x2="640" y2="'+Y+'" stroke="var(--fg)" stroke-width="2.5"/><polygon points="656,'+Y+' 638,'+(Y-9)+' 638,'+(Y+9)+'" fill="var(--fg)"/>';
+if(s.bar)o+='<rect x="'+X(s.bar[0])+'" y="'+(Y-10)+'" width="'+(X(s.bar[1])-X(s.bar[0]))+'" height="20" rx="9" fill="var(--bar)" stroke="var(--barl)" stroke-width="1.5"/>';
+(s.pts||[]).forEach(function(p){o+='<circle cx="'+X(p)+'" cy="'+Y+'" r="'+(s.pts.length>1?7:10)+'" fill="var(--act)"/>'});
+if(s.arrow){var a=X(s.arrow[0])+14,e=X(s.arrow[1])-((s.ref&&s.ref.indexOf(s.arrow[1])>-1)?17:0);o+='<line x1="'+a+'" y1="'+Y+'" x2="'+(e-10)+'" y2="'+Y+'" stroke="var(--muted)" stroke-width="3" stroke-dasharray="6 6"/><polygon points="'+e+','+Y+' '+(e-14)+','+(Y-8)+' '+(e-14)+','+(Y+8)+'" fill="var(--muted)"/>'}
+o+='<line x1="'+X(.5)+'" y1="'+(Y-24)+'" x2="'+X(.5)+'" y2="'+(Y+24)+'" stroke="var(--fg)" stroke-width="4"/>';
+(s.ref||[]).forEach(function(r){var x=X(r);o+='<polygon points="'+x+','+(Y-15)+' '+(x+15)+','+Y+' '+x+','+(Y+15)+' '+(x-15)+','+Y+'" fill="var(--ref)" stroke="var(--bg)" stroke-width="2"/>'});
+o+='<text x="'+X(s.above[0])+'" y="62" text-anchor="middle">'+s.above[1]+'</text>';
+s.below.forEach(function(b){o+='<text x="'+X(b[0])+'" y="154" text-anchor="middle">'+b[1]+'</text>'});
+return o+'</svg>'}
+function buildGrid(){
+var g=$("grid"),h='<div></div>';
+COLS.forEach(function(c){h+='<div class="ch">'+c+'</div>'});
+ROWS.forEach(function(r,i){h+='<div class="rl">'+r+'</div>';T.filter(function(t){return t.r===i}).forEach(function(t){h+='<button class="cell c'+t.c+'" data-id="'+t.id+'" aria-pressed="false">'+t.n.replace(/ (Simple|Continuous|Perfect)/,'<br>$1')+'<small>'+t.f+'</small></button>'})});
+g.innerHTML=h;
+g.addEventListener("click",function(e){var b=e.target.closest(".cell");if(b){pick(b.getAttribute("data-id"));var u=document.querySelector("#panel .head");if(u)u.scrollIntoView({behavior:"smooth",block:"start"})}})}
+var legend='<div class="legend"><span><i style="width:12px;height:12px;border-radius:50%;background:var(--act)"></i>действие</span><span><i style="width:12px;height:12px;background:var(--ref);transform:rotate(45deg)"></i>точка отсчёта</span><span><i style="width:3px;height:16px;background:var(--fg)"></i>сейчас</span><span><i style="width:22px;border-top:3px dashed var(--muted)"></i>завершилось до точки</span></div>';
+function uses(t){if(!t.u)return"";var h='<h3 class="uh">Когда используется</h3><ol class="uses">';t.u.forEach(function(u){h+='<li>'+u[0];if(u[1]&&u[1].length){h+='<ul>';u[1].forEach(function(e){h+='<li class="en">'+e+'</li>'});h+='</ul>'}h+='</li>'});return h+'</ol>'}
+function pick(id){
+sel=id;var t=byId[id];
+document.querySelectorAll(".cell").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-id")===id?"true":"false")});
+$("panel").innerHTML='<div class="head"><h2>'+t.n+'</h2><span class="chip">'+t.f+'</span></div><p style="margin:0;color:var(--muted)">'+t.note+'</p>'+legend+'<div class="tl">'+timeline(t.tl)+'</div>'+uses(t)+'<dl><dt>Пример</dt><dd><span class="en">'+t.en+'</span><br>'+t.ru+'</dd><dt>Отрицание</dt><dd>'+t.neg+'</dd><dt>Вопрос</dt><dd>'+t.q+'</dd><dt>Слова-маркеры</dt><dd>'+t.mk+'</dd></dl>'}
+function view(v){
+$("one").hidden=v!==1;$("quiz").hidden=v!==2;
+$("v1").setAttribute("aria-pressed",v===1);$("v2").setAttribute("aria-pressed",v===2)}
+$("v1").onclick=function(){view(1)};$("v2").onclick=function(){view(2)};
+
+var Q=[["I have already finished the report.","pres-p",["pres-p","past-s","pres-c","pres-pc"]],
+["She was sleeping when I called.","past-c",["past-c","past-s","past-p","pres-c"]],
+["By 5 pm tomorrow I will have finished.","fut-p",["fut-p","fut-s","fut-c","pres-p"]],
+["They had left before we arrived.","past-p",["past-p","past-s","past-c","pres-p"]],
+["I have been waiting for two hours.","pres-pc",["pres-pc","pres-p","pres-c","past-pc"]],
+["At 8 pm tomorrow I will be watching a film.","fut-c",["fut-c","fut-s","fut-p","pres-c"]],
+["He went to Paris last year.","past-s",["past-s","pres-p","past-p","past-c"]],
+["By June she will have been working here for ten years.","fut-pc",["fut-pc","fut-p","fut-c","pres-pc"]]];
+var qi=0,right=0,done=0,answered=false;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function ask(){
+var q=Q[qi];answered=false;
+$("qt").textContent=q[0];$("fb").textContent="";$("show").hidden=true;$("next").hidden=true;
+$("opts").innerHTML="";
+shuffle(q[2]).forEach(function(id){var b=document.createElement("button");b.className="opt";b.textContent=byId[id].n;b.setAttribute("data-id",id);b.onclick=function(){answer(id)};$("opts").appendChild(b)});
+$("score").textContent="Верно: "+right+" из "+done}
+function answer(id){
+if(answered)return;answered=true;done++;
+var q=Q[qi],ok=id===q[1];if(ok)right++;
+document.querySelectorAll(".opt").forEach(function(b){var i=b.getAttribute("data-id");if(i===q[1])b.classList.add("ok");else if(i===id)b.classList.add("bad")});
+$("fb").textContent=(ok?"Верно! ":"Не совсем. ")+"Это "+byId[q[1]].n+": "+byId[q[1]].note;
+$("show").hidden=false;$("next").hidden=false;
+$("score").textContent="Верно: "+right+" из "+done}
+$("next").onclick=function(){qi=(qi+1)%Q.length;ask()};
+$("show").onclick=function(){view(1);pick(Q[qi][1]);$("one").scrollIntoView({behavior:"smooth",block:"start"})};
+
+buildGrid();pick(sel);ask();
+</script>
+<script>
+/*var si=0,sl=[];
+function slidesOf(t){
+var s=[],n=t.u?t.u.length:0;
+if(n){t.u.forEach(function(u,i){var b='<p class="cb">'+u[0]+'</p>';if(u[1]&&u[1].length){b+='<ul>';u[1].forEach(function(e){b+='<li class="en">'+e+'</li>'});b+='</ul>'}s.push(['Когда используется · '+(i+1)+' из '+n,b])})}
+else s.push(['Суть','<p class="cb">'+t.note+'</p>']);
+s.push(['Формы','<dl><dt>Пример</dt><dd><span class="en">'+t.en+'</span><br>'+t.ru+'</dd><dt>Отрицание</dt><dd>'+t.neg+'</dd><dt>Вопрос</dt><dd>'+t.q+'</dd><dt>Маркеры</dt><dd>'+t.mk+'</dd></dl>']);
+return s}
+function pick(id){
+sel=id;var t=byId[id];
+document.querySelectorAll(".cell").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-id")===id?"true":"false")});
+sl=slidesOf(t);si=0;
+$("panel").innerHTML='<div class="head"><h2>'+t.n+'</h2><span class="chip">'+t.f+'</span></div>'+legend+'<div class="tl">'+timeline(t.tl)+'</div><div class="card" id="card"></div><div class="nav"><button class="nb" id="pv" aria-label="Назад">‹</button><div class="dots" id="dots"></div><button class="nb" id="nx" aria-label="Дальше">›</button></div>';
+$("pv").onclick=function(){go(-1)};$("nx").onclick=function(){go(1)};
+var c=$("card"),x0=0;
+c.addEventListener("touchstart",function(e){x0=e.touches[0].clientX},{passive:true});
+c.addEventListener("touchend",function(e){var d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)go(d<0?1:-1)});
+draw()}
+function go(d){var n=si+d;if(n<0||n>=sl.length)return;si=n;draw()}
+function draw(){
+var s=sl[si];$("card").innerHTML='<div class="ct">'+s[0]+'</div>'+s[1];
+$("card").scrollTop=0;
+$("pv").disabled=si===0;$("nx").disabled=si===sl.length-1;
+$("dots").innerHTML=sl.map(function(_,i){return '<i'+(i===si?' class="on"':'')+'></i>'}).join("")}
+document.addEventListener("keydown",function(e){if($("one").hidden)return;if(e.key==="ArrowLeft")go(-1);if(e.key==="ArrowRight")go(1)});
+pick(sel);
+*/
+</script>
+<script>
+var POOL=Q.concat([["She is cooking dinner right now.","pres-c",["pres-c","pres-s","pres-pc","fut-c"]],["The train leaves at 9 a.m. every day.","pres-s",["pres-s","pres-c","fut-s","pres-p"]],["I will call you tomorrow.","fut-s",["fut-s","fut-c","pres-c","fut-p"]],["They were playing football when it started to rain.","past-c",["past-c","past-s","past-pc","past-p"]]]);
+var BK="tensesBest",N=8,order=[],qi=0,right=0,done=0,answered=false,fin=false,acc=0,last=0,tmr=null;
+var be=document.createElement("div");be.className="sub";be.id="best";be.style.marginTop="10px";$("quiz").appendChild(be);
+function best(){try{var v=localStorage.getItem(BK);return v?JSON.parse(v):null}catch(e){return null}}
+function saveBest(b){try{localStorage.setItem(BK,JSON.stringify(b))}catch(e){}}
+function fmt(ms){var s=Math.round(ms/1000);return Math.floor(s/60)+":"+("0"+s%60).slice(-2)}
+function better(a,b){return !b||a.c>b.c||(a.c===b.c&&a.t<b.t)}
+function showBest(){var b=best();be.textContent=b?"Лучший результат: "+b.c+" из "+b.n+" за "+fmt(b.t):"Лучшего результата пока нет"}
+function elapsed(){return acc+(last?Date.now()-last:0)}
+function sync(){var inQ=!$("quiz").hidden;if(inQ&&!last&&!fin)last=Date.now();if(!inQ&&last){acc+=Date.now()-last;last=0}}
+var _view=view;view=function(v){_view(v);sync()};
+function tick(){if(fin||$("quiz").hidden)return;$("score").textContent="Верно: "+right+" из "+done+" · ⏱ "+fmt(elapsed())}
+function startRound(){
+order=shuffle(POOL).slice(0,N);qi=0;right=0;done=0;fin=false;acc=0;last=0;sync();
+clearInterval(tmr);tmr=setInterval(tick,500);
+showBest();ask()}
+function ask(){
+var q=order[qi];answered=false;
+$("qt").textContent=(qi+1)+"/"+N+". "+q[0];$("fb").textContent="";$("show").hidden=true;$("next").hidden=true;
+$("opts").innerHTML="";
+shuffle(q[2]).forEach(function(id){var b=document.createElement("button");b.className="opt";b.textContent=byId[id].n;b.setAttribute("data-id",id);b.onclick=function(){answer(id)};$("opts").appendChild(b)});
+tick();if(!$("quiz").hidden||done===0)$("score").textContent="Верно: "+right+" из "+done+" · ⏱ "+fmt(elapsed())}
+function answer(id){
+if(answered||fin)return;answered=true;done++;
+var q=order[qi],ok=id===q[1];if(ok)right++;
+document.querySelectorAll(".opt").forEach(function(b){var i=b.getAttribute("data-id");if(i===q[1])b.classList.add("ok");else if(i===id)b.classList.add("bad")});
+$("fb").textContent=(ok?"Верно! ":"Не совсем. ")+"Это "+byId[q[1]].n+": "+byId[q[1]].note;
+$("show").hidden=false;$("next").hidden=false;$("next").textContent=qi>=N-1?"Результат":"Дальше";
+tick()}
+function finish(){
+var t=elapsed();fin=true;acc=t;last=0;
+var res={c:right,n:N,t:t},b=best(),nb=better(res,b);
+if(nb)saveBest(res);
+$("qt").textContent="Готово! "+right+" из "+N+" за "+fmt(t);
+$("opts").innerHTML="";
+$("fb").textContent=nb?"Новый лучший результат!":"Прошлый рекорд пока не побит. Чем больше правильных ответов и чем быстрее, тем лучше.";
+$("show").hidden=true;$("next").hidden=false;$("next").textContent="Ещё раз";
+$("score").textContent="";showBest()}
+$("next").onclick=function(){if(fin){startRound();return}if(qi>=N-1)finish();else{qi++;ask()}};
+$("show").onclick=function(){view(1);pick(order[qi][1]);$("one").scrollIntoView({behavior:"smooth",block:"start"})};
+var tb=document.createElement("button");tb.className="totop";tb.textContent="↑";tb.setAttribute("aria-label","Наверх");document.body.appendChild(tb);
+window.addEventListener("scroll",function(){tb.classList.toggle("show",window.scrollY>240)},{passive:true});
+tb.onclick=function(){window.scrollTo({top:0,behavior:"smooth"})};
+try{history.scrollRestoration="manual"}catch(e){}
+window.scrollTo(0,0);
+window.addEventListener("load",function(){window.scrollTo(0,0);setTimeout(function(){window.scrollTo(0,0)},60)});
+startRound();
+</script>
+<script>
+var started=false;
+function sync(){var inQ=!$("quiz").hidden;if(inQ&&!last&&!fin&&started)last=Date.now();if(!inQ&&last){acc+=Date.now()-last;last=0}}
+var intro=document.createElement("div");intro.id="intro";
+intro.innerHTML='<p style="margin:6px 0 10px">Проверьте, как вы понимаете времена. Предложения в тесте только на английском: нужно выбрать, в каком времени оно написано.</p><ul style="margin:0 0 12px;padding-left:20px"><li><b>8 вопросов</b>: случайные из 11, порядок каждый раз разный.</li><li>У каждого вопроса <b>4 варианта</b> ответа. После ответа сразу видно, правильно ли это и почему.</li><li><b>Идёт секундомер</b>, пока вы на вкладке «Тест». Если перейдёте на «Времена», он встанет на паузу.</li><li>В конце увидите результат: число верных ответов и время. Лучший результат сохраняется в этом браузере: сначала побеждает больше верных, при равенстве быстрее.</li></ul><button class="act" id="start" style="background:var(--fg);color:var(--bg)">Начать тест</button>';
+$("quiz").insertBefore(intro,$("qt"));
+function setIntro(on){intro.style.display=on?"":"none";["qt","opts","fb","score"].forEach(function(i){$(i).style.display=on?"none":""});if(on){$("show").hidden=true;$("next").hidden=true}}
+$("start").onclick=function(){started=true;setIntro(false);startRound()};
+setIntro(true);
+</script>
+</body>
+</html>
